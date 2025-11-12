@@ -121,6 +121,9 @@ app.use(session({
 app.use(sessionMiddleware);
 io.use((socket, next) => sessionMiddleware(socket.request, {}, next));
 
+app.use(express.static('.'));           // serves login.html, admin.html
+app.use('/public', express.static('public'));  // /public/task-icons/...
+
 app.use(express.static(__dirname));
 app.use('/style.css', (req, res) => {
     res.setHeader('Content-Type', 'text/css');
@@ -236,6 +239,10 @@ app.use('/task-icons', express.static(path.join(__dirname, 'public', 'task-icons
 
 app.get('/favicon.ico', (req, res) => {
     res.sendFile(path.join(__dirname, 'favicon.ico'), { maxAge: 86400000 });
+});
+
+app.get('*', (req, res) => {
+    res.sendFile('login.html', { root: '.' });
 });
 
 app.get('/mobile-activity.html', (req, res) => {
@@ -1570,7 +1577,7 @@ app.use((req, res) => {
 
 // ==================== BEIGĀS – server.listen, NEVIS app.listen ====================
 server.listen(PORT, HOST, () => {
-    console.log(`Serveris uz http://192.168.1.231:3001`);
-    console.log(`Socket.IO: http://192.168.1.231:3001/socket.io/socket.io.js`);
+    console.log(`Server running on http://0.0.0.0:${PORT}`);
+    console.log(`Socket.IO ready`);
 
 });
