@@ -16,6 +16,7 @@ import http from 'http';
 import { Server } from 'socket.io';
 import multer from 'multer';
 import { fileURLToPath } from 'url';
+import { initDb } from './db.sqlite'; // ← adjust path if needed
 
 import util from 'util';
 
@@ -42,6 +43,26 @@ const sessionMiddleware = session({
     saveUninitialized: false,
     cookie: { secure: false }
 });
+
+(async () => {
+    try {
+        console.log('[DB] Initializing database...');
+        await initDb(); // ← THIS MUST FINISH FIRST
+        console.log('[DB] Database ready');
+
+        const PORT = process.env.PORT || 8080;
+        const HOST = '0.0.0.0';
+
+        server.listen(PORT, HOST, () => {
+            console.log(`Server running on http://0.0.0.0:${PORT}`);
+            console.log(`Socket.IO ready`);
+        });
+
+    } catch (err) {
+        console.error('[ERROR] Failed to start server:', err);
+        process.exit(1);
+    }
+})();
 
 // === DB & SEED SETUP ===
 (async () => {
@@ -1576,8 +1597,5 @@ app.use((req, res) => {
 });
 
 // ==================== BEIGĀS – server.listen, NEVIS app.listen ====================
-server.listen(PORT, HOST, () => {
-    console.log(`Server running on http://0.0.0.0:${PORT}`);
-    console.log(`Socket.IO ready`);
 
 });
