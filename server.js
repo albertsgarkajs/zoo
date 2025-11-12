@@ -1595,7 +1595,3 @@ app.use((req, res) => {
     if (req.path.startsWith('/api/')) return res.status(404).json({ error: 'API not found' });
     res.status(404).send('Page not found');
 });
-
-// ==================== BEIGĀS – server.listen, NEVIS app.listen ====================
-
-});
