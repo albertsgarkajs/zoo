@@ -6,7 +6,7 @@ const { default: connectSQLite3 } = await import('connect-sqlite3');
 const SQLiteStore = connectSQLite3(session);
 const sessionStore = new SQLiteStore({
     db: 'session.sqlite',
-    dir: '/data/sessions'  // ← THIS IS THE FIX
+    dir: '/tmp'  // ← RENDER: tikai /tmp ir rakstāms
 });
 import path from 'path';
 import fs from 'fs';
@@ -65,58 +65,6 @@ const sessionMiddleware = session({
 })();
 
 // === DB & SEED SETUP ===
-(async () => {
-    try {
-        const db = new sqlite3.Database(process.env.SQLITE_PATH || 'db.sqlite');
-        db.run = util.promisify(db.run);
-        db.get = util.promisify(db.get);
-        db.all = util.promisify(db.all);
-        console.log('[DB] Promisify funkcijas pievienotas – dbRun/dbGet/dbAll gatavas!');
-
-        // CREATE TABLES
-        await db.run(`
-      CREATE TABLE IF NOT EXISTS tasks (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        description TEXT,
-        icon TEXT,
-        UNIQUE(title)
-      )
-    `);
-        console.log('[DB] tasks table ready');
-
-        // LOAD animals.json IF EMPTY
-        const row = await db.get('SELECT COUNT(*) as count FROM tasks');
-        if (row.count === 0) {
-            const animalsPath = path.join(__dirname, 'animals.json');
-            if (fs.existsSync(animalsPath)) {
-                const data = JSON.parse(fs.readFileSync(animalsPath, 'utf8'));
-                console.log(`[START] Ielādēti ${data.length} uzdevumi no animals.json`);
-                for (const task of data) {
-                    await db.run(
-                        `INSERT OR IGNORE INTO tasks (title, description, icon) VALUES (?, ?, ?)`,
-                        [task.title, task.description || '', task.icon || '']
-                    );
-                }
-                console.log('[DB] Data loaded');
-            }
-        } else {
-            console.log(`[DB] Already has ${row.count} tasks – skipping seed`);
-        }
-
-        // START SERVER
-        const server = app.listen(3000, '0.0.0.0', () => {
-            console.log(`Serveris uz http://192.168.1.231:3000`);
-        });
-
-        const io = new Server(server);
-        // ... your socket.io setup
-
-    } catch (err) {
-        console.error('Startup failed:', err);
-        process.exit(1);
-    }
-})();
 
 // Globāli pieejams broadcast
 global.io = io;
