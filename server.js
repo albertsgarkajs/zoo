@@ -1592,6 +1592,6 @@ cron.schedule('30 17 * * *', async () => {
 
 // ==================== 13. 404 & START ====================
 app.use((req, res) => {
-    if (req.path.startsWith('/api/')) return res.status(404).json({ error: 'API not found' });
+    if (req.path.startsWith('/api/')) return res.status(404).json({error: 'API not found'});
     res.status(404).send('Page not found');
-});
+})
