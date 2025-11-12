@@ -16,7 +16,7 @@ import http from 'http';
 import { Server } from 'socket.io';
 import multer from 'multer';
 import { fileURLToPath } from 'url';
-import { initDb } from './db.js';
+import { db } from './db.js';
 
 import util from 'util';
 
