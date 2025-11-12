@@ -154,7 +154,7 @@ app.use('/style.css', (req, res) => {
 // ==================== 1. DB + PRODUCTION SETUP ====================
 const isProd = process.env.NODE_ENV === 'production';
 const dbPath = isProd ? '/tmp/db.sqlite' : './db.sqlite';
-const db = new sqlite3.Database(dbPath);
+
 
 // === PROMISIFY SQLITE (lai async/await strādātu) ===
 const dbRun = (sql, params = []) => new Promise((resolve, reject) => {
