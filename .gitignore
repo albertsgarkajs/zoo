@@ -1,0 +1,19 @@
+# Node & DB
+node_modules/
+db.sqlite
+db-backup-*.sqlite
+
+# Secrets
+.env
+config.json
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

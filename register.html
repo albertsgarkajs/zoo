@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reģistrācija</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header"><h1>Reģistrācija</h1></div>
+    <div class="content">
+      <div id="registerSection">
+        <div class="form-group">
+          <input type="text" id="regUsername" placeholder="Lietotājvārds" class="input-field">
+          <input type="password" id="regPassword" placeholder="Parole" class="input-field">
+          <input type="email" id="regEmail" placeholder="E-pasts" class="input-field">
+          <select id="regRole" class="dropdown"><option value="">Izvēlēties lomu</option></select>
+          <button onclick="register()" class="btn btn-primary">Reģistrēties</button>
+          <button onclick="location.href='/login.html'" class="btn btn-secondary">Atpakaļ</button>
+          <div id="regError" class="error"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+      // ==== LOAD AVAILABLE ROLES ====
+      fetch('/api/roles')
+          .then(r => {
+              if (!r.ok) throw new Error('Server error: ' + r.status);
+              return r.json();
+          })
+          .then(roles => {
+              console.log('Saņemtās lomas:', roles);
+              const select = document.getElementById('regRole');
+              select.innerHTML = '<option value="">Izvēlēties lomu</option>';
+              if (roles.length === 0) {
+                  select.innerHTML += '<option disabled>(Nav pieejamu lomu)</option>';
+              } else {
+                  roles.forEach(r => {
+                      const opt = document.createElement('option');
+                      opt.value = opt.textContent = r;
+                      select.appendChild(opt);
+                  });
+              }
+          })
+          .catch(err => {
+              console.error('Kļūda:', err);
+              document.getElementById('regError').textContent = 'Nevar ielādēt lomas: ' + err.message;
+          });
+
+      // ==== REGISTER FUNCTION (was missing!) ====
+      function register() {
+          const username = document.getElementById('regUsername').value.trim();
+          const password = document.getElementById('regPassword').value;
+          const email    = document.getElementById('regEmail').value.trim();
+          const role     = document.getElementById('regRole').value;
+
+          if (!username || !password || !email || !role) {
+              return showError('Aizpildiet visus laukus!');
+          }
+
+          fetch('/register', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&email=${encodeURIComponent(email)}&role=${encodeURIComponent(role)}`
+          })
+              .then(r => r.text())
+              .then(html => {
+                  document.body.innerHTML = html; // show success message
+                  setTimeout(() => location.href = '/login.html', 2000);
+              })
+              .catch(err => showError('Kļūda: ' + err.message));
+      }
+
+      // ==== SHOW ERROR ====
+      function showError(msg) {
+          document.getElementById('regError').textContent = msg;
+      }
+  </script>
+</body>
+</html>

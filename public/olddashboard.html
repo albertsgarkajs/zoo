@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="lv">
+<!-- FAVICON VISIEM PĀRLŪKIEM -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<meta name="favicon-version" content="v6"> <!-- UZLABOTS -->
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dienas uzdevumi</title>
+<link rel="stylesheet" href="/style.css" />
+    <style>
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+        .modal-content { background: white; margin: 5% auto; padding: 20px; width: 90%; max-width: 600px; border-radius: 8px; max-height: 80vh; overflow-y: auto; }
+        .close { float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        :root {
+            --primary: #4CAF50;       /* Galvenā zaļā */
+            --primary-dark: #388E3C;  /* Tumšāka zaļā */
+            --primary-light: #C8E6C9; /* Gaišāka */
+            --bg: #f5f5f5;
+            --bg-alt: #ffffff;
+            --text: #333333;
+            --text-light: #666666;
+            --error: #d32f2f;
+            --success: #2e7d32;
+            --warning: #ff9800;
+            --border: #dddddd;
+            --shadow: rgba(0,0,0,0.15);
+        }
+
+        /* Dark mode pārklājums */
+        [data-theme="dark"] {
+            --primary: #66BB6A;
+            --primary-dark: #558B2F;
+            --bg: #121212;
+            --bg-alt: #1e1e1e;
+            --text: #ffffff;
+            --text-light: #bbbbbb;
+            --border: #333333;
+        }
+        /* SEARCHABLE DROPDOWN – VIENS CIETS GABALS AR style.css */
+        .searchable-dropdown {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            display: block;
+            margin: 0 auto;
+            box-sizing: border-box;
+            border: 2px solid var(--border); /* ← ĀRĒJAIS BORDER APSĒD VISU */
+            border-radius: 16px; /* ← VIENS APAĻŠ STŪRIS VISAM */
+            overflow: hidden; /* ← lai iekšējie borderi neizlec ārā */
+            background: var(--light);
+        }
+
+        .searchable-dropdown input {
+            width: 100%;
+            padding: 14px;
+            border: none !important; /* ← BEZ BORDERA */
+            border-radius: 0;
+            font-size: 1rem;
+            box-sizing: border-box;
+            background: var(--light);
+            color: var(--text);
+            text-align: center;
+            margin: 0;
+            outline: none;
+        }
+
+        .searchable-dropdown input:focus {
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+
+        .searchable-dropdown select {
+            width: 100%;
+            max-height: 240px;
+            border: none !important; /* ← BEZ BORDERA */
+            border-radius: 0;
+            font-size: 1rem;
+            background: var(--light);
+            color: var(--text);
+            overflow-y: auto;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Plāna līnija starp input un select */
+        .searchable-dropdown input {
+            border-bottom: 1px solid var(--border) !important; /* ← TIKAI PLĀNA LĪNIJA STARPĀ */
+        }
+
+        .searchable-dropdown option {
+            padding: 14px;
+            text-align: center;
+        }
+
+        .searchable-dropdown option:hover,
+        .searchable-dropdown option[selected] {
+            background: var(--primary) !important;
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div></div>
+<div class="container">
+    <div class="header">
+        <h1>Latgales Zoodārzs</h1>
+        <div id="userInfo" class="user-info"></div>
+        <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+            <span class="icon sun"></span>
+            <span class="icon moon"></span>
+        </div>
+    </div>
+    <!-- TIKAI VETERINĀRĀRSTA ASISTENTS REDZ -->
+    <div id="addAnimalContainer" style="display:none; margin: 10px 0;">
+        <button class="btn btn-primary" onclick="window.location.href='add-animal.html'" style="background:#2196F3; padding:12px 20px; font-size:1.1rem;">
+            ➕ Pievienot jaunu dzīvnieku
+        </button>
+    </div>
+
+    <script>
+        // RĀDA POGU TIKAI ASISTENTAM
+        fetch('/api/user', { credentials: 'include' })
+            .then(r => r.json())
+            .then(user => {
+                if (user.role === 'Veterinārārsta asistents') {
+                    document.getElementById('addAnimalContainer').style.display = 'block';
+                }
+            });
+    </script>
+
+    <div id="taskSection">
+        <h2>Dienas uzdevumi</h2>
+        <div class="dropdown-container">
+            <label for="taskList"><strong>Neizpildītie uzdevumi:</strong></label><br>
+            <div class="searchable-dropdown">
+                <input type="text" id="pendingSearch" placeholder="Meklēt uzdevumu..." autocomplete="off">
+                <select id="taskList" class="dropdown" size="8"></select>
+            </div>
+        </div>
+
+        <div class="dropdown-container">
+            <label for="completedTasks"><strong>Izpildītie uzdevumi (šodien):</strong></label><br>
+            <div class="searchable-dropdown">
+                <input type="text" id="completedSearch" placeholder="Meklēt izpildīto..." autocomplete="off">
+                <select id="completedTasks" class="dropdown" size="8"></select>
+            </div>
+        </div>
+        </div>
+        <div class="action-buttons">
+            <button onclick="markAction('b')" class="btn btn-primary">Barošana (b)</button>
+            <button onclick="markAction('ū')" class="btn btn-primary">Ūdens maiņa (ū)</button>
+            <button onclick="markAction('k')" class="btn btn-primary">Kopšana (k)</button>
+            <button id="saveBtn" class="btn" style="display:none;">Saglabāt izvēli</button>
+            <button onclick="completeTask()" class="btn btn-complete">Apstiprināt izpildi</button>
+            <button onclick="cancelTask()" class="btn btn-cancel">Atcelt izpildi</button>
+        </div>
+        <div class="search-container">
+            <input type="text" id="animalSearch" placeholder="Meklēt dzīvnieku..." onkeyup="filterAnimals()">
+            <div id="animalResults" class="search-results"></div>
+        </div>
+
+        <!-- ANIMAL MODAL -->
+        <div id="animalModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">x</span>
+                <h2 id="modalAnimalName"></h2>
+                <p><strong>Būris:</strong> <span id="modalCage"></span></p>
+                <div class="last-actions">
+                    <p><strong>Pēdējā barošana:</strong> <span id="lastFed">-</span></p>
+                    <p><strong>Pēdējā ūdens maiņa:</strong> <span id="lastWater">-</span></p>
+                    <p><strong>Pēdējā kopšana:</strong> <span id="lastClean">-</span></p>
+                </div>
+                <h3>Komentāri</h3>
+                <div id="modalComments" style="margin-top:10px; max-height:200px; overflow-y:auto;"></div>
+                <div style="margin-top:10px; display:flex; gap:5px; align-items:center;">
+                    <input type="text" id="modalCommentInput" placeholder="Pievienot komentāru..." style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px;" />
+                    <button onclick="submitModalComment()" class="btn btn-small" style="padding:6px 12px;">Sūtīt</button>
+                    <button onclick="cancelModalReply()" id="cancelModalReplyBtn" class="btn btn-cancel btn-small" style="display:none; padding:6px 12px;">Atcelt</button>
+                </div>
+                <h3>Pēdējās 7 dienas</h3>
+                <div id="actionHistory" class="action-history"></div>
+            </div>
+        </div>
+
+        <!-- COMMENT MODAL -->
+        <div id="commentModal" class="modal">
+            <div class="modal-content" style="max-width:500px;">
+                <span class="close" onclick="closeCommentModal()">x</span>
+                <h3>Komentāri: <span id="commentAnimalName"></span></h3>
+                <div id="commentList" style="max-height:300px; overflow-y:auto; margin:10px 0;"></div>
+                <div style="display:flex; gap:5px;">
+                    <input type="text" id="commentInput" placeholder="Atbilde..." style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px;" />
+                    <button onclick="sendComment()" class="btn btn-small">Sūtīt</button>
+                    <button onclick="cancelReply()" class="btn btn-cancel btn-small" id="cancelReplyBtn" style="display:none;">Atcelt</button>
+                </div>
+            </div>
+        </div>
+
+        <h3>Dienas darbības</h3>
+        <table id="activityTable" class="activity-table">
+            <thead>
+            <tr>
+                <th>Sprosta Nr.</th>
+                <th>Nosaukums</th>
+                <th>Darbības</th>
+                <th>Lietotājs</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    let userData = null;
+    let allTasks = [];
+    let todayActions = [];
+    let completedToday = [];
+    const animalBatches = new Map();
+
+    // === COMMENTS SYSTEM ===
+    let currentCommentAnimalId = null;
+    let replyTo = null;
+    let currentModalAnimalId = null;
+    let modalReplyTo = null;
+
+    // ĀTRA MOBILE DETEKCIJA (pirms jebko ielādē)
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+        (window.innerWidth <= 768 && 'ontouchstart' in window);
+
+    if (isMobile) {
+        // Uzreiz pāradresē uz mobilo versiju
+        window.location.replace('/mobile-dashboard.html');
+    }
+
+    // === THEME TOGGLE ===
+    function toggleTheme() {
+        const body = document.body;
+        const toggle = document.getElementById('themeToggle');
+        if (body.getAttribute('data-theme') === 'dark') {
+            body.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+            toggle.classList.remove('active');
+        } else {
+            body.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            toggle.classList.add('active');
+        }
+    }
+
+    // Load saved theme on page load
+    window.addEventListener('load', () => {
+        const savedTheme = localStorage.getItem('theme');
+        const toggle = document.getElementById('themeToggle');
+        if (savedTheme === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            toggle.classList.add('active');
+        }
+    });
+
+    // === LOGIN & INITIAL LOAD ===
+    fetch('/api/user', { credentials: 'include' })
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(user => {
+            userData = user;
+            document.getElementById('userInfo').innerHTML = `
+        Sveiks, ${user.username} (${user.role})
+        <button onclick="logout()" class="btn btn-secondary">Izrakstīties</button>
+      `;
+            loadAllData();
+            setInterval(refreshLiveData, 180000); // Auto-refresh every 30s
+        })
+        .catch(() => location.href = '/login.html');
+
+    async function loadAllData() {
+        try {
+            const responses = await Promise.all([
+                fetch('/api/tasks', { credentials: 'include' }),
+                fetch('/api/daily-tasks', { credentials: 'include' }),
+                fetch('/api/today-actions', { credentials: 'include' }),
+                fetch('/api/completed-today', { credentials: 'include' }),
+                fetch('/api/task-icons-map', { credentials: 'include' })  // ← JAUNAIS
+            ]);
+
+            // DETALIZĒTA KĻŪDU DIAGNOSTIKA
+            responses.forEach((r, i) => {
+                if (!r.ok) console.error(`API ${i} failed:`, r.status, r.url);
+            });
+
+            if (responses.some(r => !r.ok)) {
+                throw new Error('One or more APIs failed – skaties console.log');
+            }
+
+            allTasks = await responses[0].json();
+            const dailyData = await responses[1].json();
+            todayActions = await responses[2].json();
+            completedToday = await responses[3].json();
+            window.taskIconsMap = await responses[4].json();  // ← GLOBĀLS KARTE
+
+            console.log('dailyData saņemts:', dailyData); // DEBUG – vari izdzēst vēlāk
+
+            // PERFEKTA PARSĒŠANA – ATBALSTA VISUS FORMĀTUS
+            let roleTasks = [];
+            if (Array.isArray(dailyData)) {
+                roleTasks = dailyData; // Vecais formāts
+            } else if (dailyData && dailyData.tasks) {
+                roleTasks = dailyData.tasks; // Substitute formāts
+                console.log('Aizvietošana aktīva:', dailyData.substitute);
+            } else if (userData && dailyData && dailyData[userData.role]) {
+                roleTasks = dailyData[userData.role].tasks || []; // Admin formāts
+            } else {
+                console.warn('Nezināms dailyData formāts:', dailyData);
+            }
+
+            const currentId = document.getElementById('taskList').value;
+            populateTaskLists(roleTasks);
+            if (currentId && !completedToday.some(c => c.animal_id == currentId)) {
+                document.getElementById('taskList').value = currentId;
+            }
+            updateActivityTable();
+            updateSaveButton();
+        } catch (err) {
+            console.error('Load error:', err);
+            document.getElementById('taskSection').innerHTML = `
+            <div class="error" style="text-align:center; margin:20px; padding:20px; background:#ffebee; border:2px solid #d32f2f; border-radius:12px;">
+                <p><strong>Neizdevās ielādēt datus!</strong></p>
+                <p>API kļūda – atver Console (F12) → meklē "API failed"</p>
+                <button onclick="location.reload()" class="btn btn-primary" style="margin-top:10px;">Mēģināt vēlreiz</button>
+            </div>
+        `;
+        }
+    }
+
+    function populateTaskLists(roleTasks) {
+        const pendingSelect = document.getElementById('taskList');
+        const completedSelect = document.getElementById('completedTasks');
+        const currentPending = pendingSelect.value;
+
+        pendingSelect.innerHTML = '<option value="">Izvēlēties dzīvnieku</option>';
+        completedSelect.innerHTML = '<option value="">Izpildītie uzdevumi</option>';
+
+        if (roleTasks.length === 0) {
+            pendingSelect.innerHTML += '<option disabled>— Nav uzdevumu šodien —</option>';
+        } else {
+            roleTasks.forEach(task => {
+                const isCompleted = completedToday.some(c => c.animal_id == task.id);
+
+                // IKONA AR CACHE BUSTING
+                const iconUrl = window.taskIconsMap?.[task.id];
+                const iconHtml = iconUrl
+                    ? `<img src="${iconUrl}?t=${Date.now()}" style="width:24px;height:24px;vertical-align:middle;margin-right:8px;border-radius:50%;object-fit:cover;">`
+                    : '<span style="display:inline-block;width:24px;height:24px;margin-right:8px;font-size:20px;">🐾</span>'; // fallback emoji
+
+                const fullText = `${task.cage} - ${task.name}`;
+                const optionHtml = `${iconHtml}${fullText}`;
+
+                if (!isCompleted) {
+                    const opt = document.createElement('option');
+                    opt.value = task.id;
+                    opt.innerHTML = optionHtml;  // ← innerHTML nevis textContent!
+                    pendingSelect.appendChild(opt);
+                }
+                if (isCompleted) {
+                    const opt = document.createElement('option');
+                    opt.value = task.id;
+                    opt.innerHTML = optionHtml;
+                    completedSelect.appendChild(opt);
+                }
+            });
+        }
+
+        if (currentPending && pendingSelect.querySelector(`option[value="${currentPending}"]`)) {
+            pendingSelect.value = currentPending;
+        }
+
+        initDropdownSearch(); // pārliecinies, ka izsauc pēc populate
+    }
+
+    document.getElementById('taskList').onchange = function() {
+        updateSaveButton();
+    };
+
+    function initDropdownSearch() {
+        ['taskList', 'completedTasks'].forEach(id => {
+            const select = document.getElementById(id);
+            const searchId = id === 'taskList' ? 'pendingSearch' : 'completedSearch';
+            const search = document.getElementById(searchId);
+            if (!select || !search) return;
+
+            const originalOptions = [];
+            let currentValue = select.value;
+
+            const saveOptions = () => {
+                originalOptions.length = 0;
+                Array.from(select.options).forEach(opt => {
+                    originalOptions.push({
+                        value: opt.value,
+                        text: opt.textContent,
+                        element: opt.cloneNode(true)
+                    });
+                });
+                // NEPARĀDA izvēlēto inputā
+                search.value = ''; // ← TAGAD VIENMĒR TUKŠS
+            };
+
+            const filter = () => {
+                const query = search.value.toLowerCase().trim();
+                select.innerHTML = '';
+
+                let matches = originalOptions;
+                if (query) {
+                    matches = originalOptions.filter(opt =>
+                        opt.text.toLowerCase().includes(query)
+                    );
+                }
+
+                if (matches.length === 0) {
+                    const opt = document.createElement('option');
+                    opt.textContent = '— Nav rezultātu —';
+                    opt.disabled = true;
+                    select.appendChild(opt);
+                } else {
+                    matches.forEach(opt => {
+                        select.appendChild(opt.element.cloneNode(true));
+                    });
+                }
+
+                if (currentValue) {
+                    const exists = matches.some(m => m.value === currentValue);
+                    if (exists) select.value = currentValue;
+                }
+            };
+
+            search.addEventListener('keyup', filter);
+            search.addEventListener('keydown', e => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const first = select.options[0];
+                    if (first && !first.disabled) {
+                        select.value = first.value;
+                        currentValue = first.value;
+                        search.value = ''; // ← TUKŠS PĒC ENTER
+                        select.dispatchEvent(new Event('change'));
+                        search.blur();
+                    }
+                }
+                if (e.key === 'Escape') {
+                    search.value = '';
+                    filter();
+                }
+            });
+
+            // KAD IZVĒLAS AR PELI
+            select.addEventListener('change', () => {
+                currentValue = select.value;
+                search.value = ''; // ← GALVENĀ IZMAIŅA: TUKŠS PĒC KLIKŠĶA
+                updateSaveButton();
+            });
+
+            search.addEventListener('focus', () => {
+                filter(); // parāda visus kad fokusā
+            });
+
+            search.addEventListener('click', () => filter());
+
+            // Sākotnēji
+            saveOptions();
+            filter();
+        });
+    }
+
+    // === MARK ACTION (b, ū, k) ===
+    function markAction(action) {
+        const id = document.getElementById('taskList').value;
+        if (!id) return alert('Izvēlieties dzīvnieku');
+
+        let actions = animalBatches.get(id);
+        if (!actions) {
+            actions = new Set();
+            animalBatches.set(id, actions);
+        }
+        actions.add(action);
+        updateSaveButton();
+    }
+
+    function makeDropdownSearchable(selectId, searchId) {
+        const select = document.getElementById(selectId);
+        const search = document.getElementById(searchId);
+        if (!select || !search) return;
+
+        // Saglabā oriģinālās opcijas ar value
+        const originalOptions = Array.from(select.options).map(opt => ({
+            value: opt.value,
+            text: opt.textContent,
+            element: opt.cloneNode(true)
+        }));
+
+        let currentValue = select.value;
+
+        function filter() {
+            const query = search.value.toLowerCase().trim();
+            select.innerHTML = '';
+
+            let matches = originalOptions;
+            if (query) {
+                matches = originalOptions.filter(opt =>
+                    opt.text.toLowerCase().includes(query)
+                );
+            }
+
+            if (matches.length === 0) {
+                const opt = document.createElement('option');
+                opt.textContent = '— Nav rezultātu —';
+                opt.disabled = true;
+                select.appendChild(opt);
+            } else {
+                matches.forEach(opt => {
+                    select.appendChild(opt.element.cloneNode(true));
+                });
+            }
+
+            // Atjauno izvēlēto pēc filtrēšanas
+            if (currentValue) {
+                const stillExists = matches.some(opt => opt.value === currentValue);
+                if (stillExists) {
+                    select.value = currentValue;
+                } else {
+                    currentValue = null; // ja filtrs izdzēsa izvēlēto
+                    search.value = '';   // notīra input
+                }
+            }
+        }
+
+        // Filtrēšana
+        search.addEventListener('keyup', filter);
+
+        // Enter = izvēlas pirmo
+        search.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const first = select.options[0];
+                if (first && !first.disabled) {
+                    select.value = first.value;
+                    currentValue = first.value;
+                    search.value = first.textContent;
+                    select.dispatchEvent(new Event('change'));
+                    search.blur();
+                }
+            }
+            if (e.key === 'Escape') {
+                search.value = '';
+                filter();
+            }
+        });
+
+        // Kad izvēlas ar peli/bultiņām
+        select.addEventListener('change', () => {
+            currentValue = select.value;
+            const selectedText = select.options[select.selectedIndex]?.textContent || '';
+            search.value = selectedText;
+            updateSaveButton(); // izsauc tavu funkciju
+        });
+
+        // Focus uz input parāda visus
+        search.addEventListener('focus', () => {
+            if (!search.value) filter();
+        });
+
+        // Sākotnēji ja ir izvēlēts
+        if (currentValue) {
+            const selected = originalOptions.find(opt => opt.value === currentValue);
+            if (selected) search.value = selected.text;
+        }
+
+        filter(); // pirmā ielāde
+    }
+
+    // === UPDATE SAVE BUTTON ===
+    function updateSaveButton() {
+        const id = document.getElementById('taskList').value;
+        const actions = animalBatches.get(id);
+        const count = actions ? actions.size : 0;
+        const btn = document.getElementById('saveBtn');
+
+        if (count > 0 && id) {
+            btn.style.display = 'inline-block';
+            btn.textContent = `Saglabāt izvēli (${count})`;
+            btn.disabled = false;
+            btn.onclick = saveCurrentBatch;
+        } else {
+            btn.style.display = 'none';
+            btn.onclick = null;
+        }
+    }
+
+    // === SAVE BATCH ===
+    async function saveCurrentBatch() {
+        const id = document.getElementById('taskList').value;
+        const actions = Array.from(animalBatches.get(id) || []);
+        if (!actions.length) return;
+
+        const btn = document.getElementById('saveBtn');
+        btn.disabled = true;
+        btn.textContent = 'Sūta...';
+
+        try {
+            await fetch('/api/mark-actions', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ animal_id: parseInt(id), actions })
+            });
+            animalBatches.delete(id);
+            await loadAllData();
+        } catch (err) {
+            alert('Kļūda saglabājot');
+            btn.disabled = false;
+            updateSaveButton();
+        }
+    }
+
+    // === COMPLETE TASK ===
+    async function completeTask() {
+        const id = document.getElementById('taskList').value;
+        if (!id) return alert('Izvēlieties dzīvnieku');
+
+        const batch = Array.from(animalBatches.get(id) || []);
+        if (batch.length) {
+            await fetch('/api/mark-actions', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ animal_id: parseInt(id), actions: batch })
+            });
+            animalBatches.delete(id);
+        }
+
+        await fetch('/api/complete-task', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ animal_id: parseInt(id) })
+        });
+
+        await loadAllData();
+    }
+
+    // === CANCEL TASK ===
+    async function cancelTask() {
+        const id = document.getElementById('completedTasks').value;
+        if (!id) return alert('Izvēlieties dzīvnieku');
+
+        await fetch('/api/cancel-task', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ animal_id: parseInt(id) })
+        });
+
+        await loadAllData();
+    }
+
+    function updateActivityTable() {
+        const tbody = document.querySelector('#activityTable tbody');
+        tbody.innerHTML = '';
+        const grouped = {};
+
+        todayActions.forEach(a => {
+            const id = a.animal_id;
+            if (!id) return; // Skip invalid
+
+            if (!grouped[id]) {
+                grouped[id] = {
+                    cage: a.cage,
+                    name: a.name,
+                    actions: [],
+                    users: new Set(),
+                    comment_count: 0,
+                    animal_id: id
+                };
+            }
+            grouped[id].actions.push(a.action);
+            grouped[id].users.add(a.username);
+            grouped[id].comment_count = a.comment_count || 0;
+        });
+
+        Object.values(grouped).forEach(g => {
+            const row = tbody.insertRow();
+            const badge = g.comment_count > 0
+                ? `<span style="background:#d32f2f;color:white;padding:2px 6px;border-radius:12px;font-size:11px;margin-left:5px;">${g.comment_count}</span>`
+                : '';
+
+            row.innerHTML = `
+      <td>${g.cage}</td>
+      <td>${g.name}</td>
+      <td>${g.actions.join(', ')}</td>
+      <td>${Array.from(g.users).join(', ')}</td>
+      <td>
+        <button onclick="openModal(${g.animal_id})" class="btn btn-small" style="font-size:12px;padding:4px 8px;">
+          Komentāri ${badge}
+        </button>
+      </td>
+    `;
+        });
+
+        if (!tbody.children.length) {
+            const row = tbody.insertRow();
+            row.innerHTML = '<td colspan="5">Nav darbību</td>';
+        }
+    }
+
+    // === SEARCH ANIMALS ===
+    function filterAnimals() {
+        const query = document.getElementById('animalSearch').value.toLowerCase().trim();
+        const results = document.getElementById('animalResults');
+        results.innerHTML = '';
+
+        if (!query) {
+            results.style.display = 'none';
+            return;
+        }
+
+        const matches = allTasks.filter(t =>
+            t.cage.toLowerCase().includes(query) || t.name.toLowerCase().includes(query)
+        );
+
+        matches.forEach(t => {
+            const div = document.createElement('div');
+            div.textContent = `${t.cage} - ${t.name}`;
+            div.onclick = () => openModal(t.id);
+            results.appendChild(div);
+        });
+
+        results.style.display = matches.length ? 'block' : 'none';
+    }
+
+    // === OPEN ANIMAL MODAL ===
+    async function openModal(animalId) {
+        const task = allTasks.find(t => t.id == animalId);
+        if (!task) return;
+
+        document.getElementById('modalAnimalName').textContent = task.name;
+        document.getElementById('modalCage').textContent = task.cage;
+
+        try {
+            const res = await fetch(`/api/animal-history/${animalId}`, { credentials: 'include' });
+            const history = await res.json();
+            const historyDiv = document.getElementById('actionHistory');
+            historyDiv.innerHTML = history.length ? '' : '<p>Nav darbību pēdējo 7 dienu laikā.</p>';
+
+            const last = { b: '-', ū: '-', k: '-' };
+            history.forEach(h => {
+                if (!last[h.action] || h.date > last[h.action]) last[h.action] = h.date;
+                const p = document.createElement('p');
+                p.innerHTML = `<strong>${h.date}:</strong> ${h.action} <em>(by ${h.username})</em>`;
+                historyDiv.appendChild(p);
+            });
+
+            document.getElementById('lastFed').textContent = last.b;
+            document.getElementById('lastWater').textContent = last.ū;
+            document.getElementById('lastClean').textContent = last.k;
+        } catch (err) {
+            document.getElementById('actionHistory').innerHTML = '<p>Kļūda ielādējot vēsturi.</p>';
+        }
+
+        loadModalComments(animalId);
+        document.getElementById('animalModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('animalModal').style.display = 'none';
+        document.getElementById('animalResults').style.display = 'none';
+    }
+
+    function logout() {
+        fetch('/logout', { credentials: 'include' }).then(() => location.href = '/login.html');
+    }
+
+    // === AUTO REFRESH ===
+    function refreshLiveData() {
+        Promise.all([
+            fetch('/api/today-actions', { credentials: 'include' }).then(r => r.json()),
+            fetch('/api/completed-today', { credentials: 'include' }).then(r => r.json()),
+            fetch('/api/daily-tasks', { credentials: 'include' }).then(r => r.json())
+        ]).then(([actions, completed, roleData]) => {
+            todayActions = actions;
+            completedToday = completed;
+            const roleTasks = Array.isArray(roleData) ? roleData : (roleData.tasks || []);
+            populateTaskLists(roleTasks);
+            updateActivityTable();
+            updateSaveButton();
+            // PIEVIENO ŠO:
+            initDropdownSearch();
+        });
+    }
+
+    function buildCommentTree(comments) {
+        const map = new Map();
+        const roots = [];
+
+        // Initialize map
+        comments.forEach(c => {
+            map.set(c.id, { ...c, children: [] });
+        });
+
+        // Build tree
+        comments.forEach(c => {
+            if (c.parent_id === 0 || c.parent_id == null) {
+                roots.push(map.get(c.id));
+            } else {
+                const parent = map.get(c.parent_id);
+                if (parent) {
+                    parent.children.push(map.get(c.id));
+                }
+            }
+        });
+
+        return roots;
+    }
+
+    function renderCommentTree(container, comments, depth = 0) {
+        comments.forEach(c => {
+            const div = document.createElement('div');
+            div.style.marginLeft = `${depth * 32}px`;
+            div.style.padding = '10px';
+            div.style.margin = '8px 0';
+            div.style.borderRadius = '8px';
+            div.style.background = c.resolved ? '#e8f5e9' : '#fff3e0';
+            div.style.borderLeft = `4px solid ${c.resolved ? '#4caf50' : '#ff9800'}`;
+            div.style.fontSize = depth > 0 ? '13px' : '14px';
+
+            const time = new Date(c.timestamp).toLocaleString('lv-LV', {
+                day: '2-digit', month: '2-digit', year: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+
+            const replyBtn = `<button onclick="setModalReply(${c.id})" style="background:none;border:none;color:#1976d2;cursor:pointer;font-size:11px;">Atbildēt</button>`;
+            const resolveBtn = ['Admin', 'Zoologs'].includes(userData?.role) && !c.resolved
+                ? `<button onclick="resolveModalComment(${c.id})" style="margin-left:8px;background:#4caf50;color:white;border:none;padding:2px 6px;border-radius:4px;font-size:10px;cursor:pointer;">Atrisināts</button>`
+                : '';
+
+            const replyTo = c.parent_id > 0 && c.parent_user
+                ? `<span style="color:#666;font-size:10px;margin-left:6px;">→ @${escapeHtml(c.parent_user)}</span>`
+                : '';
+
+            div.innerHTML = `
+      <div style="font-weight:${depth > 0 ? '500' : '600'};">
+        ${escapeHtml(c.user)}${replyTo} <small style="color:#666;font-size:10px;">${time}</small>
+      </div>
+      <p style="margin:4px 0; line-height:1.4;">${escapeHtml(c.comment)}</p>
+      <div style="margin-top:6px; font-size:11px;">
+        ${replyBtn} ${resolveBtn}
+      </div>
+    `;
+
+            container.appendChild(div);
+
+            if (c.children?.length) {
+                renderCommentTree(container, c.children, depth + 1);
+            }
+        });
+    }
+
+    // === MODAL COMMENTS (ANIMAL MODAL) ===
+    function loadModalComments(animalId) {
+        currentModalAnimalId = animalId;
+        fetch(`/api/comments/${animalId}`, { credentials: 'include' })
+            .then(r => r.json())
+            .then(comments => {
+                const container = document.getElementById('modalComments');
+                container.innerHTML = '';
+                if (comments.length === 0) {
+                    container.innerHTML = '<p style="color:#888;font-style:italic;">Nav komentāru</p>';
+                    return;
+                }
+                const tree = buildCommentTree(  comments);
+                renderCommentTree(container, tree, 0);
+            })
+            .catch(() => {
+                document.getElementById('modalComments').innerHTML = '<p style="color:red;">Kļūda ielādējot komentāru</p>';
+            });
+    }
+
+    function setModalReply(parentId) {
+        modalReplyTo = parentId;
+        const input = document.getElementById('modalCommentInput');
+        const cancelBtn = document.getElementById('cancelModalReplyBtn');
+        input.placeholder = 'Atbilde uz komentāru...';
+        input.focus();
+        cancelBtn.style.display = 'inline-block';
+        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function cancelModalReply() {
+        modalReplyTo = null;
+        const input = document.getElementById('modalCommentInput');
+        const cancelBtn = document.getElementById('cancelModalReplyBtn');
+        input.placeholder = 'Pievienot komentāru...';
+        cancelBtn.style.display = 'none';
+    }
+
+    function submitModalComment() {
+        const input = document.getElementById('modalCommentInput');
+        const text = input.value.trim();
+        if (!text || !currentModalAnimalId) return;
+
+        const payload = { animal_id: currentModalAnimalId, comment: text };
+        if (modalReplyTo) payload.parent_id = modalReplyTo;
+
+        fetch('/api/add-comment', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }).then(() => {
+            input.value = '';
+            modalReplyTo = null;
+            cancelModalReply();
+            loadModalComments(currentModalAnimalId);
+        }).catch(() => alert('Kļūda sūtot komentāru'));
+    }
+
+    function resolveModalComment(id) {
+        fetch('/api/resolve-comment', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ comment_id: id })
+        }).then(() => loadModalComments(currentModalAnimalId));
+    }
+
+    // === UTILS ===
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // === CLOSE MODALS ON CLICK OUTSIDE ===
+    window.onclick = e => {
+        const animalModal = document.getElementById('animalModal');
+        const commentModal = document.getElementById('commentModal');
+        if (e.target === animalModal) closeModal();
+        if (e.target === commentModal) document.getElementById('commentModal').style.display = 'none';
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,1017 @@
+[
+  {
+    "id": 1,
+    "cage": "1.13",
+    "name": "Truši/Oryctolagus cuniculus"
+  },
+  {
+    "id": 2,
+    "cage": "1.1",
+    "name": "Surikati/Suricata suricatta"
+  },
+  {
+    "id": 3,
+    "cage": "1.23/ 2",
+    "name": "Makaki/Macaca fascicularis"
+  },
+  {
+    "id": 4,
+    "cage": "1.71",
+    "name": "Galago/Galago senegalensis"
+  },
+  {
+    "id": 5,
+    "cage": "2",
+    "name": "Galago (II stāvs)/Galago senegalensis"
+  },
+  {
+    "id": 6,
+    "cage": "2.10",
+    "name": "Parastais kalitrikss (II stāvs)/Callithrix jacchus"
+  },
+  {
+    "id": 7,
+    "cage": "1.58",
+    "name": "Tamarīni (mazie)/Saguinus oedipus"
+  },
+  {
+    "id": 8,
+    "cage": "1.73",
+    "name": "Tamarīni (lielie)/Saguinus oedipus"
+  },
+  {
+    "id": 9,
+    "cage": "2",
+    "name": "Tamarīni (II stāvs)/Saguinus oedipus"
+  },
+  {
+    "id": 10,
+    "cage": "1.4",
+    "name": "Sarainais bruņnesis/Chaetophractus villosus"
+  },
+  {
+    "id": 11,
+    "cage": "1.43/1.46",
+    "name": "Trīsjoslu bruņnesis/Tolypeutes matacus"
+  },
+  {
+    "id": 12,
+    "cage": "2.5",
+    "name": "Cukurvāveres/Petaurus breviceps"
+  },
+  {
+    "id": 13,
+    "cage": "1.51",
+    "name": "Cukurvāveres (I stāvs)/Petaurus breviceps"
+  },
+  {
+    "id": 14,
+    "cage": "1.41",
+    "name": "Lidojušie sunīši/Rousettus aegyptiacus"
+  },
+  {
+    "id": 15,
+    "cage": "1.21",
+    "name": "Jūrascūciņas/Cavia porcellus"
+  },
+  {
+    "id": 16,
+    "cage": "2.6",
+    "name": "Jūrascūciņas (II stāvs)/Cavia porcellus"
+  },
+  {
+    "id": 17,
+    "cage": "2.2",
+    "name": "Āzijas īsnagu ūdrs (8:00 12:00 15:00)/Amblonyx cinereus"
+  },
+  {
+    "id": 18,
+    "cage": "1.48",
+    "name": "Bolīvijas naktspērtiķis/Aotus azarae"
+  },
+  {
+    "id": 19,
+    "cage": "2.5",
+    "name": "Žurkas/Rattus norvegicus"
+  },
+  {
+    "id": 20,
+    "cage": "1.20",
+    "name": "Džungārijas kāmis (I stāvs)/Phodopus sungorus"
+  },
+  {
+    "id": 21,
+    "cage": "2",
+    "name": "Džungārijas kāmis (II stāvs)/Phodopus sungorus"
+  },
+  {
+    "id": 22,
+    "cage": "1.50",
+    "name": "Sarkanā rozella"
+  },
+  {
+    "id": 23,
+    "cage": "1.49",
+    "name": "Karella/Viļņpapagailis"
+  },
+  {
+    "id": 24,
+    "cage": "1.32",
+    "name": "Zebru amadīna"
+  },
+  {
+    "id": 25,
+    "cage": "1.22",
+    "name": "Dzeltenpieres/Zilpieres amazone u.c."
+  },
+  {
+    "id": 26,
+    "cage": "2.1",
+    "name": "Žako/Psittacus erithacus"
+  },
+  {
+    "id": 27,
+    "cage": "1.49",
+    "name": "Zaļspārnīši/Agapornis personatus"
+  },
+  {
+    "id": 28,
+    "cage": "1.49",
+    "name": "Zaļspārnīši/Agapornis fischeri"
+  },
+  {
+    "id": 29,
+    "cage": "1.80",
+    "name": "Ragvardes/Ceratophrys cranwelli"
+  },
+  {
+    "id": 30,
+    "cage": "2.8",
+    "name": "Ragvardes (II stāvs)/Ceratophrys sp."
+  },
+  {
+    "id": 31,
+    "cage": "1.84",
+    "name": "Āfrikas racējvardes (I stāvs)/Pyxicephalus adsperus"
+  },
+  {
+    "id": 32,
+    "cage": "2.8",
+    "name": "Āfrikas racējvardes (II stāvs)/Pyxicephalus adspersus"
+  },
+  {
+    "id": 33,
+    "cage": "1.8",
+    "name": "Jūras krupis/Rhinella marina"
+  },
+  {
+    "id": 34,
+    "cage": "2",
+    "name": "Circeņi/Acheta domesticus"
+  },
+  {
+    "id": 35,
+    "cage": "1.3/1.72/1.76",
+    "name": "Dendrobati (visi)/Dendrobates sp."
+  },
+  {
+    "id": 36,
+    "cage": "2.9",
+    "name": "Zofobas/Zophobas morio"
+  },
+  {
+    "id": 37,
+    "cage": "2.8",
+    "name": "Tūkstoškāji/Telodeinopus aoutii"
+  },
+  {
+    "id": 38,
+    "cage": "2.9",
+    "name": "Prusaki (II stāvs)/Blaberus sp., Shelfordella sp. u.c."
+  },
+  {
+    "id": 39,
+    "cage": "1.6",
+    "name": "Prusaki (I stāvs)/Blaberus sp."
+  },
+  {
+    "id": 40,
+    "cage": "1.29",
+    "name": "Gliemeži/Lissachatina fulica"
+  },
+  {
+    "id": 41,
+    "cage": "2.9",
+    "name": "Gliemeži (II stāvs)/Lissachatina fulica"
+  },
+  {
+    "id": 42,
+    "cage": "1.44",
+    "name": "Felzumas (Madagaskaras dienas gekons)/Phelsuma madagascariensis"
+  },
+  {
+    "id": 43,
+    "cage": "1.77",
+    "name": "Āzijas ūdens agāma, bruņurupuči/Physignathus cocincinus, Trachemys sp."
+  },
+  {
+    "id": 44,
+    "cage": "2.8",
+    "name": "Āzijas ūdens agāma (II stāvs)/Physignathus cocincinus"
+  },
+  {
+    "id": 45,
+    "cage": "1.48a",
+    "name": "Zaļais bazilisks/Basiliscus plumifrons"
+  },
+  {
+    "id": 46,
+    "cage": "2.10q",
+    "name": "Zaļais bazilisks (II stāvs)/Basiliscus plumifrons"
+  },
+  {
+    "id": 47,
+    "cage": "1.37",
+    "name": "Āfrikas resnastes gekons/Hemitheconyx caudicinctus"
+  },
+  {
+    "id": 48,
+    "cage": "1.45",
+    "name": "Austrālijas kokvardes/Ranoidea caerulea"
+  },
+  {
+    "id": 49,
+    "cage": "1.88",
+    "name": "Āzijas buļļvardes/Kaloula pulchra"
+  },
+  {
+    "id": 50,
+    "cage": "2.10c",
+    "name": "Tarentola annularis/Sienas gekons"
+  },
+  {
+    "id": 51,
+    "cage": "1.59/1.60",
+    "name": "Sarkanausu bruņurupuči (pie kaimaniem)/Trachemys sp."
+  },
+  {
+    "id": 52,
+    "cage": "1.9",
+    "name": "Dzeltenvēdera,sarkanausu bruņurupuči/Trachemys sp."
+  },
+  {
+    "id": 53,
+    "cage": "1.71",
+    "name": "Garkakla bruņurupucis/Pelomedus subrufa"
+  },
+  {
+    "id": 54,
+    "cage": "1.71",
+    "name": "Īskakla bruņurupucis/Emydura subglobosa"
+  },
+  {
+    "id": 55,
+    "cage": "1.73",
+    "name": "Austrumāfrikas bruņurupucis/Pelusios subniger"
+  },
+  {
+    "id": 56,
+    "cage": "1.63",
+    "name": "Aligatorbruņurupucis/Macrochelys temminckii"
+  },
+  {
+    "id": 57,
+    "cage": "1.87",
+    "name": "Kaimana bruņurupucis/Chelydra serpentina"
+  },
+  {
+    "id": 58,
+    "cage": "1.67",
+    "name": "Jaungvinejas mīkstbruņrupucis/Carettochelys insculpta"
+  },
+  {
+    "id": 59,
+    "cage": "1.86",
+    "name": "Ķīnas trīsķīļu bruņurupucis/Mauremys reevesii"
+  },
+  {
+    "id": 60,
+    "cage": "1.79",
+    "name": "Eiropas purva bruņurupuči/Emys orbicularis"
+  },
+  {
+    "id": 61,
+    "cage": "1.40",
+    "name": "Zaļā iguāna (I stāvs)/Iguana iguana"
+  },
+  {
+    "id": 62,
+    "cage": "1.67",
+    "name": "Zaļā iguāna (sarkanā)/Iguana iguana"
+  },
+  {
+    "id": 63,
+    "cage": "1.58/1.57/1.55",
+    "name": "Sauszemes bruņurupuči/Testudo sp."
+  },
+  {
+    "id": 64,
+    "cage": "2",
+    "name": "Vidusāzijas bruņurupucis/Testudo horsfieldii"
+  },
+  {
+    "id": 65,
+    "cage": "1.55/1.57/1.58",
+    "name": "Sauszemes bruņurupuču vannošana"
+  },
+  {
+    "id": 66,
+    "cage": "1.58",
+    "name": "Lielā bruņķirzaka/Broadleysaurus major"
+  },
+  {
+    "id": 67,
+    "cage": "1.53",
+    "name": "Zilmēles scinks/Tiliqua sp."
+  },
+  {
+    "id": 68,
+    "cage": "1.34",
+    "name": "Bārdainās agāmas/Pogona vitticeps"
+  },
+  {
+    "id": 69,
+    "cage": "2.8",
+    "name": "Bārdainās agāmas (II stāvs)/Pogona vitticeps"
+  },
+  {
+    "id": 70,
+    "cage": "1.36",
+    "name": "Garkāju scinks/Eumeces schneiderii"
+  },
+  {
+    "id": 71,
+    "cage": "1.56",
+    "name": "Argentīnas melnbaltais tegu/Salvator merianae"
+  },
+  {
+    "id": 72,
+    "cage": "1.59/1.60",
+    "name": "Krokodili/Caiman crocodilus"
+  },
+  {
+    "id": 73,
+    "cage": "1.33",
+    "name": "Smilšu žņaudzējčūska/Eryx conicus"
+  },
+  {
+    "id": 74,
+    "cage": "1.25",
+    "name": "Parastā žņaudzējčūska/Boa constrictor"
+  },
+  {
+    "id": 75,
+    "cage": "1.27",
+    "name": "Kubas žņaudzējčūska/Chilabothrus angulifer"
+  },
+  {
+    "id": 76,
+    "cage": "1.42",
+    "name": "Varavīksnes žņaudzējčūska/Epicrates maurus"
+  },
+  {
+    "id": 77,
+    "cage": "1.54",
+    "name": "Briljanta pitons/Morelia spilota"
+  },
+  {
+    "id": 78,
+    "cage": "1.28",
+    "name": "Karaliskais pitons/Python regius"
+  },
+  {
+    "id": 79,
+    "cage": "1.39",
+    "name": "Morelia viridis/Morelia viridis"
+  },
+  {
+    "id": 80,
+    "cage": "2.10a",
+    "name": "Parastā žņaudzējčūska/Boa constrictor"
+  },
+  {
+    "id": 81,
+    "cage": "2.10o",
+    "name": "Varavīksnes žņaudzējčūska/Epicrates maurus"
+  },
+  {
+    "id": 82,
+    "cage": "2.10d",
+    "name": "Karaliskais pitons/Python regius"
+  },
+  {
+    "id": 83,
+    "cage": "2.10p (4881)",
+    "name": "Karaliskais pitons/Python regius"
+  },
+  {
+    "id": 84,
+    "cage": "2.10e",
+    "name": "Karaliskais pitons/Python regius"
+  },
+  {
+    "id": 85,
+    "cage": "4882",
+    "name": "Karaliskias pitons/Python regius"
+  },
+  {
+    "id": 86,
+    "cage": "4884",
+    "name": "Karaliskias pitons/Python regius"
+  },
+  {
+    "id": 87,
+    "cage": "2.10t (5137)",
+    "name": "Karaliskias pitons/Python regius"
+  },
+  {
+    "id": 88,
+    "cage": "2.10h",
+    "name": "Varavīksnes žņaudzējčūska/Epicrates maurus"
+  },
+  {
+    "id": 89,
+    "cage": "2.10f",
+    "name": "Parastā žņaudzējčūska/Boa constrictor"
+  },
+  {
+    "id": 90,
+    "cage": "2.10g",
+    "name": "Parastā žņaudzējčūska/Boa constrictor"
+  },
+  {
+    "id": 91,
+    "cage": "2.10m",
+    "name": "Parastā žņaudzējčūska/Boa constrictor"
+  },
+  {
+    "id": 92,
+    "cage": "2.10n",
+    "name": "Parastā žņaudzējčūska/Boa constrictor"
+  },
+  {
+    "id": 93,
+    "cage": "2.10u",
+    "name": "Kubas žņaudzējčūska/Chilabothrus angulifer"
+  },
+  {
+    "id": 94,
+    "cage": "1.68",
+    "name": "Pundurkaimani/Paleosuchus palpebrosus"
+  },
+  {
+    "id": 95,
+    "cage": "1.11",
+    "name": "Koi Karpa/Cyprinus carpio"
+  },
+  {
+    "id": 96,
+    "cage": "1.7/1.26",
+    "name": "Eublefāri (I stāvs)/Eublepharis macularius"
+  },
+  {
+    "id": 97,
+    "cage": "2.8",
+    "name": "Eublefāri (II stāvs)/Eublepharis macularius"
+  },
+  {
+    "id": 98,
+    "cage": "1.10",
+    "name": "Piešvardes/Xenopus laevis"
+  },
+  {
+    "id": 99,
+    "cage": "2.26",
+    "name": "Himalaju tritons/Tylototriton verrucosus"
+  },
+  {
+    "id": 100,
+    "cage": "1.68",
+    "name": "Niedrzivis/Erpetoichthys calabaricus"
+  },
+  {
+    "id": 101,
+    "cage": "1.66",
+    "name": "Tilāpijas, Tauriņzivis/Cyphotilapia frontosa,P. buchholzi"
+  },
+  {
+    "id": 102,
+    "cage": "1.67",
+    "name": "Piraijas/Metynnis maculatus"
+  },
+  {
+    "id": 103,
+    "cage": "1.67",
+    "name": "Sudraba arovānas/Osteoglossum bicirrhosum"
+  },
+  {
+    "id": 104,
+    "cage": "1.81",
+    "name": "Skalārijs/Pterophyllum (I stāvs)"
+  },
+  {
+    "id": 105,
+    "cage": "1.82",
+    "name": "Gūpijas, Šķepneši/Poecilia sp., Xiphophorus sp. (I stāvs)"
+  },
+  {
+    "id": 106,
+    "cage": "1.83",
+    "name": "Sinodonts, Ktenopoma/Synodontis sp., Ctenopoma acutirostre (I stāvs)"
+  },
+  {
+    "id": 107,
+    "cage": "1.40",
+    "name": "Cihlīdas/Amatitlania nigrofasciata (I stāvs)"
+  },
+  {
+    "id": 108,
+    "cage": "1.87",
+    "name": "Cihlīdas/Amatitlania nigrofasciata (I stāvs)"
+  },
+  {
+    "id": 109,
+    "cage": "1.59/1.60",
+    "name": "Trīsķīļu bruņurupucis/Astronotus ocellatus"
+  },
+  {
+    "id": 110,
+    "cage": "2.29",
+    "name": "Gūpijas, Šķēpneši/P. reticulata,P. sphenops"
+  },
+  {
+    "id": 111,
+    "cage": "2.13",
+    "name": "Gūpijas, Šķēpneši/P. reticulata/P. sphenops"
+  },
+  {
+    "id": 112,
+    "cage": "2.18",
+    "name": "Zelta zivtiņas, Agamikss/Carassius auratus/Agamyxis"
+  },
+  {
+    "id": 113,
+    "cage": "2.27",
+    "name": "Cihlīda (Asaris)/Cichla monoculus"
+  },
+  {
+    "id": 114,
+    "cage": "1.16",
+    "name": "Tarantuli (I stāvs)/Brachypelma sp."
+  },
+  {
+    "id": 115,
+    "cage": "1.76",
+    "name": "Putnēdājs/Theraphosa blondi"
+  },
+  {
+    "id": 116,
+    "cage": "1.11a",
+    "name": "Aksolotls/Ambystoma mexicanum"
+  },
+  {
+    "id": 117,
+    "cage": "1.74",
+    "name": "Skorpions/Heterometrus sp."
+  },
+  {
+    "id": 118,
+    "cage": "2.9",
+    "name": "Skorpions/Heterometrus sp."
+  },
+  {
+    "id": 119,
+    "cage": "1.78",
+    "name": "Pātagzirneklis/Damon medius"
+  },
+  {
+    "id": 120,
+    "cage": "1.18",
+    "name": "Zarkukaiņi/Medauroidea sp."
+  },
+  {
+    "id": 121,
+    "cage": "1.30",
+    "name": "Dievlūdzējs/Sphodromantis lineola"
+  },
+  {
+    "id": 122,
+    "cage": "1.85",
+    "name": "Garneles (I stāvs)/Neocaridina heteropoda"
+  },
+  {
+    "id": 123,
+    "cage": "2.19/2.20/2.22/2.24",
+    "name": "Garneles (II stāvs)/Neocaridina heteropoda"
+  },
+  {
+    "id": 124,
+    "cage": "2",
+    "name": "Čū(Žako)/Psittacus erithacus"
+  },
+  {
+    "id": 125,
+    "cage": "Karantīna",
+    "name": "Gūpijas/Poecilia reticulata"
+  },
+  {
+    "id": 126,
+    "cage": "Karantīna",
+    "name": "Lapgriežskudras/Atta cephalotes"
+  },
+  {
+    "id": 127,
+    "cage": "Karantīna",
+    "name": "Pātagzirneklis/Damon medius"
+  },
+  {
+    "id": 128,
+    "cage": "Karantīna",
+    "name": "Diskuss/Symphysodon aequifasciatus"
+  },
+  {
+    "id": 129,
+    "cage": "Karantīna",
+    "name": "Plekostomus sams/Hypostomus plecostomus"
+  },
+  {
+    "id": 130,
+    "cage": "Karantīna",
+    "name": "Pterigoplīhts/Pterygoplichthys gibbiceps"
+  },
+  {
+    "id": 131,
+    "cage": "Karantīna",
+    "name": "Ancistrus sams/Ancistrus sp."
+  },
+  {
+    "id": 132,
+    "cage": "Karantīna",
+    "name": "Tarantuli/Brachypelma smithi"
+  },
+  {
+    "id": 133,
+    "cage": "Karantīna",
+    "name": "Pātagzirneklis/Damon diadema"
+  },
+  {
+    "id": 134,
+    "cage": "Karantīna",
+    "name": "Vidusāzijas bruņurupucis/Testudo horsfieldii"
+  },
+  {
+    "id": 135,
+    "cage": "Karantīna",
+    "name": "Austrālijas kokvardes/Ranoidea caerulea"
+  },
+  {
+    "id": 136,
+    "cage": "Karantīna",
+    "name": "Zeltainā kokvarde/Ranoidea aurea"
+  },
+  {
+    "id": 137,
+    "cage": "Karantīna",
+    "name": "Piešvardes/Hymenochirus boettgeri"
+  },
+  {
+    "id": 138,
+    "cage": "Karantīna",
+    "name": "Piešvardes/Hymenochirus boettgeri albino"
+  },
+  {
+    "id": 139,
+    "cage": "Karantīna",
+    "name": "Varavīksnes krabis/Cardisoma armatum"
+  },
+  {
+    "id": 140,
+    "cage": "Karantīna",
+    "name": "Dievlūdzējs/Sphodromantis viridis"
+  },
+  {
+    "id": 141,
+    "cage": "Karantīna",
+    "name": "Dievlūdzējs/Sphodromantis lineola"
+  },
+  {
+    "id": 142,
+    "cage": "Karantīna",
+    "name": "Piena kokvarde/Trachycephalus resinifictrix"
+  },
+  {
+    "id": 143,
+    "cage": "Karantīna",
+    "name": "Hromiss/Hemichromis sp."
+  },
+  {
+    "id": 144,
+    "cage": "Karantīna",
+    "name": "Putnēdājs/Theraphosa blondi"
+  },
+  {
+    "id": 145,
+    "cage": "Karantīna",
+    "name": "Skolopendra/Scolopendra dawydoffi"
+  },
+  {
+    "id": 146,
+    "cage": "Karantīna",
+    "name": "Sarkanā garra/Garra rufa"
+  },
+  {
+    "id": 147,
+    "cage": "Karantīna",
+    "name": "Leoparda hameleons/Furcifer pardalis"
+  },
+  {
+    "id": 148,
+    "cage": "Karantīna",
+    "name": "Jemenas hameleons/Chamaeleo calyptratus"
+  },
+  {
+    "id": 149,
+    "cage": "Karantīna",
+    "name": "Zaļais bazilisks/Basiliscus plumifrons"
+  },
+  {
+    "id": 150,
+    "cage": "Karantīna",
+    "name": "Bruņurupucis/Centrochelys sulcata"
+  },
+  {
+    "id": 151,
+    "cage": "1.89",
+    "name": "Krabis vientuļnieks/Coenobita clypeatus"
+  },
+  {
+    "id": 152,
+    "cage": "Karantīna",
+    "name": "Barbus/Barbonymus schwanenfeldii"
+  },
+  {
+    "id": 153,
+    "cage": "Karantīna",
+    "name": "Cukurvāveres/Petaurus breviceps"
+  },
+  {
+    "id": 154,
+    "cage": "2",
+    "name": "Eiropas trusis/Oryctolagus cuniculus"
+  },
+  {
+    "id": 155,
+    "cage": "1.90",
+    "name": "Jūras akvārijs"
+  },
+  {
+    "id": 156,
+    "cage": "2",
+    "name": "Jūras akvārijs II stāvs"
+  },
+  {
+    "id": 157,
+    "cage": "2.6",
+    "name": "Tarantuli/Monocentropus balfouri"
+  },
+  {
+    "id": 158,
+    "cage": "2.6",
+    "name": "Lielais kapučsienāzis/Siliquofera grandis"
+  },
+  {
+    "id": 159,
+    "cage": "1",
+    "name": "Lapgriežskudras/Atta cephalotes"
+  },
+  {
+    "id": 160,
+    "cage": "1.70",
+    "name": "Filipīnu zarkukainis/Sungaya inexpectata"
+  },
+  {
+    "id": 161,
+    "cage": "2.6",
+    "name": "Āfrikas alu circenis/Phaeophilacris bredoides"
+  },
+  {
+    "id": 162,
+    "cage": "2.6",
+    "name": "Trīspunktu rožvabole/Pachnoda trimaculata"
+  },
+  {
+    "id": 163,
+    "cage": "2.6",
+    "name": "Meksikas sienāzis/Nesoecia constricta"
+  },
+  {
+    "id": 164,
+    "cage": "2.6",
+    "name": "Zvanu circenis/Homeogryllus cf adunctus"
+  },
+  {
+    "id": 165,
+    "cage": "1.35",
+    "name": "Madagaskaras šņācējprusaki/Gromphadorhina portentosa"
+  },
+  {
+    "id": 166,
+    "cage": "2.6",
+    "name": "Madagaskaras šņācējprusaki/Gromphadorhina portentosa"
+  },
+  {
+    "id": 167,
+    "cage": "2.6",
+    "name": "Smaragda rožvabole/Chlorocala smaragdina"
+  },
+  {
+    "id": 168,
+    "cage": "2.6",
+    "name": "Dubijas prusaks/Blaptica dubia"
+  },
+  {
+    "id": 169,
+    "cage": "2.6",
+    "name": "Milzu prusaks/Blaberus giganteus"
+  },
+  {
+    "id": 170,
+    "cage": "2.6",
+    "name": "Mozaīku prusaks/Archimandrita tesselata"
+  },
+  {
+    "id": 171,
+    "cage": "2.6",
+    "name": "Dievlūdzējs/Rhombodera valida"
+  },
+  {
+    "id": 172,
+    "cage": "2.15/2.16",
+    "name": "Ūdensblaktis/Hydrocyrius sp."
+  },
+  {
+    "id": 173,
+    "cage": "1.75",
+    "name": "Zarkukaiņi/Extatosoma tiaratum"
+  },
+  {
+    "id": 174,
+    "cage": "1.15",
+    "name": "Milzu prusaks/Blaberus giganteus"
+  },
+  {
+    "id": 175,
+    "cage": "1.59/1.60",
+    "name": "Krokodili (Ūdens maiņa)"
+  },
+  {
+    "id": 176,
+    "cage": "1.63",
+    "name": "Aligatorbruņrupucis (Ūdens maiņa)"
+  },
+  {
+    "id": 177,
+    "cage": "2",
+    "name": "Kaimanbruņrupucis (Ūdens maiņa)"
+  },
+  {
+    "id": 178,
+    "cage": "1.9",
+    "name": "Dzeltenausu/Sarkanausu bruņurupuči (Ūdens maiņa)"
+  },
+  {
+    "id": 179,
+    "cage": "1.11",
+    "name": "Koi Karpas (Ūdens maiņa)"
+  },
+  {
+    "id": 180,
+    "cage": "1.40",
+    "name": "Zaļā iguāna (Ūdens maiņa)"
+  },
+  {
+    "id": 181,
+    "cage": "1.66",
+    "name": "Tilāpijas/Tauriņzivis (Ūdens maiņa)"
+  },
+  {
+    "id": 182,
+    "cage": "1.67",
+    "name": "Jaungvinejas mīkstbruņrupucis (Ūdens maiņa)"
+  },
+  {
+    "id": 183,
+    "cage": "1.68",
+    "name": "Pundurkaimani (Ūdens maiņa)"
+  },
+  {
+    "id": 184,
+    "cage": "1.79",
+    "name": "Eiropas purva bruņurupuči (ūdens maiņa)"
+  },
+  {
+    "id": 185,
+    "cage": "1.81",
+    "name": "Skalārijas (Ūdens maiņa)"
+  },
+  {
+    "id": 186,
+    "cage": "1.82",
+    "name": "Gūpijas/Šķepneši (Ūdens maiņa)"
+  },
+  {
+    "id": 187,
+    "cage": "1.83",
+    "name": "Sinodonti/Ktenopoma (Ūdens maiņa)"
+  },
+  {
+    "id": 188,
+    "cage": "1.85",
+    "name": "Garneles (Ūdens maiņa)"
+  },
+  {
+    "id": 189,
+    "cage": "1.86",
+    "name": "Ķīnas trīsķīļu bruņurupucis (Ūdens maiņa)"
+  },
+  {
+    "id": 190,
+    "cage": "1.87",
+    "name": "Cihlīda (Ūdens maiņa)"
+  },
+  {
+    "id": 191,
+    "cage": "1.69",
+    "name": "Malajas slēdzējbruņurupucis (Ūdens maiņa)"
+  },
+  {
+    "id": 192,
+    "cage": "1.71",
+    "name": "Garkakla bruņurupucis (Ūdens maiņa)"
+  },
+  {
+    "id": 193,
+    "cage": "1.73",
+    "name": "Austrumāfrikas bruņurupucis (Ūdens maiņa)"
+  },
+  {
+    "id": 194,
+    "cage": "1.77",
+    "name": "Āzijas ūdens agāma (Ūdens maiņa)"
+  },
+  {
+    "id": 195,
+    "cage": "1",
+    "name": "Zivis I stāvs (Kopšana)"
+  },
+  {
+    "id": 196,
+    "cage": "2",
+    "name": "Laboratorija II stāvs plaukti, terāriji (Kopšana)"
+  },
+  {
+    "id": 197,
+    "cage": "2",
+    "name": "Laboratorija II stāvs grīdas, logi, izlietne (Kopšana)"
+  },
+  {
+    "id": 198,
+    "cage": "Karantīna",
+    "name": "Laboratorija karantīna, med. dzīvn. (Kopšana)"
+  },
+  {
+    "id": 199,
+    "cage": "Karantīna",
+    "name": "Laboratorija karantīna grīdas, logi, izlietne (Kopšana)"
+  },
+  {
+    "id": 200,
+    "cage": "Karantīna",
+    "name": "Laboratorija karantīna akvāriji (Kopšana)"
+  },
+  {
+    "id": 201,
+    "cage": "2",
+    "name": "Laboratorija aukstā ģenerālā tīrīšana"
+  },
+  {
+    "id": 202,
+    "cage": "2",
+    "name": "Laboratorija aukstā skaidu maiņa"
+  },
+  {
+    "id": 203,
+    "cage": "2",
+    "name": "Laboratorija aukstā stiklu tīrīšana"
+  }
+]

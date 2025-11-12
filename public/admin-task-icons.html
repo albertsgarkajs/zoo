@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin: Dzīvnieku ikonas</title>
+    <style>
+        body { font-family: Arial; background: #f4f4f4; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background: #2196F3; color: white; }
+        .icon-preview { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd; background: #f0f0f0; }
+        .upload-btn { background: #4CAF50; color: white; padding: 8px 12px; cursor: pointer; border-radius: 4px; }
+        .delete-btn { background: #f44336; color: white; padding: 8px 12px; cursor: pointer; border-radius: 4px; }
+        .status { margin-top: 10px; padding: 10px; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .upload-btn, .delete-btn { margin: 2px; font-size: 12px; }
+        td { vertical-align: middle; }
+    </style>
+</head>
+<body>
+<h1>🐾 Admin: Dzīvnieku ikonas uzdevumiem</h1>
+<p>Augšupielādē ikonu (max 2MB, jpg/png/gif/webp). Tā parādīsies dashboard uzdevumos automātiski!</p>
+<div id="status"></div>
+<table id="tasksTable">
+    <thead><tr><th>ID</th><th>Dzīvnieks</th><th>Krātiņš</th><th>Pašreizējā ikona</th><th>Darbības</th></tr></thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    const statusEl = document.getElementById('status');
+    const tbody = document.querySelector('#tasksTable tbody');
+
+    function showStatus(msg, isError = false) {
+        statusEl.textContent = msg;
+        statusEl.className = isError ? 'status error' : 'status success';
+        setTimeout(() => statusEl.textContent = '', 6000);
+    }
+
+    async function loadTasks() {
+        try {
+            const res = await fetch('/api/tasks-with-icons');
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const tasks = await res.json();
+            tbody.innerHTML = '';
+            tasks.forEach(t => {
+                const tr = document.createElement('tr');
+                const iconHtml = t.icon
+                    ? `<img src="${t.icon}?t=${Date.now()}" class="icon-preview" onerror="this.style.border='2px dashed #ccc'; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iMzAiIHk9IjM1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM5OTkiPtCZ0YfRh9C40LogPC90ZXh0Pjwvc3ZnPg=='">`
+                    : '<i style="color:#999;">nav ikonas</i>';
+
+                tr.innerHTML = `
+                        <td><strong>${t.id}</strong></td>
+                        <td>${t.name}</td>
+                        <td>${t.cage}</td>
+                        <td>${iconHtml}</td>
+                        <td>
+                            <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" id="file-${t.id}" style="margin-bottom:5px;">
+                            <div>
+                                <button class="upload-btn" onclick="uploadIcon(${t.id})">Augšupielādēt</button>
+                                ${t.icon ? `<button class="delete-btn" onclick="deleteIcon(${t.id})">Dzēst</button>` : ''}
+                            </div>
+                        </td>
+                    `;
+                tbody.appendChild(tr);
+            });
+        } catch (err) {
+            showStatus('Neizdevās ielādēt: ' + err.message, true);
+        }
+    }
+
+    async function uploadIcon(taskId) {
+        const fileInput = document.getElementById(`file-${taskId}`);
+        if (!fileInput.files[0]) return showStatus('Izvēlies attēlu!', true);
+
+        const formData = new FormData();
+        formData.append('icon', fileInput.files[0]);
+        formData.append('taskId', taskId.toString());
+
+        showStatus('Augšupielādē... ⏳');
+
+        try {
+            const res = await fetch('/api/upload-task-icon', {
+                method: 'POST',
+                body: formData
+            });
+            const json = await res.json();
+
+            if (json.success) {
+                showStatus(`✅ Augšupielādēta: ${json.filename}`);
+                loadTasks();
+
+                // Reāllaika atjaunināšana dashboardā
+                if (window.opener?.postMessage) {
+                    window.opener.postMessage({
+                        type: 'icon-updated',
+                        taskId,
+                        url: json.url
+                    }, '*');
+                }
+            } else {
+                showStatus('Kļūda: ' + (json.error || 'Nezināma'), true);
+            }
+        } catch (err) {
+            console.error(err);
+            showStatus('Tīkla kļūda!', true);
+        }
+    }
+
+    async function deleteIcon(taskId) {
+        if (!confirm(`Dzēst ikonu ID ${taskId}?`)) return;
+        showStatus('Dzēš...');
+        try {
+            const res = await fetch(`/api/delete-task-icon/${taskId}`, { method: 'DELETE' });
+            const json = await res.json();
+            if (json.success) {
+                showStatus('🗑️ Dzēsta!');
+                loadTasks();
+                if (window.opener?.postMessage) {
+                    window.opener.postMessage({ type: 'icon-deleted', taskId }, '*');
+                }
+            }
+        } catch (err) {
+            showStatus('Kļūda dzēšot!', true);
+        }
+    }
+
+    loadTasks();
+    setInterval(loadTasks, 20000);
+</script>
+</body>
+</html>

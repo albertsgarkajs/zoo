@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Pieslēgties</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="container">
+    <div class="header"><h1>Latgales Zoodārzs</h1></div>
+    <div class="content">
+        <div id="loginSection">
+            <h2>Pieslēgties</h2>
+            <div class="form-group">
+                <input type="text" id="username" placeholder="Lietotājvārds" class="input-field" onkeydown="if(event.key==='Enter')login()">
+                <input type="password" id="password" placeholder="Parole" class="input-field" onkeydown="if(event.key==='Enter')login()">
+                <button onclick="login()" class="btn btn-primary">Pieslēgties</button>
+                <button onclick="location.href='/register.html'" class="btn btn-secondary">Reģistrēties</button>
+                <button onclick="forgotPassword()" class="btn btn-link" style="margin-top:8px; font-size:0.9em;">
+                    Aizmirsi paroli?
+                </button>
+                <div id="error" class="error"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function login() {
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+        if (!username || !password) return showError('Ievadiet lietotājvārdu un paroli');
+
+        fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+        })
+            .then(r => {
+                if (!r.ok) throw new Error('Nepareizs lietotājvārds vai parole');
+                return r.text();
+            })
+            .then(() => location.href = '/dashboard.html')
+            .catch(err => showError(err.message));
+    }
+
+    function showError(msg) {
+        document.getElementById('error').textContent = msg;
+    }
+
+    // === FORGOT PASSWORD ===
+    function forgotPassword() {
+        const email = prompt('Ievadiet savu e-pastu, lai saņemtu paroles atiestatīšanas saiti:');
+        if (!email || !email.includes('@')) {
+            return showError('Ievadiet derīgu e-pastu');
+        }
+
+        fetch('/api/forgot-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success || data.message) {
+                    alert('Ja e-pasts ir reģistrēts, saite nosūtīta uz jūsu pastu.');
+                } else {
+                    showError(data.error || 'Kļūda');
+                }
+            })
+            .catch(() => showError('Neizdevās sazināties ar serveri'));
+    }
+</script>
+</body>
+</html>

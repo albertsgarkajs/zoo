@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lietotāja Panelis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+    .section {
+      margin: 25px 0;
+      padding: 18px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #34495e;
+    }
+    select {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: white;
+    }
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 15px 0;
+    }
+    .btn {
+      padding: 12px;
+      font-size: 15px;
+      font-weight: bold;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn-b { background: #27ae60; }
+    .btn-u { background: #2980b9; }
+    .btn-k { background: #8e44ad; }
+    .btn-save { background: #f39c12; grid-column: span 3; }
+    .btn-confirm { background: #27ae60; grid-column: span 3; }
+    .btn-cancel { background: #c0392b; grid-column: span 3; }
+
+    .actions-log {
+      margin-top: 20px;
+      padding: 15px;
+      background: #ecf0f1;
+      border-radius: 6px;
+      min-height: 60px;
+    }
+    .action-item {
+      background: white;
+      margin: 5px 0;
+      padding: 8px 12px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+    .logout {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .logout a {
+      color: #e74c3c;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Lietotāja Panelis – <span id="username">...</span></h1>
+
+    <!-- TASK SELECT -->
+    <div class="section">
+      <label for="task-select">Uzdevumi (šodien)</label>
+      <select id="task-select">
+        <option value="">— Izvēlies uzdevumu —</option>
+      </select>
+    </div>
+
+    <!-- COMPLETED TASKS -->
+    <div class="section">
+      <label for="completed-select">Pabeigtie uzdevumi</label>
+      <select id="completed-select">
+        <option value="">— Nav pabeigtu —</option>
+      </select>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="section">
+      <div class="action-buttons">
+        <button class="btn btn-b" data-action="b">Barošana</button>
+        <button class="btn btn-u" data-action="ū">Ūdens maiņa</button>
+        <button class="btn btn-k" data-action="k">Kopšana</button>
+        <button class="btn btn-save">Saglabāt</button>
+        <button class="btn btn-confirm">Apstiprināt izpildi</button>
+        <button class="btn btn-cancel">Atcelt izpildi</button>
+      </div>
+    </div>
+
+    <!-- DIENAS DARBĪBAS -->
+    <div class="section">
+      <h3>Dienas darbības</h3>
+      <div id="actions-log" class="actions-log">
+        <em>Nav darbību</em>
+      </div>
+    </div>
+
+    <div class="logout">
+      <a href="/logout">Izlogoties</a>
+    </div>
+  </div>
+
+  <script>
+    const taskSelect = document.getElementById('task-select');
+    const completedSelect = document.getElementById('completed-select');
+    const actionsLog = document.getElementById('actions-log');
+    const usernameEl = document.getElementById('username');
+
+    let currentTask = null;
+    let completedTasks = [];
+    let dailyActions = {}; // { taskId: ['b', 'ū', 'k'] }
+
+    // Load user & tasks
+    async function init() {
+      const userRes = await fetch('/api/user');
+      const user = await userRes.json();
+      usernameEl.textContent = user.username + ' (' + user.role + ')';
+
+      const tasksRes = await fetch('/api/daily-tasks');
+      const data = await tasksRes.json();
+      const roleTasks = data[user.role]?.tasks || [];
+
+      // Populate task select
+      roleTasks.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.id;
+        opt.textContent = `${t.id} – ${t.cage} – ${t.name}`;
+        taskSelect.appendChild(opt);
+      });
+
+      loadCompleted();
+      loadActionsLog();
+    }
+
+    // Load completed tasks from localStorage
+    function loadCompleted() {
+      const saved = localStorage.getItem('completedTasks');
+      if (saved) {
+        completedTasks = JSON.parse(saved);
+        updateCompletedSelect();
+      }
+    }
+
+    function saveCompleted() {
+      localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+    }
+
+    function updateCompletedSelect() {
+      completedSelect.innerHTML = '<option value="">— Nav pabeigtu —</option>';
+      completedTasks.forEach(id => {
+        const task = getTaskById(id);
+        if (task) {
+          const opt = document.createElement('option');
+          opt.value = id;
+          opt.textContent = `${id} – ${task.cage} – ${task.name}`;
+          completedSelect.appendChild(opt);
+        }
+      });
+    }
+
+    function getTaskById(id) {
+      return Array.from(taskSelect.options).find(o => o.value == id)?.dataset.task
+        ? JSON.parse(taskSelect.options.find(o => o.value == id).dataset.task || '{}')
+        : null;
+    }
+
+    // Store task details in option
+    taskSelect.addEventListener('change', () => {
+      if (taskSelect.value) {
+        completedSelect.value = '';
+        currentTask = taskSelect.value;
+        const opt = taskSelect.selectedOptions[0];
+        opt.dataset.task = JSON.stringify({
+          id: opt.value,
+          cage: opt.textContent.split('–')[1].trim(),
+          name: opt.textContent.split('–')[2].trim()
+        });
+      }
+    });
+
+    completedSelect.addEventListener('change', () => {
+      if (completedSelect.value) {
+        taskSelect.value = '';
+        currentTask = completedSelect.value;
+      }
+    });
+
+    // Action buttons
+    document.querySelectorAll('[data-action]').forEach(btn => {
+      btn.onclick = () => {
+        if (!currentTask) {
+          alert('Izvēlies uzdevumu!');
+          return;
+        }
+        const action = btn.dataset.action;
+        if (!dailyActions[currentTask]) dailyActions[currentTask] = [];
+        if (!dailyActions[currentTask].includes(action)) {
+          dailyActions[currentTask].push(action);
+          loadActionsLog();
+        }
+      };
+    });
+
+    // Saglabāt
+    document.querySelector('.btn-save').onclick = () => {
+      if (!currentTask || !dailyActions[currentTask]) {
+        alert('Nav darbību!');
+        return;
+      }
+      loadActionsLog();
+      alert('Saglabāts!');
+    };
+
+    // Apstiprināt izpildi
+    document.querySelector('.btn-confirm').onclick = () => {
+      if (!currentTask || !dailyActions[currentTask]) {
+        alert('Nav darbību!');
+        return;
+      }
+      if (!completedTasks.includes(currentTask)) {
+        completedTasks.push(currentTask);
+        saveCompleted();
+        updateCompletedSelect();
+      }
+      taskSelect.querySelector(`option[value="${currentTask}"]`)?.remove();
+      alert('Uzdevums apstiprināts!');
+      currentTask = null;
+      loadActionsLog();
+    };
+
+    // Atcelt izpildi
+    document.querySelector('.btn-cancel').onclick = () => {
+      if (!currentTask || !completedTasks.includes(currentTask)) {
+        alert('Uzdevums nav pabeigts!');
+        return;
+      }
+      completedTasks = completedTasks.filter(id => id !== currentTask);
+      saveCompleted();
+      updateCompletedSelect();
+      const opt = document.createElement('option');
+      const task = getTaskById(currentTask);
+      opt.value = currentTask;
+      opt.textContent = `${currentTask} – ${task.cage} – ${task.name}`;
+      taskSelect.appendChild(opt);
+      delete dailyActions[currentTask];
+      alert('Izpilde atcelta!');
+      currentTask = null;
+      loadActionsLog();
+    };
+
+    // Render actions log
+    function loadActionsLog() {
+      if (Object.keys(dailyActions).length === 0) {
+        actionsLog.innerHTML = '<em>Nav darbību</em>';
+        return;
+      }
+      actionsLog.innerHTML = '';
+      Object.entries(dailyActions).forEach(([taskId, actions]) => {
+        const task = getTaskById(taskId) || { cage: 'Nezināms', name: '' };
+        const div = document.createElement('div');
+        div.className = 'action-item';
+        div.innerHTML = `
+          <span><b>${taskId}</b> – ${task.cage} – ${task.name}</span>
+          <span>${actions.map(a => 
+            a === 'b' ? 'Barošana' : 
+            a === 'ū' ? 'Ūdens maiņa' : 'Kopšana'
+          ).join(', ')}</span>
+        `;
+        actionsLog.appendChild(div);
+      });
+    }
+
+    // Start
+    init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="lv" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dzīvnieki – Pievienot & Pārvaldīt</title>
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+        body { margin:0; background:#f5f5f5; font-family:sans-serif; }
+        .container { max-width:900px; margin:20px auto; padding:20px; }
+        .form-box { background:white; padding:30px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.15); text-align:center; margin-bottom:30px; }
+        input { width:100%; padding:18px; margin:15px 0; border:2px solid #2196F3; border-radius:12px; font-size:1.3rem; box-sizing:border-box; }
+        button { background:#2196F3; color:white; padding:20px; border:none; border-radius:12px; font-size:1.5rem; width:100%; cursor:pointer; font-weight:bold; }
+        #status { margin-top:20px; font-weight:bold; font-size:1.3rem; }
+        .back { position:fixed; top:20px; left:20px; font-size:2rem; cursor:pointer; z-index:100; }
+        .table-container { background:white; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.15); overflow:hidden; }
+        #searchAnimals { width:100%; padding:16px; border:none; border-bottom:2px solid #2196F3; font-size:1.2rem; box-sizing:border-box; }
+        table { width:100%; border-collapse:collapse; }
+        th { background:#2196F3; color:white; padding:16px; text-align:left; font-size:1.2rem; cursor:pointer; }
+        td { padding:16px; border-bottom:1px solid #eee; cursor:pointer; transition:0.2s; }
+        tr:hover td { background:#e3f2fd; }
+        .cage { font-weight:bold; color:#2196F3; }
+        .name { font-size:1.1rem; }
+        .no-animals { text-align:center; padding:40px; color:#999; font-size:1.3rem; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); overflow: auto; }
+        .modal-content { background: white; margin: 5% auto; padding: 20px; width: 90%; max-width: 600px; border-radius: 12px; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .close { float: right; font-size: 28px; font-weight: bold; cursor: pointer; color: #aaa; }
+        .close:hover { color: #000; }
+        .cage-change-section { background: #f0f8ff; padding: 20px; border-radius: 12px; margin: 15px 0; }
+        .day-row { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+        .day-label { width: 50px; font-weight: bold; color: #2196F3; font-size: 1.1rem; }
+        .day-select { flex: 1; padding: 12px; border: 2px solid #ccc; border-radius: 12px; font-size: 1rem; background: white; }
+        .day-select:focus { border-color: #2196F3; outline: none; }
+        .comment-input-container { margin-top: 15px !important; display: flex !important; gap: 10px !important; align-items: center !important; flex-wrap: nowrap !important; width: 100% !important; box-sizing: border-box !important; }
+        .comment-input-container input { flex: 1 !important; min-width: 0 !important; padding: 12px 14px !important; border: 2px solid #ccc !important; border-radius: 12px !important; font-size: 1rem !important; box-sizing: border-box !important; }
+        .comment-input-container button { flex-shrink: 0 !important; width: auto !important; min-width: 110px !important; padding: 12px 24px !important; background: #2196F3 !important; color: white !important; border: none !important; border-radius: 12px !important; font-weight: bold !important; white-space: nowrap !important; cursor: pointer !important; font-size: 1rem !important; }
+        .comment-input-container button:hover { background: #1976D2 !important; }
+        .comment-input-container button.cancel-btn { background:#d32f2f !important; min-width:90px !important; }
+        @media (max-width: 480px) {
+            .comment-input-container button { padding: 12px 16px !important; min-width: 90px !important; font-size: 0.95rem !important; }
+            .day-row { flex-direction: column; align-items: stretch; }
+            .day-label { width: auto; text-align: left; }
+        }
+        [data-theme="dark"] .modal-content { background: #1e1e1e; color: white; }
+        [data-theme="dark"] .close { color: #ccc; }
+        [data-theme="dark"] .close:hover { color: white; }
+        [data-theme="dark"] .cage-change-section { background: #2c3e50; }
+    </style>
+</head>
+<body>
+<div class="back" onclick="window.location.href='dashboard.html'">←</div>
+<div class="container">
+    <div class="form-box">
+        <h1 style="font-size:2rem; color:#2196F3;">🦒 Pievienot jaunu dzīvnieku</h1>
+        <input type="text" id="cage" placeholder="Būris/Sprosts" required />
+        <input type="text" id="name" placeholder="Nosaukums" required />
+        <button onclick="addAnimal()">PIEVIENOT DZĪVNIEKU</button>
+        <p id="status"></p>
+    </div>
+    <div class="table-container">
+        <input type="text" id="searchAnimals" placeholder="🔍 Meklēt pēc būra vai vārda..." onkeyup="filterTable()" />
+        <table id="animalsTable">
+            <thead>
+            <tr>
+                <th onclick="sortTable(0)">Būris ↑↓</th>
+                <th onclick="sortTable(1)">Vārds ↑↓</th>
+                <th>ID</th>
+            </tr>
+            </thead>
+            <tbody id="animalsBody">
+            <tr><td colspan="3" class="no-animals">Ielādē dzīvniekus...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="animalModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <h2 id="modalTitle">Dzīvnieks</h2>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    let allAnimals = [];
+    let currentModalAnimalId = null;
+    let modalReplyTo = null;
+
+    async function loadAnimals() {
+        try {
+            const res = await fetch('/api/tasks', { credentials: 'include' });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const tasks = await res.json();
+            allAnimals = tasks.map(t => ({ id: t.id, cage: t.cage, name: t.name }));
+            renderTable();
+        } catch (err) {
+            document.getElementById('animalsBody').innerHTML = '<tr><td colspan="3" class="no-animals">Kļūda</td></tr>';
+        }
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById('animalsBody');
+        if (allAnimals.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" class="no-animals">Nav dzīvnieku 😴</td></tr>';
+            return;
+        }
+        tbody.innerHTML = allAnimals.map(animal => `
+                <tr onclick="openAnimalModal(${animal.id})">
+                    <td class="cage">${animal.cage}</td>
+                    <td class="name">${animal.name}</td>
+                    <td>${animal.id}</td>
+                </tr>
+            `).join('');
+    }
+
+    function closeModal() {
+        document.getElementById('animalModal').style.display = 'none';
+    }
+
+    function filterTable() {
+        const query = document.getElementById('searchAnimals').value.toLowerCase();
+        const filtered = allAnimals.filter(a => a.cage.toLowerCase().includes(query) || a.name.toLowerCase().includes(query));
+        const tbody = document.getElementById('animalsBody');
+        tbody.innerHTML = filtered.length > 0 ? filtered.map(a => `
+                <tr onclick="openAnimalModal(${a.id})">
+                    <td class="cage">${a.cage}</td>
+                    <td class="name">${a.name}</td>
+                    <td>${a.id}</td>
+                </tr>
+            `).join('') : '<tr><td colspan="3" class="no-animals">Nekas nav atrasts</td></tr>';
+    }
+
+    function sortTable(col) {
+        allAnimals.sort((a, b) => (col === 0 ? a.cage : a.name).localeCompare(col === 0 ? b.cage : b.name));
+        renderTable();
+    }
+
+    async function addAnimal() {
+        const cage = document.getElementById('cage').value.trim();
+        const name = document.getElementById('name').value.trim();
+        if (!cage || !name) return document.getElementById('status').innerHTML = '<span style="color:#d32f2f;">Aizpildi abus!</span>';
+
+        document.getElementById('status').innerHTML = '<span style="color:#2196F3;">Pievieno...</span>';
+        document.getElementById('cage').value = '';
+        document.getElementById('name').value = '';
+
+        try {
+            const res = await fetch('/api/add-animal', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cage, name })
+            });
+            const data = await res.json();
+            document.getElementById('status').innerHTML = data.success
+                ? `<span style="color:#2e7d32;">✅ Pievienots: ${cage} – ${name}</span>`
+                : `<span style="color:#d32f2f;">${data.error}</span>`;
+            if (data.success) loadAnimals();
+        } catch (err) {
+            document.getElementById('status').innerHTML = '<span style="color:#d32f2f;">Servera kļūda</span>';
+        }
+    }
+
+    async function openAnimalModal(animalId) {
+        const task = allAnimals.find(t => t.id == animalId);
+        if (!task) return;
+
+        currentModalAnimalId = animalId;
+
+        document.getElementById('modalTitle').textContent = task.name;
+        document.getElementById('modalBody').innerHTML = `
+                <p><strong>Būris:</strong> <span id="currentCage">${task.cage}</span></p>
+                <p><strong>Vārds:</strong> ${task.name}</p>
+                <p><strong>ID:</strong> ${task.id}</p>
+                <h3>Mainīt būri + uzdevumi nākamajām 7 dienām</h3>
+                <div class="cage-change-section">
+                    <input type="text" id="newCageInput" placeholder="Jauns būris (piem. B12)" style="width:100%; padding:14px; border:2px solid #2196F3; border-radius:12px; margin-bottom:15px; font-size:1.1rem;" />
+                    <div style="margin-bottom:12px; font-weight:bold; color:#2196F3;">Izvēlies lomu katrai dienai:</div>
+                    ${['P', 'O', 'T', 'C', 'Pk', 'S', 'Sv'].map((day, i) => `
+                        <div class="day-row">
+                            <div class="day-label">${day}:</div>
+                            <select class="day-select" id="day-${i}">
+                                <option value="">— Neviens —</option>
+                            </select>
+                        </div>
+                    `).join('')}
+                    <button onclick="changeCage(${task.id})" style="margin-top:20px; padding:14px; background:#4CAF50; color:white; border:none; border-radius:12px; font-weight:bold; width:100%; font-size:1.1rem;">
+                        MAINĪT BŪRI + PIEŠĶIRT UZDEVUMUS
+                    </button>
+                </div>
+                <div id="cageStatus" style="margin-top:10px; font-weight:bold; min-height:24px;"></div>
+                <h3>Būra maiņas vēsture</h3>
+<div id="cageHistory" style="padding:15px; background:#f0f8ff; border-radius:12px; margin:15px 0; font-size:1rem;">
+    Ielādē vēsturi...
+</div>
+                <div class="last-actions" style="margin-top:20px;">
+                    <p><strong>Pēdējā barošana:</strong> <span id="lastFed">-</span></p>
+                    <p><strong>Pēdējā ūdens maiņa:</strong> <span id="lastWater">-</span></p>
+                    <p><strong>Pēdējā kopšana:</strong> <span id="lastClean">-</span></p>
+                </div>
+                <h3>Komentāri</h3>
+                <div id="modalComments" style="margin-top:10px; max-height:200px; overflow-y:auto; border:1px solid #ddd; padding:10px; border-radius:8px; background:#f9f9f9;"></div>
+                <div class="comment-input-container">
+                    <input type="text" id="modalCommentInput" placeholder="Pievienot komentāru..." onkeypress="if(event.key==='Enter') submitModalComment()" />
+                    <button onclick="submitModalComment()">Sūtīt</button>
+                </div>
+                <h3>Pēdējās 7 dienas</h3>
+                <div id="actionHistory" class="action-history"></div>
+            `;
+
+        // === JAUNA API: IELĀDĒ TIKAI TAVAS 7 ROLES ===
+        try {
+            const res = await fetch('/api/assignable-roles', { credentials: 'include' });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const roles = await res.json();
+
+            for (let i = 0; i < 7; i++) {
+                const select = document.getElementById(`day-${i}`);
+                select.innerHTML = '<option value="">— Neviens —</option>';
+                roles.forEach(role => {
+                    select.innerHTML += `<option value="${role}">${role}</option>`;
+                });
+            }
+        } catch (err) {
+            console.error('Roles load error:', err);
+            for (let i = 0; i < 7; i++) {
+                document.getElementById(`day-${i}`).innerHTML = '<option value="">Kļūda ielādējot lomas</option>';
+            }
+        }
+
+        // Ielādē komentārus, vēsturi utt.
+        loadModalComments(animalId);
+        loadCageHistory(animalId);
+        loadLastActions(animalId);
+        loadActionHistory(animalId);
+
+        document.getElementById('animalModal').style.display = 'block';
+    }
+
+    async function changeCage(animalId) {
+        const newCage = document.getElementById('newCageInput').value.trim().toUpperCase();
+        const reason = document.getElementById('modalCommentInput').value.trim(); // no textarea
+
+        // Obligāts tikai ir tikai jaunais būris
+        if (!newCage) {
+            document.getElementById('cageStatus').innerHTML = '<span style="color:#d32f2f;">Ievadi jauno būri!</span>';
+            return;
+        }
+
+        // Savāc weekSchedule
+        const weekSchedule = [];
+        let anyAssigned = false;
+        for (let i = 0; i < 7; i++) {
+            const val = document.getElementById(`day-${i}`).value;
+            if (val) {
+                weekSchedule.push({ role: val });
+                anyAssigned = true;
+            } else {
+                weekSchedule.push(null);
+            }
+        }
+
+        if (!anyAssigned) {
+            document.getElementById('cageStatus').innerHTML = '<span style="color:#d32f2f;">Izvēlies vismaz 1 dienu!</span>';
+            return;
+        }
+
+        document.getElementById('cageStatus').innerHTML = '<span style="color:#2196F3;">Maina būri...</span>';
+
+        const data = {
+            animalId,
+            newCage,
+            weekSchedule
+            // reason vairs nesūta – tas iet caur /api/add-comment, JA ir ievadīts
+        };
+
+        console.log('[CHANGE-CAGE] Sūtam būri:', data);
+
+        try {
+            // 1. Maina būri
+            const res = await fetch('/api/change-cage', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const json = await res.json();
+            console.log('[CHANGE-CAGE] Atbilde:', res.status, json);
+
+            if (!res.ok) {
+                document.getElementById('cageStatus').innerHTML = `<span style="color:#d32f2f;">Kļūda: ${json.error || 'Nezināma kļūda'}</span>`;
+                return;
+            }
+
+            // 2. Ja ir iemesls – pievieno to kā komentāru (izmanto esošo submitModalComment)
+            if (reason) {
+                currentModalAnimalId = animalId;                     // globālais mainīgais
+                document.getElementById('modalCommentInput').value = reason;
+                await submitModalComment();                          // nosūta komentāru + ielādē sarakstu
+            }
+
+            // SUCCESS
+            document.getElementById('currentCage').textContent = newCage;
+            const successMsg = reason
+                ? `✅ Būris ${newCage} + iemesls pievienots kā komentārs!`
+                : `✅ Būris ${newCage} nomainīts (bez komentāra)`;
+
+            document.getElementById('cageStatus').innerHTML = `<span style="color:#2e7d32;">${successMsg}</span>`;
+
+            // Notīra laukus
+            document.getElementById('newCageInput').value = '';
+            document.getElementById('modalCommentInput').value = '';  // notīra arī textarea
+            for (let i = 0; i < 7; i++) {
+                document.getElementById(`day-${i}`).value = '';
+            }
+
+            // Atjauno datus
+            loadAnimals();
+            loadCageHistory(animalId);
+            loadModalComments(animalId);
+
+        } catch (err) {
+            console.error('Kļūda:', err);
+            document.getElementById('cageStatus').innerHTML = '<span style="color:#d32f2f;">Servera kļūda</span>';
+        }
+    }
+
+    // === PAPILDU FUNKCIJAS (komentāri, vēsture utt.) ===
+    function loadModalComments(animalId) {
+        fetch(`/api/comments/${animalId}`, { credentials: 'include' })
+            .then(r => r.json())
+            .then(comments => {
+                const container = document.getElementById('modalComments');
+                container.innerHTML = comments.length
+                    ? comments.map(c => `<p><strong>${c.username}:</strong> ${c.comment} <em>${c.date}</em></p>`).join('')
+                    : '<p style="color:#888;">Nav komentāru</p>';
+            });
+    }
+
+    function submitModalComment() {
+        const input = document.getElementById('modalCommentInput');
+        const text = input.value.trim();
+        if (!text || !currentModalAnimalId) return;
+        fetch('/api/add-comment', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ animal_id: currentModalAnimalId, comment: text })
+        }).then(() => {
+            input.value = '';
+            loadModalComments(currentModalAnimalId);
+        });
+    }
+
+    async function loadCageHistory(animalId) {
+        try {
+            const res = await fetch(`/api/cage-history/${animalId}`, { credentials: 'include' });
+            const data = await res.json();
+            if (data.cages) {
+                const cages = data.cages.split(', ');
+                const dates = data.dates.split(', ');
+                let html = '<strong>Būra maiņas vēsture:</strong><br>';
+                for (let i = 0; i < cages.length; i++) {
+                    html += `• ${dates[i]} → <strong>${cages[i]}</strong><br>`;
+                }
+                document.getElementById('cageHistory').innerHTML = html;
+            } else {
+                document.getElementById('cageHistory').innerHTML = '<em>Nav vēstures</em>';
+            }
+        } catch (err) {
+            document.getElementById('cageHistory').innerHTML = 'Kļūda ielādējot vēsturi';
+        }
+    }
+
+    function loadLastActions(animalId) {
+        document.getElementById('lastFed').textContent = '-';
+        document.getElementById('lastWater').textContent = '-';
+        document.getElementById('lastClean').textContent = '-';
+    }
+
+    function loadActionHistory(animalId) {
+        document.getElementById('actionHistory').innerHTML = '';
+    }
+
+    const socket = io();
+    socket.on('connect', () => console.log('[SOCKET] ✅'));
+    socket.on('animals-updated', () => loadAnimals());
+
+    loadAnimals();
+
+    window.onclick = e => {
+        if (e.target === document.getElementById('animalModal')) closeModal();
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="lv" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Mobīlais Panelis</title>
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            padding-bottom: 160px; /* BIJA 80px → TAGAD 160px (drošība visiem telefoniem + notch) */
+            font-family: sans-serif;
+            background: var(--bg, #f5f5f5);
+            box-sizing: border-box;
+        }
+        .container {
+            margin: 0;
+            background: white;
+        }
+        .header {
+            z-index: 999;
+            padding: 16px 20px;
+            background: var(--primary);
+            color: white;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            flex: 1;
+            text-align: center;
+            margin-left: -50px;
+        }
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .back-btn:hover, .back-btn:active {
+            background: rgba(255,255,255,0.4);
+            transform: scale(1.1);
+        }
+        /* CLEAN TOGGLE – NO EMOJI, GRAY + BLUE */
+        .theme-toggle {
+            position: relative;
+            display: inline-block;
+            width: 56px;
+            height: 30px;
+        }
+        .theme-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ddd; /* LIGHT GRAY */
+            transition: .4s;
+            border-radius: 34px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 24px;
+            width: 24px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        input:checked + .slider {
+            background-color: #2196F3; /* BLUE */
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        /* DARK MODE FIX – PELĒKIE TOŅI */
+        [data-theme="dark"] .slider {
+            background-color: #444; /* DARK GRAY */
+        }
+        [data-theme="dark"] input:checked + .slider {
+            background-color: #444; /* DEEP BLUE */
+        }
+        /* NO EMOJI AT ALL */
+        .slider:after {
+            display: none;
+        }
+        .content {
+            padding: 16px;
+        }
+        #mobile-date {
+            margin: 0 0 16px;
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            text-align: center;
+        }
+        /* SEARCH BAR */
+        #animalSearch {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        #animalResults {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 16px;
+            right: 16px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 0 0 12px 12px;
+            max-height: 50vh;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .search-result-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .search-result-item:hover {
+            background: var(--bg-alt);
+        }
+        .no-results {
+            padding: 16px;
+            text-align: center;
+            color: #999;
+            font-style: italic;
+        }
+        /* TASK CARD KĀ ACTIVITY CARD */
+        .task-card {
+            background: var(--bg-alt);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 12px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .task-card.selected {
+            border-left: 6px solid var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+        .task-card.completed {
+            opacity: 0.7;
+            background: #f5f5f5;
+        }
+        .task-card h4 {
+            margin: 0 0 12px;
+            font-size: 1.2rem;
+            color: var(--primary-dark);
+        }
+        .task-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-small {
+            padding: 10px 14px;
+            font-size: 1rem;
+            font-weight: bold;
+            min-width: 44px;
+            background: #ffffff;
+            border: 3px solid #4CAF50;
+            color: #1B5E20;
+            border-radius: 14px;
+            transition: all 0.25s ease;
+            box-shadow: 0 3px 8px rgba(76,175,80,0.3);
+        }
+        .btn-small.marked {
+            background: #4CAF50 !important;
+            color: white !important;
+            border-color: #388E3C !important;
+            box-shadow: 0 6px 18px rgba(76,175,80,0.6) !important;
+            transform: scale(1.1);
+            animation: pulse 0.4s ease;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.18); }
+            100% { transform: scale(1.1); }
+        }
+        .floating-actions {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 12px 16px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+            border-top: 1px solid #ddd;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            z-index: 999;
+            flex-wrap: wrap;
+            /* FIX – SAFE AREA + EXTRA SPACE */
+            bottom: env(safe-area-inset-bottom, 0px);
+            padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+        }
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .floating-actions {
+                padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            }
+        }
+        .floating-actions button {
+            flex: 1;
+            padding: 16px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 12px;
+            max-width: 220px;
+        }
+        #saveBatchBtn {
+            background: #ff9800 !important;
+            color: white;
+            display: none;
+        }
+        .btn-activity {
+            background: #2196f3 !important;
+            color: white;
+        }
+        .floating-refresh {
+            position: fixed;
+            bottom: 100px; /* VIR S PANEĻA – neaizsedz */
+            right: 20px;
+            z-index: 1000;
+            background: #2196f3;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            font-size: 2rem;
+            box-shadow: 0 6px 20px rgba(33,150,243,0.4);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .loading, .error {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .error {
+            color: #d32f2f;
+        }
+        /* MODAL STILS */
+        #animalModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            overflow-y: auto;
+        }
+        #animalModal .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 12px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        #animalModal .close {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #aaa;
+        }
+        #animalModal .close:hover {
+            color: #d32f2f;
+        }
+        /* FIXED SEARCH BAR – VIENMĒR AUGŠĀ */
+        .search-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg, #f5f5f5);
+            padding: 16px;
+            z-index: 998;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #ddd;
+        }
+
+        .search-wrapper #taskSearch {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            font-size: 1.1rem;
+            box-sizing: border-box;
+            background: white;
+        }
+
+        #taskResults {
+            position: absolute;
+            top: 100%;
+            left: 16px;
+            right: 16px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-top: none;
+            border-radius: 0 0 16px 16px;
+            max-height: 60vh;
+            overflow-y: auto;
+            z-index: 999;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            margin-top: -8px;
+        }
+
+        /* Atbīda saturu zem fixed bara */
+        .content {
+            padding-top: 90px !important; /* 16px padding + 60px search augstums */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>ZOO</h1>
+        <div class="user-info">
+            <span id="mobile-username">Ielādējas...</span>
+            <button onclick="logout()" class="btn-small">Iziet</button>
+            <label class="theme-toggle">
+                <input type="checkbox" id="themeCheckbox" onclick="toggleTheme()">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+    <div class="content">
+        <h2 id="mobile-date">Šodien</h2>
+
+        <!-- UZDEVUMU SEARCH BAR -->
+        <div class="search-wrapper">
+            <input type="text" id="taskSearch" placeholder="🔍 Meklēt pēc būra vai vārda..."
+                   onkeyup="filterTasks()" autocomplete="off" />
+            <div id="taskResults"></div>
+        </div>
+
+        <div id="mobile-tasks">
+            <div class="loading">Ielādē uzdevumus...</div>
+        </div>
+    </div>
+</div>
+
+<!-- FLOATING ACTION BAR -->
+<div class="floating-actions">
+    <button class="btn btn-complete" id="completeBtn" onclick="completeSelected()" disabled>Apstiprināt</button>
+    <button class="btn btn-cancel" id="cancelBtn" onclick="cancelSelected()" disabled>Atcelt</button>
+    <button class="btn" id="saveBatchBtn" onclick="saveCurrentBatch()">Saglabāt izvēli</button>
+    <button class="btn btn-reply" id="commentBtn" onclick="openCommentModal()" disabled>Komentāri</button>
+    <button class="btn btn-activity" onclick="location.href='/mobile-activity.html'">Dienas darbības</button>
+</div>
+
+<!-- MOBILE-ACTIVITY STILA MODAL – 100% IDENTISKS -->
+<div id="animalModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); overflow-y:auto;">
+    <div class="modal-content" style="background:white; margin:5% auto; padding:20px; width:90%; max-width:600px; border-radius:12px; max-height:90vh; overflow-y:auto;">
+        <span class="close" onclick="closeAnimalModal()" style="float:right; font-size:2rem; cursor:pointer; color:#aaa;">×</span>
+        <h2 id="modalAnimalName" style="margin:0 0 12px; font-size:1.6rem; color:var(--primary-dark);"></h2>
+        <p style="margin:8px 0;"><strong>Būris:</strong> <span id="modalCage"></span></p>
+
+        <div class="last-actions" style="background:var(--bg-alt); padding:12px; border-radius:12px; margin:16px 0;">
+            <p style="margin:6px 0;"><strong>Pēdējā barošana:</strong> <span id="lastFed">-</span></p>
+            <p style="margin:6px 0;"><strong>Pēdējā ūdens maiņa:</strong> <span id="lastWater">-</span></p>
+            <p style="margin:6px 0;"><strong>Pēdējā kopšana:</strong> <span id="lastClean">-</span></p>
+        </div>
+
+        <h3>Komentāri</h3>
+        <div id="modalComments" style="max-height:200px; overflow-y:auto; margin:10px 0; padding:8px; background:var(--bg-alt); border-radius:8px;"></div>
+
+        <div style="margin-top:10px; display:flex; gap:5px; position:sticky; bottom:0; background:white; padding:10px 0; border-top:1px solid #eee;">
+            <input type="text" id="modalCommentInput" placeholder="Pievienot komentāru..." style="flex:1; padding:10px; border:1px solid #ccc; border-radius:8px;" />
+            <button onclick="submitModalComment()" class="btn btn-small">Sūtīt</button>
+            <button onclick="cancelModalReply()" id="cancelModalReplyBtn" class="btn btn-cancel btn-small" style="display:none; padding:6px 12px;">Atcelt</button>
+        </div>
+
+        <h3>Pēdējās 7 dienas</h3>
+        <div id="actionHistory" style="background:var(--bg-alt); padding:12px; border-radius:12px; font-size:0.95rem;"></div>
+    </div>
+</div>
+
+<script>
+    let currentUser = null;
+    let selectedTaskId = null;
+    let currentModalAnimalId = null;
+    let modalReplyTo = null;
+    let userData = null;
+    const animalBatches = new Map();
+    let tasksData = []; // GALVENAIS – GLABĀ UZDEVUMUS
+    let preventScrollReset = false;  // JAUNS FLAG
+
+    fetch('/api/user', { credentials: 'include' })
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(user => {
+            currentUser = user;
+            userData = user;
+            document.getElementById('mobile-username').textContent = user.username;
+            updateDate();
+            loadTasksForToday();
+            initTheme();
+        })
+        .catch(() => location.href = '/login.html');
+
+    function initTheme() {
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = saved === 'dark' || (!saved && prefersDark);
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        document.getElementById('themeCheckbox').checked = isDark;
+    }
+
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        document.getElementById('themeCheckbox').checked = (newTheme === 'dark');
+    }
+
+    function updateDate() {
+        const today = new Date();
+        const days = ['Svētdiena', 'Pirmdiena', 'Otrdiena', 'Trešdiena', 'Ceturtdiena', 'Piektdiena', 'Sestdiena'];
+        document.getElementById('mobile-date').textContent = `${days[today.getDay()]} ${today.toLocaleDateString('lv-LV')}`;
+    }
+
+    // GALĪGĀ VERSIJA: ROLE FILTERIS + today-actions LOĢIKA + completed_by NO TODAY-ACTIONS
+    function loadTasksForToday() {
+        const container = document.getElementById('mobile-tasks');
+        container.innerHTML = '<div class="loading">Ielādē uzdevumus...</div>';
+
+        // 1. Role-filtrētos uzdevumus + substitute
+        fetch('/api/mobile-tasks', { credentials: 'include' })
+            .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+            .then(mobileData => {
+                let roleTasks = [];
+                let substitute = '';
+
+                if (Array.isArray(mobileData)) {
+                    roleTasks = mobileData.map(t => ({ ...t, id: Number(t.id) }));
+                } else if (mobileData && mobileData.tasks) {
+                    roleTasks = mobileData.tasks.map(t => ({ ...t, id: Number(t.id) }));
+                    substitute = mobileData.substitute || '';
+                }
+
+                // 2. Ielādē today-actions + completed-today
+                return Promise.all([
+                    fetch('/api/today-actions', { credentials: 'include' }).then(r => r.json()),
+                    fetch('/api/completed-today', { credentials: 'include' }).then(r => r.json()),
+                    Promise.resolve(roleTasks),
+                    Promise.resolve(substitute)
+                ]);
+            })
+            .then(([actions, completedToday, roleTasks, substitute]) => {
+// JAUNĀ APSTRĀDE – VISAS ACTION INSTANCES (b, b, ū) + UNIKĀLI LIETOTĀJI
+                const grouped = {};
+                actions.forEach(a => {
+                    const id = a.animal_id;
+                    if (!grouped[id]) {
+                        grouped[id] = {
+                            cage: a.cage,
+                            name: a.name,
+                            actions: [],            // TAGAD VISAS INSTANCES
+                            users: new Set(),       // TIKAI UNIKĀLI LIETOTĀJI
+                            comment_count: a.comment_count || 0
+                        };
+                    }
+                    grouped[id].actions.push(a.action);  // PUSH KATRU (b, b, ū)
+                    grouped[id].users.add(a.username);
+                });
+
+                // Apvieno ar roleTasks
+                tasksData = roleTasks.map(task => {
+                    const id = task.id;
+                    const g = grouped[id] || { actions: [], users: new Set(), comment_count: 0 };
+                    const isCompleted = completedToday.some(c => c.animal_id == id);
+                    const completedBy = isCompleted ? Array.from(g.users).join(', ') : null;
+
+                    return {
+                        ...task,
+                        actions: g.actions,               // b, ū, k
+                        comment_count: g.comment_count,   // badge
+                        completed: isCompleted,
+                        completed_by: completedBy         // TAGAD NO TODAY-ACTIONS!
+                    };
+                });
+
+                // Banner
+                let html = '';
+                if (substitute) {
+                    const isReplaced = substitute.includes('Aizvietošana');
+                    const color = isReplaced ? '#d32f2f' : '#2e7d32';
+                    const bg = isReplaced ? '#ffebee' : '#e8f5e9';
+                    const border = isReplaced ? '#ffcdd2' : '#c8e6c9';
+                    const icon = isReplaced ? '⚠️ AIZVIETOŠANA!' : '🔄 Aizvietošana';
+                    html += `<div style="background:${bg};padding:18px;border-radius:16px;margin:16px;border:3px solid ${border};box-shadow:0 6px 16px rgba(0,0,0,0.2);text-align:center;font-weight:bold;color:${color};font-size:1.2rem;">${icon} ${substitute}</div>`;
+                }
+
+                if (tasksData.length === 0) {
+                    html += '<p style="text-align:center;color:#999;margin:40px;font-size:1.2rem;">Nav uzdevumu šodien 😴</p>';
+                } else {
+                    html += tasksData.map(t => {
+                        const batch = animalBatches.get(t.id) || new Set();
+// SAGLABĀ VISAS INSTANCES (arājam server actions + lokālais batch)
+                        const serverActions = t.actions || [];  // TAGAD ARRAY, NE SET
+                        const localActions = Array.from(batch);
+                        const allActions = [...serverActions, ...localActions];
+
+// Ja gribi count (b (2x)) – izkomentē apakšējo, ja nē – atstāj join
+// const countMap = allActions.reduce((acc, act) => { acc[act] = (acc[act] || 0) + 1; return acc; }, {});
+// const displayActions = Object.entries(countMap).map(([act, count]) => count > 1 ? `${act} (${count}x)` : act).join(', ') || '—';
+
+                        const displayActions = allActions.length > 0 ? allActions.join(', ') : '—';
+
+                        const completedClass = t.completed ? 'completed' : '';
+                        const isSelected = selectedTaskId === t.id;
+                        const commentBadge = t.comment_count > 0 ? `<span style="background:#d32f2f;color:white;padding:4px 8px;border-radius:12px;font-size:0.8rem;">${t.comment_count} 💬</span>` : '';
+
+                        if (t.completed) {
+                            return `<div class="task-card ${completedClass} ${isSelected ? 'selected' : ''}" onclick="selectTask(${t.id}, this)">
+                            <h4>${t.cage} – ${t.name} ${commentBadge}</h4>
+                            <p><strong>Darbības:</strong> ${displayActions}</p>
+                            <p><strong>Izpildīja:</strong> ${t.completed_by || '—'}</p>
+                            <em style="color:#4CAF50;font-weight:bold;">Izpildīts ✅</em>
+                        </div>`;
+                        }
+
+                        return `<div class="task-card ${completedClass} ${isSelected ? 'selected' : ''}" onclick="selectTask(${t.id}, this)">
+                        <h4>${t.cage} – ${t.name} ${commentBadge}</h4>
+                        <p><strong>Darbības:</strong> ${displayActions}</p>
+                        <p><strong>Izpildīja:</strong> ${t.completed_by || '—'}</p>
+                        <div class="task-actions">
+                            <button class="btn btn-small ${batch.has('b') ? 'marked' : ''}" onclick="event.stopPropagation(); markAction(${t.id}, 'b')">b</button>
+                            <button class="btn btn-small ${batch.has('ū') ? 'marked' : ''}" onclick="event.stopPropagation(); markAction(${t.id}, 'ū')">ū</button>
+                            <button class="btn btn-small ${batch.has('k') ? 'marked' : ''}" onclick="event.stopPropagation(); markAction(${t.id}, 'k')">k</button>
+                        </div>
+                    </div>`;
+                    }).join('');
+                }
+
+                container.innerHTML = html;
+                updateFloatingButtons();
+
+                // Notīra search
+                document.getElementById('taskSearch').value = '';
+                document.getElementById('taskResults').style.display = 'none';
+            })
+            .catch(err => {
+                console.error('[mobile] Kļūda:', err);
+                container.innerHTML = `<div class="error">Kļūda: ${err.message}<br><button onclick="loadTasksForToday()" class="btn btn-primary">Mēģināt vēlreiz</button></div>`;
+            });
+    }
+
+    // ATJAUNO UZDEVUMUS AR MINIMIZĒTIEM IZPILDĪTAJIEM + DARBĪBĀM ARĪ COMPLETED
+    function renderTasks() {
+        if (tasksData.length === 0) return;
+        const container = document.getElementById('mobile-tasks');
+        const bannerHTML = container.innerHTML.match(/<div style="background:#.{6};.*<\/div>/) || [''];
+
+        const tasksHTML = tasksData.map(t => {
+            const batch = animalBatches.get(t.id) || new Set();
+            const actionsStr = batch.size > 0 ? Array.from(batch).join(', ') : '—';
+            const isSelected = selectedTaskId === t.id;
+            const completedClass = t.completed ? 'completed' : '';
+            const commentBadge = t.comment_count > 0 ? `<span style="background:#d32f2f;color:white;padding:4px 8px;border-radius:12px;font-size:0.8rem;">${t.comment_count} 💬</span>` : '';
+
+            // JA IZPILDĪTS → MINIMIZĒTS (mazs, bez pogām, bet ar darbībām)
+            if (t.completed) {
+                return `<div class="task-card ${completedClass} ${isSelected ? 'selected' : ''}" onclick="selectTask(${t.id}, this)">
+                <h4>${t.cage} – ${t.name} ${commentBadge}</h4>
+                <p><strong>Darbības:</strong> ${actionsStr}</p>
+                <p><strong>Izpildīja:</strong> ${t.completed_by || '—'}</p>
+                <em style="color:#4CAF50;font-weight:bold;">Izpildīts ✅</em>
+            </div>`;
+            }
+
+            // NEIZPILDĪTS → PILNS AR POGĀM
+            return `<div class="task-card ${completedClass} ${isSelected ? 'selected' : ''}" onclick="selectTask(${t.id}, this)">
+            <h4>${t.cage} – ${t.name} ${commentBadge}</h4>
+            <p><strong>Darbības:</strong> ${actionsStr}</p>
+            <p><strong>Izpildīja:</strong> ${t.completed_by || '—'}</p>
+            <div class="task-actions">
+                <button class="btn btn-small ${batch.has('b') ? 'marked' : ''}" onclick="event.stopPropagation(); markAction(${t.id}, 'b')">b</button>
+                <button class="btn btn-small ${batch.has('ū') ? 'marked' : ''}" onclick="event.stopPropagation(); markAction(${t.id}, 'ū')">ū</button>
+                <button class="btn btn-small ${batch.has('k') ? 'marked' : ''}" onclick="event.stopPropagation(); markAction(${t.id}, 'k')">k</button>
+            </div>
+        </div>`;
+        }).join('');
+
+        container.innerHTML = bannerHTML[0] + tasksHTML;
+        updateFloatingButtons();
+    }
+
+    function selectTask(id, el) {
+        selectedTaskId = id;
+        currentModalAnimalId = id;
+
+        // NEIZDZĒŠ batch – saglabā lokālās izmaiņas!
+        // animalBatches.delete(id); ← IZDZĒS ŠO RINDU JA IR!
+
+        // Tikai atjauno izcēlumu
+        document.querySelectorAll('.task-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+        el.classList.add('selected');
+
+        updateFloatingButtons();
+    }
+
+    function markAction(id, action) {
+        let actions = animalBatches.get(id) || new Set();
+        if (actions.has(action)) actions.delete(action);
+        else actions.add(action);
+        if (actions.size === 0) animalBatches.delete(id);
+        else animalBatches.set(id, actions);
+        renderTasks();
+    }
+
+    function updateFloatingButtons() {
+        const hasSelection = !!selectedTaskId;
+        const task = tasksData.find(t => t.id === selectedTaskId);
+        const isCompleted = task?.completed;
+        const batchSize = (animalBatches.get(selectedTaskId) || new Set()).size;
+        document.getElementById('saveBatchBtn').style.display = hasSelection && batchSize > 0 && !isCompleted ? 'block' : 'none';
+        document.getElementById('completeBtn').disabled = !hasSelection || isCompleted;
+        document.getElementById('cancelBtn').disabled = !hasSelection || !isCompleted;
+        document.getElementById('commentBtn').disabled = !hasSelection;
+    }
+
+    // ██████████████████ JAUNA saveCurrentBatch() – AIZSTĀJ VISU ██████████████████
+    async function saveCurrentBatch() {
+        if (!selectedTaskId) return;
+        const actions = Array.from(animalBatches.get(selectedTaskId) || []);
+        if (actions.length === 0) return;
+
+        const btn = document.getElementById('saveBatchBtn');
+        btn.disabled = true;
+        btn.textContent = 'Sūta...';
+
+        const scrollPos = window.scrollY;
+        preventScrollReset = true;  // ← GALVENĀ JAUNĀ RINDIŅA!
+
+        try {
+            await fetch('/api/mark-actions', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ animal_id: selectedTaskId, actions })
+            });
+
+            animalBatches.delete(selectedTaskId);
+            await loadTasksForToday();  // tagad scroll paliek!
+
+            // DROŠĪBAS scroll (ja kāds pārlūks tomēr izlēca)
+            requestAnimationFrame(() => window.scrollTo(0, scrollPos));
+            setTimeout(() => window.scrollTo(0, scrollPos), 0);
+            setTimeout(() => window.scrollTo(0, scrollPos), 100);
+
+            btn.disabled = false;
+            btn.textContent = 'Saglabāt izvēli';
+            btn.style.display = 'none';
+
+        } catch (err) {
+            console.error('Kļūda saglabājot:', err);
+            btn.disabled = false;
+            btn.textContent = 'Saglabāt izvēli';
+
+            // ATJAUNO SCROLL ARĪ KĻŪDĀ
+            requestAnimationFrame(() => window.scrollTo(0, scrollPos));
+            setTimeout(() => window.scrollTo(0, scrollPos), 100);
+
+            alert('Neizdevās saglabāt! Mēģini vēlreiz.');
+            preventScrollReset = false;
+        }
+    }
+
+    function completeSelected() {
+        if (!selectedTaskId) return alert('Izvēlies uzdevumu!');
+        const batch = animalBatches.get(selectedTaskId);
+        const actions = batch ? Array.from(batch) : [];
+        const scrollPos = window.scrollY;
+
+        const complete = () => {
+            fetch('/api/complete-task', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ animal_id: selectedTaskId })
+            })
+                .then(() => {
+                    loadTasksForToday().then(() => {
+                        window.scrollTo(0, scrollPos);
+                        selectedTaskId = null;
+                    });
+                });
+        };
+
+        if (actions.length > 0) {
+            fetch('/api/mark-actions', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ animal_id: selectedTaskId, actions })
+            })
+                .then(() => {
+                    animalBatches.delete(selectedTaskId);
+                    complete();
+                });
+        } else {
+            complete();
+        }
+    }
+
+    function cancelSelected() {
+        if (!selectedTaskId) return alert('Izvēlies izpildīto uzdevumu!');
+        fetch('/api/cancel-task', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ animal_id: selectedTaskId })
+        })
+            .then(() => {
+                loadTasksForToday();
+                selectedTaskId = null;
+            });
+    }
+
+    // KOMENTĀRI – ATVER MODAL
+    function openCommentModal() {
+        if (!selectedTaskId) return alert('Izvēlies dzīvnieku!');
+        openAnimalModal(selectedTaskId);
+    }
+
+    async function openAnimalModal(animalId) {
+        if (!animalId) return;
+        currentModalAnimalId = animalId;
+        modalReplyTo = null;
+        document.getElementById('cancelModalReplyBtn').style.display = 'none';
+        document.getElementById('modalCommentInput').placeholder = 'Pievienot komentāru...';
+
+        const task = tasksData.find(t => t.id == animalId);
+        if (!task) return;
+
+        document.getElementById('modalAnimalName').textContent = task.name;
+        document.getElementById('modalCage').textContent = task.cage;
+
+        // Vēsture
+        try {
+            const res = await fetch(`/api/animal-history/${animalId}`, { credentials: 'include' });
+            const history = await res.json();
+            const last = { b: '-', ū: '-', k: '-' };
+            const historyDiv = document.getElementById('actionHistory');
+            historyDiv.innerHTML = history.length ? '' : '<p>Nav darbību pēdējo 7 dienu laikā.</p>';
+            history.forEach(h => {
+                if (!last[h.action] || h.date > last[h.action]) last[h.action] = h.date;
+                const p = document.createElement('p');
+                p.innerHTML = `<strong>${h.date}:</strong> ${h.action} <em>(by ${h.username})</em>`;
+                historyDiv.appendChild(p);
+            });
+            document.getElementById('lastFed').textContent = last.b || '-';
+            document.getElementById('lastWater').textContent = last.ū || '-';
+            document.getElementById('lastClean').textContent = last.k || '-';
+        } catch (e) { console.error(e); }
+
+        loadModalComments(animalId);
+        document.getElementById('animalModal').style.display = 'block';
+    }
+
+    function closeAnimalModal() {
+        document.getElementById('animalModal').style.display = 'none';
+    }
+
+    // KOMENTĀRU SISTĒMA
+    function buildCommentTree(comments) {
+        const map = new Map();
+        const roots = [];
+        comments.forEach(c => map.set(c.id, { ...c, children: [] }));
+        comments.forEach(c => {
+            if (c.parent_id === 0 || c.parent_id == null) {
+                roots.push(map.get(c.id));
+            } else {
+                const parent = map.get(c.parent_id);
+                if (parent) parent.children.push(map.get(c.id));
+            }
+        });
+        return roots;
+    }
+
+    function renderCommentTree(container, comments, depth = 0) {
+        comments.forEach(c => {
+            const div = document.createElement('div');
+            div.style.marginLeft = `${depth * 32}px`;
+            div.style.padding = '12px';
+            div.style.margin = '8px 0';
+            div.style.borderRadius = '12px';
+            div.style.background = c.resolved ? '#e8f5e9' : '#fff3e0';
+            div.style.borderLeft = `4px solid ${c.resolved ? '#4caf50' : '#ff9800'}`;
+
+            const time = new Date(c.timestamp).toLocaleString('lv-LV', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            const replyBtn = `<button onclick="setModalReply(${c.id})" style="background:none;border:none;color:#1976d2;cursor:pointer;font-size:12px;">Atbildēt</button>`;
+            const resolveBtn = ['Admin', 'Zoologs'].includes(userData?.role) && !c.resolved
+                ? `<button onclick="resolveModalComment(${c.id})" style="margin-left:8px;background:#4caf50;color:white;border:none;padding:4px 8px;border-radius:8px;font-size:11px;cursor:pointer;">Atrisināts</button>`
+                : '';
+            const replyTo = c.parent_id > 0 && c.parent_user ? `<span style="color:#666;font-size:11px;margin-left:6px;">→ @${escapeHtml(c.parent_user)}</span>` : '';
+
+            div.innerHTML = `
+            <div style="font-weight:600;">${escapeHtml(c.user)}${replyTo} <small style="color:#666;font-size:11px;">${time}</small></div>
+            <p style="margin:6px 0; line-height:1.5;">${escapeHtml(c.comment)}</p>
+            <div style="margin-top:8px;">${replyBtn} ${resolveBtn}</div>
+        `;
+            container.appendChild(div);
+            if (c.children?.length) renderCommentTree(container, c.children, depth + 1);
+        });
+    }
+
+    function loadModalComments(animalId) {
+        const container = document.getElementById('modalComments');
+        container.innerHTML = '<p style="text-align:center; color:#666;">Ielādē...</p>';
+        fetch(`/api/comments/${animalId}`, { credentials: 'include' })
+            .then(r => r.json())
+            .then(comments => {
+                container.innerHTML = '';
+                if (comments.length === 0) {
+                    container.innerHTML = '<p style="color:#888;font-style:italic; text-align:center;">Nav komentāru</p>';
+                    return;
+                }
+                const tree = buildCommentTree(comments);
+                renderCommentTree(container, tree, 0);
+            })
+            .catch(() => container.innerHTML = '<p style="color:red;">Kļūda ielādējot komentārus</p>');
+    }
+
+    function setModalReply(parentId) {
+        modalReplyTo = parentId;
+        const input = document.getElementById('modalCommentInput');
+        const cancelBtn = document.getElementById('cancelModalReplyBtn');
+        input.placeholder = 'Atbilde uz komentāru...';
+        input.focus();
+        cancelBtn.style.display = 'inline-block';
+        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function cancelModalReply() {
+        modalReplyTo = null;
+        const input = document.getElementById('modalCommentInput');
+        const cancelBtn = document.getElementById('cancelModalReplyBtn');
+        input.placeholder = 'Pievienot komentāru...';
+        cancelBtn.style.display = 'none';
+    }
+
+    function submitModalComment() {
+        const input = document.getElementById('modalCommentInput');
+        const text = input.value.trim();
+        if (!text || !currentModalAnimalId) return;
+
+        const payload = { animal_id: currentModalAnimalId, comment: text };
+        if (modalReplyTo) payload.parent_id = modalReplyTo;
+
+        fetch('/api/add-comment', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+            .then(() => {
+                input.value = '';
+                modalReplyTo = null;
+                cancelModalReply();
+                loadModalComments(currentModalAnimalId);
+                loadTasksForToday();
+            })
+            .catch(() => alert('Kļūda sūtot komentāru'));
+    }
+
+    function resolveModalComment(id) {
+        fetch('/api/resolve-comment', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ comment_id: id })
+        })
+            .then(() => loadModalComments(currentModalAnimalId));
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function logout() {
+        fetch('/logout', { credentials: 'include' }).then(() => location.href = '/login.html');
+    }
+
+    // Aizvēršana ārpus modala
+    window.onclick = e => {
+        if (e.target === document.getElementById('animalModal')) closeAnimalModal();
+    };
+
+    // MOBILE TASK SEARCH – SCROLL + SELECT + AUTO CLEAR
+    function filterTasks() {
+        const query = document.getElementById('taskSearch').value.toLowerCase().trim();
+        const resultsDiv = document.getElementById('taskResults');
+        resultsDiv.innerHTML = '';
+
+        if (!query) {
+            resultsDiv.style.display = 'none';
+            return;
+        }
+
+        const matches = tasksData.filter(t =>
+            t.cage.toLowerCase().includes(query) ||
+            t.name.toLowerCase().includes(query)
+        );
+
+        if (matches.length === 0) {
+            resultsDiv.innerHTML = '<div class="no-results">— Nav rezultātu —</div>';
+            resultsDiv.style.display = 'block';
+            return;
+        }
+
+        matches.forEach(task => {
+            const div = document.createElement('div');
+            div.className = 'search-result-item';
+            div.textContent = `${task.cage} – ${task.name}`;
+            div.onclick = (e) => {
+                e.stopPropagation();
+                selectAndScroll(task.id);
+            };
+            resultsDiv.appendChild(div);
+        });
+
+        resultsDiv.style.display = 'block';
+    }
+
+    // GALVENĀ – IZVĒLAS + SCROLL + NOTĪRA
+    function selectAndScroll(id) {
+        selectedTaskId = id;
+        currentModalAnimalId = id;
+        renderTasks(); // atjauno izcēlumu
+
+        // SCROLL UZ UZDEVUMU
+        const card = document.querySelector(`.task-card[onclick*="selectTask(${id}"`);
+        if (card) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            card.style.animation = 'pulse 0.6s ease';
+        }
+
+        // NOTĪRA SEARCH + SLĒPJ REZULTĀTUS
+        document.getElementById('taskSearch').value = '';
+        document.getElementById('taskResults').style.display = 'none';
+
+        updateFloatingButtons();
+    }
+
+    // ENTER = PIRMAIS REZULTĀTS
+    document.getElementById('taskSearch').addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const first = document.querySelector('#taskResults .search-result-item');
+            if (first) first.click();
+        }
+        if (e.key === 'Escape') {
+            document.getElementById('taskSearch').value = '';
+            document.getElementById('taskResults').style.display = 'none';
+        }
+    });
+
+    // SLĒPJ REZULTĀTUS KAD KLIKŠĶI ĀRĀ
+    document.addEventListener('click', e => {
+        if (!e.target.closest('#taskSearch') && !e.target.closest('#taskResults')) {
+            document.getElementById('taskResults').style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>

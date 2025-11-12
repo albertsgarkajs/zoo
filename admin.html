@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin Panelis</title>
+    <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div></div>
+<div class="container">
+    <div class="header">
+        <h1>Latgales Zoodārzs</h1>
+        <div id="userInfo" class="user-info"></div>
+        <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+            <span class="icon sun"></span>
+            <span class="icon moon"></span>
+        </div>
+    </div>
+
+    <div id="adminPanel" class="admin-panel">
+        <h3>Šodienas uzdevumi</h3>
+        <table id="todayTasksTable" class="activity-table">
+            <thead><tr><th>Loma</th><th>Uzdevumi (ID)</th><th>Aizvietotājs</th></tr></thead>
+            <tbody></tbody>
+        </table>
+
+        <div id="substitutionPanel" style="margin-top:20px;">
+            <h3>Aizvietošana (šodien)</h3>
+            <table id="subTable" class="activity-table">
+                <thead><tr><th>Galvenā loma</th><th>Aizvietotājs</th><th>Darbība</th></tr></thead>
+                <tbody></tbody>
+            </table>
+            <button onclick="saveAllSubstitutions()" class="btn btn-primary">Saglabāt visas aizvietošanas</button>
+        </div>
+
+        <div style="margin-top:20px; padding:15px; background:var(--bg-alt); border-radius:12px; text-align:center;">
+            <h3>🔄 Manuāla datu atjaunošana</h3>
+            <button onclick="manualReloadAnimals()" class="btn btn-primary" style="margin:5px;">Reload animals.json</button>
+            <button onclick="manualReloadTasks()" class="btn btn-primary" style="margin:5px;">Reload uzdevumi (tasks)</button>
+            <p id="reloadStatus" style="margin-top:10px; color:#666; font-size:0.9rem;"></p>
+        </div>
+
+        <button onclick="saveWeekly()" class="btn btn-primary" style="margin-top:10px;">Saglabāt visus uzdevumus</button>
+    </div>
+
+    <div id="weeklyPanel" class="admin-panel" style="margin-top:30px;">
+        <h3>Nedēļas uzdevumu grafiks</h3>
+        <div class="week-tabs">
+            <button class="tab-btn active" data-day="1">P</button>
+            <button class="tab-btn" data-day="2">O</button>
+            <button class="tab-btn" data-day="3">T</button>
+            <button class="tab-btn" data-day="4">C</button>
+            <button class="tab-btn" data-day="5">Pk</button>
+            <button class="tab-btn" data-day="6">S</button>
+            <button class="tab-btn" data-day="7">Sv</button>
+        </div>
+        <div id="weekContent"></div>
+    </div>
+
+    <div id="userManagementPanel" class="admin-panel" style="margin-top:30px;">
+        <h3>Lietotāju pārvaldība</h3>
+        <table id="usersTable" class="activity-table">
+            <thead>
+            <tr>
+                <th>Lietotājvārds</th>
+                <th>E-pasts</th>
+                <th>Loma</th>
+                <th>Statuss</th>
+                <th>Darbības</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // TAVS SVĒTAIS SARAKSTS – VISUR ŠEIT!
+    const ROLES = ['Vivāriju dzīvnieku kopējs I','Vivāriju dzīvnieku kopējs II','Vivāriju dzīvnieku kopējs III','Zootehniķis','Veterinārārsts','Veterinārārsta asistents','Entomologs'];
+    const ALL_ROLES_WITH_ADMIN = [...ROLES, 'Admin'];
+    const WEEKDAY_NAMES = {1:'Pirmdiena',2:'Otrdiena',3:'Trešdiena',4:'Ceturtdiena',5:'Piektdiena',6:'Sestdiena',7:'Svētdiena'};
+
+    let weeklySchedule = {};
+    let allTasks = [];
+    let currentUserId = null;
+
+    // === ROLE CHECK ===
+    fetch('/api/user', { credentials: 'include' })
+        .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+        .then(user => {
+            currentUserId = user.id;
+            if (!['Admin', 'Zoologs'].includes(user.role)) {
+                location.href = (window.innerWidth <= 768 || 'ontouchstart' in window) ? '/mobile-dashboard.html' : '/dashboard.html';
+                return;
+            }
+            document.getElementById('userInfo').innerHTML = `Sveiks, ${user.username} (${user.role}) <button onclick="logout()" class="btn btn-secondary">Izrakstīties</button>`;
+            loadTasks();
+            loadTodayAdminPanel();
+            loadWeeklyPanel();
+            loadUserManagement();
+        })
+        .catch(() => location.href = '/login.html');
+
+    function loadTasks() {
+        fetch('/api/tasks', { credentials: 'include' })
+            .then(r => r.json())
+            .then(tasks => allTasks = tasks);
+    }
+
+    async function loadTodayAdminPanel() {
+        const res = await fetch('/api/daily-tasks', { credentials: 'include' });
+        const daily = await res.json();
+
+        const taskTbody = document.querySelector('#todayTasksTable tbody');
+        taskTbody.innerHTML = '';
+        ROLES.forEach(role => {
+            const data = daily[role] || { tasks: [], substitute: '' };
+            const row = taskTbody.insertRow();
+            row.innerHTML = `<td>${role}</td><td>${data.tasks.map(t => t.id).join(', ') || '—'}</td><td>${data.substitute || '—'}</td>`;
+        });
+
+        const subTbody = document.querySelector('#subTable tbody');
+        subTbody.innerHTML = '';
+        ROLES.forEach(role => {
+            const currentSub = daily[role]?.substitute || '';
+            const row = subTbody.insertRow();
+            row.innerHTML = `
+                    <td>${role}</td>
+                    <td>
+                        <select class="sub-select" data-role="${role}">
+                            <option value="">— neviens —</option>
+                            ${ROLES.filter(r => r !== role).map(r => `<option value="${r}" ${currentSub === r ? 'selected' : ''}>${r}</option>`).join('')}
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-small sub-btn ${currentSub ? 'active' : 'inactive'}" onclick="toggleSubstitute('${role}')">
+                            ${currentSub ? 'Aktīvs' : 'Pieteikt'}
+                        </button>
+                    </td>
+                `;
+        });
+    }
+
+    async function toggleSubstitute(role) {
+        const select = document.querySelector(`select[data-role="${role}"]`);
+        const newSub = select.value || null;
+        await fetch('/api/replace', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ main_role: role, substitute_user: newSub })
+        });
+        loadTodayAdminPanel();
+    }
+
+    async function saveAllSubstitutions() {
+        for (const role of ROLES) {
+            const select = document.querySelector(`select[data-role="${role}"]`);
+            if (select && select.value) {
+                await fetch('/api/replace', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ main_role: role, substitute_user: select.value })
+                });
+            }
+        }
+        alert('Aizvietošanas saglabātas!');
+        loadTodayAdminPanel();
+    }
+
+    function loadWeeklyPanel() {
+        fetch('/api/weekly-schedule', { credentials: 'include' })
+            .then(r => r.json())
+            .then(data => {
+                weeklySchedule = data;
+                showWeekDay(1);
+            });
+    }
+
+    function showWeekDay(day) {
+        const content = document.getElementById('weekContent');
+        content.innerHTML = `<h4>${WEEKDAY_NAMES[day]}</h4>`;
+        ROLES.forEach(role => {
+            const div = document.createElement('div');
+            div.className = 'role-section';
+            div.innerHTML = `<h5>${role}</h5><div class="task-list" id="week-${day}-${role.replace(/ /g,'_')}"></div>`;
+            content.appendChild(div);
+            const list = div.querySelector('.task-list');
+            const assigned = weeklySchedule[role]?.[day] || [];
+            allTasks.forEach(t => {
+                const label = document.createElement('label');
+                label.className = 'task-item';
+                label.innerHTML = `<input type="checkbox" value="${t.id}" ${assigned.includes(t.id) ? 'checked' : ''}> ${t.cage} – ${t.name}`;
+                list.appendChild(label);
+            });
+        });
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.day === String(day)));
+    }
+
+    async function saveWeekly() {
+        const day = document.querySelector('.tab-btn.active').dataset.day;
+        for (const role of ROLES) {
+            const list = document.getElementById(`week-${day}-${role.replace(/ /g,'_')}`);
+            if (!list) continue;
+            const taskIds = Array.from(list.querySelectorAll('input:checked')).map(cb => parseInt(cb.value));
+            await fetch('/api/weekly-schedule', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ role, weekday: parseInt(day), taskIds })
+            });
+        }
+        alert('Nedēļas grafiks saglabāts!');
+        loadWeeklyPanel();
+    }
+
+    // === USER MANAGEMENT – HARD-CODE + ADMIN ===
+    async function loadUserManagement() {
+        const tbody = document.querySelector('#usersTable tbody');
+        tbody.innerHTML = '<tr><td colspan="5">Ielādē...</td></tr>';
+
+        const usersRes = await fetch('/api/users', { credentials: 'include' });
+        const users = await usersRes.json();
+
+        tbody.innerHTML = '';
+        users.forEach(user => {
+            const tr = tbody.insertRow();
+            tr.innerHTML = `
+                    <td>${user.username} ${user.id === currentUserId ? ' (tu)' : ''}</td>
+                    <td>${user.email || '—'}</td>
+                    <td>
+                        <select class="role-select" data-id="${user.id}" ${user.is_active ? '' : 'disabled'}>
+                            <option value="">— bez lomas —</option>
+                            ${ALL_ROLES_WITH_ADMIN.map(r => `
+                                <option value="${r}" ${user.role === r ? 'selected' : ''}>
+                                    ${r} ${r === 'Admin' ? '⭐' : ''}
+                                </option>
+                            `).join('')}
+                        </select>
+                    </td>
+                    <td><span class="${user.is_active ? 'user-active' : 'user-inactive'}">
+                        ${user.is_active ? 'Aktīvs' : 'Neaktīvs'}
+                    </span></td>
+                    <td>
+                        <button class="btn btn-small" onclick="toggleUserStatus(${user.id}, ${!user.is_active})">
+                            ${user.is_active ? 'Deaktivizēt' : 'Aktivizēt'}
+                        </button>
+                        <button class="btn btn-small btn-danger" onclick="deleteUser(${user.id})">Dzēst</button>
+                    </td>
+                `;
+        });
+
+        document.querySelectorAll('.role-select').forEach(sel => {
+            sel.onchange = () => updateUserRole(sel.dataset.id, sel.value);
+        });
+    }
+
+    async function updateUserRole(userId, newRole) {
+        if (userId == currentUserId && newRole !== 'Admin' && document.querySelector(`.role-select[data-id="${userId}"]`).value === 'Admin') {
+            if (!confirm('TU NOŅEM SEV ADMIN LOMU! Tiešām?')) {
+                loadUserManagement();
+                return;
+            }
+        }
+
+        const res = await fetch('/api/update-role', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: parseInt(userId), new_role: newRole || null })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+            alert('Loma atjaunota!');
+            loadUserManagement();
+            loadTodayAdminPanel();
+        } else {
+            alert(data.error || 'Kļūda');
+            loadUserManagement();
+        }
+    }
+
+    async function toggleUserStatus(userId, activate) {
+        await fetch('/api/user-status', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: parseInt(userId), is_active: activate })
+        });
+        loadUserManagement();
+    }
+
+    async function deleteUser(userId) {
+        if (!confirm('Tiešām dzēst?')) return;
+        await fetch('/api/user-delete', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: parseInt(userId) })
+        });
+        loadUserManagement();
+        loadTodayAdminPanel();
+    }
+
+    // === RELOAD ===
+    async function manualReloadAnimals() {
+        const status = document.getElementById('reloadStatus');
+        status.textContent = 'Pārlādē animals.json...';
+        const res = await fetch('/api/reload-animals', { method: 'POST', credentials: 'include' });
+        const data = await res.json();
+        status.innerHTML = data.success ? `✅ animals.json pārlādēts! <strong>${data.count}</strong>` : '❌ ' + (data.error || 'Kļūda');
+    }
+
+    async function manualReloadTasks() {
+        const status = document.getElementById('reloadStatus');
+        status.textContent = 'Atjauno uzdevumus...';
+        const res = await fetch('/api/reload-tasks', { method: 'POST', credentials: 'include' });
+        const data = await res.json();
+        if (data.success) {
+            status.innerHTML = `✅ Uzdevumi atjaunoti! <strong>${data.count}</strong>`;
+            loadTodayAdminPanel();
+            loadWeeklyPanel();
+        } else {
+            status.textContent = '❌ ' + (data.error || 'Kļūda');
+        }
+    }
+
+    function logout() { fetch('/logout').then(() => location.href = '/login.html'); }
+    function toggleTheme() {
+        const body = document.body;
+        const isDark = body.getAttribute('data-theme') === 'dark';
+        body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        document.getElementById('themeToggle').classList.toggle('active');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.onclick = () => showWeekDay(btn.dataset.day));
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggle').classList.add('active');
+    }
+</script>
+</body>
+</html>
