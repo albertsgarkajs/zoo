@@ -7,24 +7,17 @@
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
   html,body{height:100%;overflow:hidden;background:#000;font-family:"Segoe UI",Arial,sans-serif;}
-  
-  /* Perfect letterbox for any screen */
-  .frame{
-    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;
-  }
+  .frame{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;}
   .presentation{
     width:1920px;height:1080px;max-width:100vw;max-height:100vh;
     background:radial-gradient(circle at 40% 30%,#1b3a1e,#081a0d);
     position:relative;overflow:hidden;
   }
-
   .slide{
     position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;color:#e8f5e9;padding:100px 180px;opacity:0;transition:opacity 1s ease;
   }
   .slide.active{opacity:1;z-index:10;}
-
-  /* Animations */
   .fade{transform:translateY(60px);}
   .zoom{transform:scale(0.4);}
   .slide-left{transform:translateX(-2000px);}
@@ -39,7 +32,7 @@
   h2{font-size:38px;font-weight:800;margin:12px 0;}
   p{font-size:32px;line-height:1.45;margin:10px 0;}
   .small{font-size:26px;opacity:0.85;}
-  .law{font-style:italic;background:rgba(255,255,255,0.08);padding:20px 40px;border-radius:16px;margin:20px 0;}
+  .law{font-style:italic;background:rgba(255,255,255,0.08);padding:25px 45px;border-radius:18px;margin:25px 0;max-width:1600px;}
 
   .red{color:#ff1744;text-shadow:0 0 30px #ff1744;}
   .green{color:#00e676;text-shadow:0 0 30px #00e676;}
@@ -51,7 +44,6 @@
   #counter{position:fixed;top:30px;right:50px;background:rgba(0,255,100,0.2);padding:15px 40px;border-radius:60px;font-size:40px;z-index:999;border:3px solid #00ff88;}
   #progress{position:fixed;bottom:0;left:0;height:16px;background:#00ff88;width:0%;transition:0.6s;z-index:999;}
 
-  /* Growing vines */
   .vines{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
   .vine{position:absolute;background:linear-gradient(to bottom,transparent,#1b5e20 40%,#2e7d32 80%);border-radius:100px;}
   @keyframes grow{0%{transform:scaleY(0);opacity:0;}70%{opacity:0.4;}100%{transform:scaleY(1);opacity:0.35;}}
@@ -71,20 +63,51 @@
     <div id="counter">1 / 13</div>
     <div id="progress"></div>
 
-    <!-- Slides -->
     <section class="slide active pulse"><h1 class="red">210 izlaistas barošanas reizes</h1><p>5.–18.11.2025 (13 darba dienas)</p></section>
     <section class="slide fade"><h1 class="red">1 dzīvnieks aizgāja bojā</h1><p>Dievlūdzējs (voljērs 1.30)</p><p>Nekad nav ticis barots</p></section>
     <section class="slide slide-left"><h2 class="red">PILNĪGI SAUSS VOLJĒRS</h2><img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2010.jpg"><p>Extatosoma tiaratum</p></section>
     <section class="slide slide-right"><h2 class="red">TUKŠS ŪDENS TRAUKS</h2><img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2011.jpg"><p>Blaberus giganteus</p></section>
-    <section class="slide zoom"><h1 class="red">130 reizes izlaistas</h1><p>10 čūskas 2. stāvā – 13 no 13 dienām</p><canvas id="c1"></canvas></section>
+
+    <section class="slide zoom">
+      <h1 class="red">110 reizes izlaistas</h1>
+      <p>10 čūskas 2. stāvā</p>
+      <p class="red">11 no 13 dienām</p>
+      <p class="small">(ūdens dots tikai 13. un 15. novembrī)</p>
+      <canvas id="c1"></canvas>
+    </section>
+
     <section class="slide rotate"><h1 class="red">10 reizes izlaisti</h1><p>Tūkstoškāji – 10 no 13 dienām</p><canvas id="c2"></canvas></section>
     <section class="slide flip"><h1 class="red">60 reizes izlaistas</h1><p>Lielās čūskas 1. stāvā</p><canvas id="c3"></canvas></section>
     <section class="slide fall"><img src="https://i46.servimg.com/u/f46/14/10/26/20/screen10.jpg"><h2 class="red">Aizgāja 14:35</h2><p>Darba diena līdz 15:30</p></section>
-    <section class="slide zoom"><h1 class="yellow">Darba likums 145. pants</h1><div class="law"><p>(2) Pārtraukumu neieskaita darba laikā.</p><p>(3) Pārtraukuma laikā darbiniekam ir tiesības atstāt darba vietu.</p></div></section>
-    <section class="slide slide-left"><h1 class="yellow">Darba likums 145. pants</h1><div class="law"><p>Ja darbinieks var pamest darba vietu → pusdienas laiks NEIESKAITĀS darba laikā.</p></div></section>
-    <section class="slide pulse"><h1 class="red">Darba likums 131. pants</h1><div class="law"><p>Darbiniekam jāpilda pienākumi visu nolīgto darba laiku.</p><p>Nedrīkst pamest darbu pirms laika beigām.</p></div></section>
-    <section class="slide slide-right"><canvas id="line"></canvas><h2 class="red">Situācija pasliktinās</h2></section>
-    <section class="slide fade"><h1 class="green">Mēs gribam tikai:</h1><p>2 apgaitas dienā • 1 atbildīgo par 2. stāvu • 0 izlaistus voljērus</p><h2 class="green">PALDIES, ka rūpējaties</h2><p class="small">Nākamā pārbaude pēc 7 dienām</p></section>
+
+    <section class="slide zoom">
+      <h1 class="yellow">Darba likums – 145. pants (2)</h1>
+      <div class="law">
+        <p>Pārtraukumu piešķir ne vēlāk kā pēc četrām stundām no darba sākuma.</p>
+        <p>Pārtraukuma ilgumu nosaka darba devējs pēc konsultēšanās ar darbinieku pārstāvjiem, taču tas nedrīkst būt īsāks par 30 minūtēm.</p>
+        <p>Pārtraukumu <strong>neieskaita darba laikā</strong>, ja darba līgumā vai koplīgumā nav noteikts citādi.</p>
+        <p>Ja darbinieks drīkst atstāt darba vietu → pusdienas laiks <strong>NEIESKAITĀS darba laikā</strong>.</p>
+      </div>
+    </section>
+
+    <section class="slide slide-left">
+      <h1 class="red">Darba likums – 131. pants</h1>
+      <div class="law">
+        <p>Darbiniekam jāpilda darba pienākumi visu nolīgto darba laiku.</p>
+        <p>Darba devējs nedrīkst pieļaut, ka darbinieks pamet darbu pirms darba laika beigām, ja darbs nav pabeigts.</p>
+      </div>
+    </section>
+
+    <section class="slide pulse"><canvas id="line"></canvas><h2 class="red">Situācija tikai pasliktinās</h2></section>
+
+    <section class="slide fade">
+      <h1 class="green">Mēs gribam tikai:</h1>
+      <p>2 apgaitas dienā</p>
+      <p>1 atbildīgo par 2. stāvu</p>
+      <p>0 izlaistus voljērus</p>
+      <h2 class="green">PALDIES, ka rūpējaties par dzīvniekiem</h2>
+      <p class="small">Nākamā pārbaude pēc 7 dienām</p>
+    </section>
 
   </div>
 </div>
@@ -101,18 +124,15 @@ function go(n) {
   slides.forEach((s,i) => s.classList.toggle('active', i===current));
   document.getElementById('counter').textContent = (current+1)+' / '+total;
   document.getElementById('progress').style.width = (current+1)/total*100+'%';
-  
-  // Restart vines
   pres.classList.remove('grow');
   void pres.offsetWidth;
   pres.classList.add('grow');
 }
 
-// KEYS + TOUCH
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight' || e.key === ' ') go(current + 1);
   if (e.key === 'ArrowLeft') go(current - 1);
-  if (e.key === 'f' || e.key === 'F') {
+  if (e.key.toLowerCase() === 'f') {
     if (document.fullscreenElement) document.exitFullscreen();
     else document.documentElement.requestFullscreen();
   }
@@ -125,8 +145,8 @@ document.addEventListener('touchend', e => {
   if (Math.abs(diff) > 50) go(current + (diff > 0 ? 1 : -1));
 });
 
-/* Charts */
-new Chart(document.getElementById('c1'), {type:'doughnut',data:{datasets:[{data:[130,80],backgroundColor:['#ff1744','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
+/* Updated charts – 110 instead of 130 for 2nd floor snakes */
+new Chart(document.getElementById('c1'), {type:'doughnut',data:{datasets:[{data:[110,100],backgroundColor:['#ff1744','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c2'), {type:'doughnut',data:{datasets:[{data:[10,203],backgroundColor:['#ff5722','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c3'), {type:'doughnut',data:{datasets:[{data:[60,150],backgroundColor:['#ff9800','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('line'), {type:'line',data:{datasets:[{data:[15,18,12,20,28,25,10,18,35,20,22,24],borderColor:'#ff1744',backgroundColor:'rgba(255,23,68,0.3)',fill:true,tension:0.4,pointRadius:14,pointBackgroundColor:'#ff1744'}]},options:{plugins:{legend:false},scales:{x:{display:false},y:{display:false}}}});
