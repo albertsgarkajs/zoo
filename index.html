@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Awesome HTML Presentation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root {
+    --primary: #0066ff;
+    --dark: #121212;
+    --light: #f0f4f8;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #000;
+    color: white;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  #presentation {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    perspective: 1200px;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    background: var(--dark);
+    opacity: 0;
+    transform: translateZ(-300px) scale(0.8) rotateY(30deg);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    visibility: hidden;
+  }
+
+  .slide.active {
+    opacity: 1;
+    transform: translateZ(0) scale(1) rotateY(0);
+    visibility: visible;
+    z-index: 10;
+  }
+
+  .slide.prev {
+    transform: translateX(-100%) rotateY(-20deg);
+    opacity: 0;
+  }
+
+  .slide.next {
+    transform: translateX(100%) rotateY(20deg);
+    opacity: 0;
+  }
+
+  .content {
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
+  }
+
+  h1 { font-size: 4.5rem; margin-bottom: 1rem; background: linear-gradient(90deg, #00ffea, #0066ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  h2 { font-size: 3rem; margin: 2rem 0 1rem; }
+  p  { font-size: 1.6rem; line-height: 1.6; margin: 1rem 0; opacity: 0.9; }
+
+  img {
+    max-width: 100%;
+    max-height: 70vh;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    margin: 2rem 0;
+  }
+
+  .chart {
+    width: 80%;
+    height: 400px;
+    margin: 2rem auto;
+    background: #1e1e1e;
+    border-radius: 12px;
+  }
+
+  /* Progress bar */
+  #progress {
+    position: fixed;
+    bottom: 0; left: 0;
+    height: 5px;
+    background: var(--primary);
+    width: 0%;
+    transition: width 0.4s;
+    z-index: 100;
+  }
+
+  /* Slide number */
+  #counter {
+    position: fixed;
+    top: 20px; right: 30px;
+    font-size: 1.2rem;
+    background: rgba(0,0,0,0.5);
+    padding: 8px 16px;
+    border-radius: 30px;
+    z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="counter">1 / 8</div>
+
+<div id="presentation">
+  <!-- SLIDE 1 - Title -->
+  <section class="slide active">
+    <div class="content">
+      <h1>HTML Presentations<br>Are The Future</h1>
+      <p>Smooth transitions • Fullscreen • Touch support • Zero PowerPoint</p>
+      <img src="https://images.unsplash.com/photo-1519389951291-4d0f51c66a9f?w=1200" alt="Hero">
+    </div>
+  </section>
+
+  <!-- SLIDE 2 -->
+  <section class="slide">
+    <div class="content">
+      <h2>Why This Beats PowerPoint</h2>
+      <ul style="text-align:left; font-size:2rem; max-width:800px; margin:3rem auto;">
+        <li>Smooth 3D transitions (cubic-bezier magic)</li>
+        <li>Works offline</li>
+        <li>Free & open source</li>
+        <li>Embed videos, charts, code, anything</li>
+        <li>Looks 10× better on retina screens</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 - Image heavy -->
+  <section class="slide">
+    <div class="content">
+      <h2>Stunning Visuals</h2>
+      <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200" alt="Space">
+      <p>Just drop any image URL or local file</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 - Chart example (using Chart.js) -->
+  <section class="slide">
+    <div class="content">
+      <h2>Live Charts (optional)</h2>
+      <canvas id="myChart" class="chart"></canvas>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 -->
+  <section class="slide">
+    <div class="content">
+      <h2>Custom Animations Per Slide</h2>
+      <p>Add data-animate="fade-up" or any CSS animation you want</p>
+      <div style="font-size:8rem; animation: bounce 2s infinite;">🚀</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6 - Quote -->
+  <section class="slide" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="content">
+      <h2 style="background:none; -webkit-text-fill-color:white;">"Death by PowerPoint is real.<br>This is the cure."</h2>
+      <p>— Every developer ever</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 7 - Final call -->
+  <section class="slide">
+    <div class="content">
+      <h1>Thank You!</h1>
+      <p style="font-size:3rem; margin:3rem 0;">Start building your own right now</p>
+      <p>Copy this file • Replace content • Done</p>
+      <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Celebrate">
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Simple presentation engine
+const slides = document.querySelectorAll('.slide');
+let current = 0;
+const total = slides.length;
+
+function goToSlide(n) {
+  slides.forEach((s, i) => {
+    s.classList.remove('active', 'prev', 'next');
+    if (i === n) s.classList.add('active');
+    if (i < n) s.classList.add('prev');
+    if (i > n) s.classList.add('next');
+  });
+
+  current = n;
+  document.getElementById('counter').textContent = `${current + 1} / ${total}`;
+  document.getElementById('progress').style.width = `${(current + 1)/total * 100}%`;
+}
+
+// Navigation
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') goToSlide(Math.min(current + 1, total - 1));
+  if (e.key === 'ArrowLeft') goToSlide(Math.max(current - 1, 0));
+  if (e.key === 'f') document.documentElement.requestFullscreen();
+});
+
+// Touch swipe support
+let touchstartX = 0;
+document.addEventListener('touchstart', e => touchstartX = e.changedTouches[0].screenX);
+document.addEventListener('touchend', e => {
+  let touchendX = e.changedTouches[0].screenX;
+  if (touchstartX - touchendX > 50) goToSlide(Math.min(current + 1, total - 1));
+  if (touchendX - touchstartX > 50) goToSlide(Math.max(current - 1, 0));
+});
+
+// Optional Chart on slide 4
+if (document.getElementById('myChart')) {
+  const ctx = document.getElementById('myChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      datasets: [{
+        label: 'Revenue 2025',
+        data: [12, 19, 33, 45, 62, 88],
+        backgroundColor: 'rgba(0, 102, 255, 0.7)',
+        borderRadius: 8
+      }]
+    },
+    options: { animation: { duration: 2000 } }
+  });
+}
+
+// Auto-play (optional, remove if not wanted)
+// setInterval(() => { if (current < total-1) goToSlide(current + 1); }, 8000);
+
+</script>
+
+<style>
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+  }
+</style>
+
+</body>
+</html>
