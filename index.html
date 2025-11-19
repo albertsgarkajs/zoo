@@ -3,53 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dzīvnieku aprūpe – 5.–18.11.2025</title>
+<title>Dzīvnieku aprūpe + Darba laiks – 5.–18.11.2025</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
   html,body{height:100%;overflow:hidden;background:#081a0d;color:#e8f5e9;font-family:Arial,sans-serif;}
-
-  /* PC / projector → horizontal 16:9 */
-  @media (min-width: 901px) {
-    .deck{display:flex;height:100vh;overflow:hidden;}
+  @media (min-width:901px){.deck{display:flex;height:100vh;overflow:hidden;}
     .slide{width:100vw;height:100vh;flex:none;scroll-snap-align:start;}
-    .deck{scroll-snap-type:x mandatory;overflow-x:scroll;overflow-y:hidden;}
-  }
-
-  /* Phone / tablet → vertical */
-  @media (max-width: 900px) {
-    .deck{height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+    .deck{scroll-snap-type:x mandatory;overflow-x:scroll;overflow-y:hidden;}}
+  @media (max-width:900px){.deck{height:100vh;display:flex;flex-direction:column;overflow:hidden;}
     .slide{height:100vh;width:100vw;flex:none;scroll-snap-align:start;}
-    .deck{scroll-snap-type:y mandatory;overflow-y:scroll;overflow-x:hidden;}
-  }
-
-  .slide{
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    padding:5vh 8vw;text-align:center;
-    background:radial-gradient(circle at 40% 30%,#1b3a1e,#081a0d);
-    scroll-snap-stop:always;
-  }
-
+    .deck{scroll-snap-type:y mandatory;overflow-y:scroll;overflow-x:hidden;}}
+  .slide{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:5vh 8vw;text-align:center;background:radial-gradient(circle at 40% 30%,#1b3a1e,#081a0d);}
   .big{font-size:18vw;font-weight:900;line-height:1;}
   .huge{font-size:26vw;font-weight:900;line-height:1;}
   .med{font-size:9vw;margin:2vh 0;}
   .small{font-size:5.5vw;opacity:0.9;}
-  @media (min-width:901px){
-    .big{font-size:11vw;}
-    .huge{font-size:15vw;}
-    .med{font-size:5.5vw;}
-    .small{font-size:3.2vw;}
-  }
-
-  .red{color:#ff5252;}
-  .green{color:#b2ff59;}
+  @media (min-width:901px){.big{font-size:11vw;}.huge{font-size:15vw;}.med{font-size:5.5vw;}.small{font-size:3.2vw;}}
+  .red{color:#ff5252;}.green{color:#b2ff59;}.yellow{color:#ffeb3b;}
   canvas{max-width:82vw !important;max-height:52vh !important;margin:4vh auto;}
-
   #counter{position:fixed;top:15px;right:15px;background:rgba(0,0,0,0.7);padding:10px 24px;border-radius:40px;font-size:1.8rem;z-index:999;}
   @media (max-width:900px){#counter{font-size:5vw;padding:8px 16px;}}
   #progress{position:fixed;bottom:0;left:0;height:8px;background:#00ff88;width:0%;transition:0.4s;z-index:999;}
-
-  /* Vines & leaves – back and better */
-  .jung25{position:fixed;inset:0;pointer-events:none;z-index:1;}
+  .jungle{position:fixed;inset:0;pointer-events:none;z-index:1;}
   .vine{position:absolute;background:#1b5e20;opacity:0.18;border-radius:100px;}
   .leaf{position:absolute;background:#2e7d32;border-radius:60% 10% 60% 10%;opacity:0.38;}
   .vine:nth-child(1){top:-10%;left:5%;width:90px;height:45vh;transform:rotate(22deg);}
@@ -62,27 +38,30 @@
 </head>
 <body>
 
-<div class="jung25">
+<div class="jungle">
   <div class="vine"></div><div class="vine"></div><div class="vine"></div>
   <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
 </div>
 
-<div id="counter">1 / 9</div>
+<div id="counter">1 / 10</div>
 <div id="progress"></div>
 
 <div class="deck" id="deck">
+  <!-- 1 – 210× -->
   <section class="slide"><div>
     <div class="huge red">210</div>
     <div class="med">reizes dzīvnieki palika bez ēdiena</div>
     <div class="small">5.–18.11.2025</div>
   </div></section>
 
+  <!-- 2 – 1 dzīvnieks aizgāja bojā -->
   <section class="slide"><div>
     <div class="big red">1</div>
     <div class="med red">dzīvnieks aizgāja bojā</div>
     <div class="small">Dievlūdzējs 1.30</div>
   </div></section>
 
+  <!-- 3 – 2. stāva čūskas -->
   <section class="slide"><div>
     <div class="big">2. stāva čūskas</div>
     <canvas id="c1"></canvas>
@@ -90,35 +69,51 @@
     <div class="small">13 no 13 dienām</div>
   </div></section>
 
+  <!-- 4 – Tūkstoškāji -->
   <section class="slide"><div>
     <div class="big">Tūkstoškāji</div>
     <canvas id="c2"></canvas>
     <div class="big red">50×</div>
   </div></section>
 
+  <!-- 5 – Lielās čūskas 1.st. -->
   <section class="slide"><div>
     <div class="big">Lielās čūskas 1.st.</div>
     <canvas id="c3"></canvas>
     <div class="big red">60×</div>
   </div></section>
 
+  <!-- 6 – JAUNUMS: Darba likums & pārtraukumi -->
   <section class="slide"><div>
-    <canvas id="line" style="max-height:55vh !important;"></canvas>
+    <div class="huge yellow">Darba likums</div>
+    <div class="big yellow">145. pants</div>
+    <div class="med red">Pusdienu pārtraukums</div>
+    <div class="med red">NEIESKAITĀS darba laikā</div>
+    <div class="med red">Aizliegts atstāt darbu agrāk</div>
+    <div class="small">ja darbs nav pabeigts</div>
+  </div></section>
+
+  <!-- 7 – Tendence -->
+  <section class="slide"><div>
+    <canvas id="line"></canvas>
     <div class="med red">Situācija neuzlabojas</div>
   </div></section>
 
+  <!-- 8 – Risinājums -->
   <section class="slide"><div>
     <div class="big green">2</div><div class="med">apgaitas dienā</div>
     <div class="big green">1</div><div class="med">atbildīgais 2. stāvam</div>
     <div class="big green">0</div><div class="med">izlaisti voljēri</div>
   </div></section>
 
+  <!-- 9 – Mēs to varam -->
   <section class="slide"><div>
     <div class="huge green">MĒS TO</div>
     <div class="huge green">VARAM</div>
     <div class="huge green">ATRISINĀT</div>
   </div></section>
 
+  <!-- 10 – Katru dienu -->
   <section class="slide"><div>
     <div class="huge green">KATRU</div>
     <div class="huge green">DIENU</div>
@@ -129,9 +124,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 const deck = document.getElementById('deck');
-const slides = document.querySelectorAll('.slide');
 let current = 0;
-const total = slides.length;
+const total = 10;
 
 function go(to){
   current = Math.max(0, Math.min(to, total-1));
@@ -144,22 +138,17 @@ function go(to){
   document.getElementById('progress').style.width = (current+1)/total*100 + '%';
 }
 
-// Keyboard & touch
 document.addEventListener('keydown', e=>{
   if(e.key==='ArrowRight' || e.key===' ') go(current+1);
   if(e.key==='ArrowLeft') go(current-1);
   if(e.key.toLowerCase()==='f') document.documentElement.requestFullscreen();
 });
-let startX = 0, startY = 0;
-document.addEventListener('touchstart', e=>{startX=e.touches[0].clientX; startY=e.touches[0].clientY;});
-document.addEventListener('touchend', e=>{
-  const dx = startX - e.changedTouches[0].clientX;
-  const dy = startY - e.changedTouches[0].clientY;
-  if(Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>50){
-    if(dx>0) go(current+1); else go(current-1);
-  } else if(Math.abs(dy)>50){
-    if(dy>0) go(current+1); else go(current-1);
-  }
+let sx=0,sy=0;
+document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;});
+document.addEventListener('touchend',e=>{
+  const dx=sx-e.changedTouches[0].clientX, dy=sy-e.changedTouches[0].clientY;
+  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50) dx>0?go(current+1):go(current-1);
+  else if(Math.abs(dy)>50) dy>0?go(current+1):go(current-1);
 });
 
 // Charts
