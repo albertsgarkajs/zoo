@@ -3,12 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DZĪVNIEKU APRŪPE – FAKTI 5.–18.11.2025</title>
+<title>DZĪVNIEKU APRŪPE – FAKTI</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{height:100%;overflow:hidden;background:#000;color:#e8f5e9;font-family:Arial,Helvetica,sans-serif;}
-  .slide{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 40% 30%,#1b3a1e,#081a0d);opacity:0;visibility:hidden;transition:all 1.2s cubic-bezier(0.22,1,0.36,1);padding:5vh 8vw;}
-  .slide.active{opacity:1;visibility:visible;z-index:10;}
+  html,body{height:100%;overflow:hidden;background:#000;color:#e8f5e9;font-family:Arial,Helvetica,sans-serif;position:relative;}
+  
+  /* === LIVING GROWING VINES === */
+  .vine{
+    position:fixed;
+    background:linear-gradient(to bottom, transparent 0%, #1b5e20 30%, #2e7d32 70%, #1b5e20 100%);
+    border-radius:100px;
+    opacity:0;
+    transform-origin:top left;
+    animation:vinesGrow 4s ease-out forwards;
+  }
+  @keyframes vinesGrow{
+    0%   {transform:scaleY(0);opacity:0;}
+    60%  {opacity:0.4;}
+    100% {transform:scaleY(1);opacity:0.35;}
+  }
+  .vine1{top:-10%;left:8%;width:22px;height:60vh;transform:rotate(18deg);}
+  .vine2{top:-15%;right:12%;width:20px;height:55vh;transform:rotate(-32deg);}
+  .vine3{bottom:-10%;left:10%;width:24px;height:62vh;transform:rotate(155deg);}
+  .vine4{top:10%;left:-5%;width:18px;height:50vh;transform:rotate(80deg);}
+  .vine5{bottom:20%;right:-8%;width:20px;height:48vh;transform:rotate(-100deg);}
+
+  /* Trigger new growth on every slide change */
+  .slide-change .vine{animation:vinesGrow 4s ease-out forwards;}
+
+  .slide{
+    position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    background:radial-gradient(circle at 40% 30%,#1b3a1e,#081a0d);
+    opacity:0;visibility:hidden;transition:all 1.2s cubic-bezier(0.22,1,0.36,1);padding:5vh 8vw;z-index:10;
+  }
+  .slide.active{opacity:1;visibility:visible;}
   .fade{transform:translateY(60px);}
   .zoom{transform:scale(0.2);}
   .slide-left{transform:translateX(-120vw);}
@@ -18,6 +46,7 @@
   .pulse{transform:scale(0);}
   .fall{transform:translateY(-200vh);}
   .slide.active{transform:none !important;}
+
   .huge{font-size:16vw;font-weight:900;letter-spacing:2px;}
   .big{font-size:11vw;font-weight:900;}
   .med{font-size:5.5vw;margin:2vh 0;}
@@ -28,112 +57,40 @@
   .red{color:#ff1744;text-shadow:0 0 30px #ff1744;}
   .green{color:#00e676;text-shadow:0 0 30px #00e676;}
   .yellow{color:#ffc107;text-shadow:0 0 30px #ffc107;}
+
   canvas,img{max-width:88vw !important;max-height:55vh !important;margin:3vh auto;border-radius:16px;box-shadow:0 15px 40px rgba(0,0,0,0.8);}
   img{object-fit:contain;background:#111;}
+
   #counter{position:fixed;top:20px;right:20px;background:rgba(0,255,100,0.2);padding:12px 30px;border-radius:50px;font-size:2.2rem;z-index:999;border:2px solid #00ff88;}
   #progress{position:fixed;bottom:0;left:0;height:12px;background:#00ff88;width:0%;transition:0.6s;z-index:999;box-shadow:0 0 20px #00ff88;}
 </style>
 </head>
-<body>
+<body id="body">
+
+<!-- Growing vines -->
+<div class="vine vine1"></div>
+<div class="vine vine2"></div>
+<div class="vine vine3"></div>
+<div class="vine vine4"></div>
+<div class="vine vine5"></div>
 
 <div id="counter">1 / 13</div>
 <div id="progress"></div>
 
 <div id="slides">
-
-  <!-- 1 -->
-  <section class="slide active pulse">
-    <div class="huge red">210</div>
-    <div class="med">izlaistas barošanas reizes</div>
-    <div class="small">5.–18.11.2025 (13 dienas)</div>
-  </section>
-
-  <!-- 2 -->
-  <section class="slide fade">
-    <div class="huge red">1 DZĪVNIEKS</div>
-    <div class="big red">AIZGĀJA BOJĀ</div>
-    <div class="med red">Dievlūdzējs (1.30)</div>
-  </section>
-
-  <!-- 3 -->
-  <section class="slide slide-left">
-    <div class="big red">PILNĪGI SAUSS</div>
-    <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2010.jpg" alt="Extatosoma">
-    <div class="med red">Extatosoma tiaratum</div>
-  </section>
-
-  <!-- 4 -->
-  <section class="slide slide-right">
-    <div class="big red">TUKŠS ŪDENS TRAUKS</div>
-    <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2011.jpg" alt="Blaberus">
-    <div class="med red">Blaberus giganteus</div>
-  </section>
-
-  <!-- 5 -->
-  <section class="slide zoom">
-    <div class="huge red">130×</div>
-    <div class="med">Visas 10 čūskas 2. stāvā</div>
-    <div class="med red">13 no 13 dienām izlaistas</div>
-    <canvas id="c1"></canvas>
-  </section>
-
-  <!-- 6 -->
-  <section class="slide rotate">
-    <div class="huge red">10×</div>
-    <div class="med">Tūkstoškāji</div>
-    <div class="med red">10 no 13 dienām</div>
-    <canvas id="c2"></canvas>
-  </section>
-
-  <!-- 7 -->
-  <section class="slide flip">
-    <div class="huge red">60×</div>
-    <div class="med">Lielās čūskas 1. stāvā</div>
-    <canvas id="c3"></canvas>
-  </section>
-
-  <!-- 8 -->
-  <section class="slide fall">
-    <img src="https://i46.servimg.com/u/f46/14/10/26/20/screen10.jpg" alt="14:35">
-    <div class="big red">AIZGĀJA 14:35</div>
-    <div class="med red">Darba diena līdz 15:30</div>
-    <div class="small">Mammāļi paēdināti pārāk agri</div>
-  </section>
-
-  <!-- 9 -->
-  <section class="slide zoom">
-    <div class="huge yellow">DARBA LIKUMS 145. pants</div>
-    <div class="big red">Pusdienas ≠ darba laiks</div>
-    <div class="big red">Aizliegts aiziet agrāk</div>
-  </section>
-
-  <!-- 10 -->
-  <section class="slide slide-left">
-    <canvas id="line"></canvas>
-    <div class="big red">SITUĀCIJA PASLIKTINĀS</div>
-  </section>
-
-  <!-- 11 -->
-  <section class="slide pulse">
-    <div class="huge green">MĒS GRIBAM</div>
-    <div class="big green">2 apgaitas dienā</div>
-    <div class="big green">1 atbildīgo par 2. stāvu</div>
-    <div class="big green">0 izlaistus voljērus</div>
-  </section>
-
-  <!-- 12 -->
-  <section class="slide rotate">
-    <div class="huge green">KATRAM DZĪVNIEKAM</div>
-    <div class="huge green">KATRU DIENU</div>
-  </section>
-
-  <!-- 13 -->
-  <section class="slide fade">
-    <div class="huge green">PALDIES</div>
-    <div class="big green">ka rūpējaties</div>
-    <div class="med green">Nākamā pārbaude pēc 7 dienām</div>
-  </section>
-
+  <section class="slide active pulse"><div class="huge red">210</div><div class="med">izlaistas barošanas reizes</div><div class="small">5.–18.11.2025</div></section>
+  <section class="slide fade"><div class="huge red">1 DZĪVNIEKS</div><div class="big red">AIZGĀJA BOJĀ</div><div class="med red">Dievlūdzējs (1.30)</div></section>
+  <section class="slide slide-left"><div class="big red">PILNĪGI SAUSS</div><img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2010.jpg"><div class="med red">Extatosoma tiaratum</div></section>
+  <section class="slide slide-right"><div class="big red">TUKŠS ŪDENS</div><img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2011.jpg"><div class="med red">Blaberus giganteus</div></section>
+  <section class="slide zoom"><div class="huge red">130×</div><div class="med">10 čūskas 2. stāvā</div><div class="med red">13 no 13 dienām</div><canvas id="c1"></canvas></section>
+  <section class="slide rotate"><div class="huge red">10×</div><div class="med">Tūkstoškāji</div><div class="med red">10 no 13 dienām</div><canvas id="c2"></canvas></section>
+  <section class="slide flip"><div class="huge red">60×</div><div class="med">Lielās čūskas 1. stāvā</div><canvas id="c3"></canvas></section>
+  <section class="slide fall"><img src="https://i46.servimg.com/u/f46/14/10/26/20/screen10.jpg"><div class="big red">AIZGĀJA 14:35</div><div class="med red">Darba diena līdz 15:30</div></section>
+  <section class="slide zoom"><div class="huge yellow">DARBA LIKUMS 145. pants</div><div class="big red">Pusdienas ≠ darba laiks</div></section>
+  <section class="slide slide-left"><canvas id="line"></canvas><div class="big red">SITUĀCIJA PASLIKTINĀS</div></section>
+  <section class="slide pulse"><div class="huge green">MĒS GRIBAM</div><div class="big green">2 apgaitas dienā</div><div class="big green">1 atbildīgo par 2. stāvu</div><div class="big green">0 izlaistus voljērus</div></section>
+  <section class="slide rotate"><div class="huge green">KATRAM DZĪVNIEKAM</div><div class="huge green">KATRU DIENU</div></section>
+  <section class="slide fade"><div class="huge green">PALDIES</div><div class="big green">ka rūpējaties</div><div class="med green">Nākamā pārbaude pēc 7 dienām</div></section>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -141,12 +98,20 @@
 const slides = document.querySelectorAll('.slide');
 let current = 0;
 const total = slides.length;
+const body = document.getElementById('body');
+
 function go(n){
   current = Math.max(0, Math.min(n, total-1));
   slides.forEach((s,i)=>s.classList.toggle('active', i===current));
   document.getElementById('counter').textContent = (current+1)+' / '+total;
   document.getElementById('progress').style.width = (current+1)/total*100+'%';
+  
+  // TRIGGER VINE GROWTH ON EVERY SLIDE CHANGE
+  body.classList.remove('slide-change');
+  void body.offsetWidth; // force reflow
+  body.classList.add('slide-change');
 }
+
 document.addEventListener('keydown', e=>{
   if(e.key==='ArrowRight'||e.key===' ') go(current+1);
   if(e.key==='ArrowLeft') go(current-1);
@@ -160,11 +125,11 @@ document.addEventListener('touchend',e=>{
   if(dx < -50) go(current-1);
 });
 
-/* Corrected charts */
+/* Charts */
 new Chart(document.getElementById('c1'),{type:'doughnut',data:{datasets:[{data:[130,80],backgroundColor:['#ff1744','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c2'),{type:'doughnut',data:{datasets:[{data:[10,203],backgroundColor:['#ff5722','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c3'),{type:'doughnut',data:{datasets:[{data:[60,150],backgroundColor:['#ff9800','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
-new Chart(document.getElementById('line'),{type:'line',data:{datasets:[{data:[15,18,12,20,28,25,10,18,35,20,22,24],borderColor:'#ff1744',backgroundColor:'rgba(255,23,68,0.3)',fill:true,tension:0.4,pointRadius:12,pointBackgroundColor:'#ff1744',pointBorderWidth:4}]},options:{plugins:{legend:false},scales:{x:{display:false},y:{display:false}}}});
+new Chart(document.getElementById('line'),{type:'line',data:{datasets:[{data:[15,18,12,20,28,25,10,18,35,20,22,24],borderColor:'#ff1744',backgroundColor:'rgba(255,23,68,0.3)',fill:true,tension:0.4,pointRadius:12,pointBackgroundColor:'#ff1744'}]},options:{plugins:{legend:false},scales:{x:{display:false},y:{display:false}}}});
 
 go(0);
 </script>
