@@ -15,7 +15,7 @@
   }
   .slide{
     position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;color:#e8f5e9;padding:80px 140px;opacity:0;transition:opacity 1s ease;
+    text-align:center;color:#e8f5e9;padding:60px 120px;opacity:0;transition:opacity 1s ease;
   }
   .slide.active{opacity:1;z-index:10;}
   .fade{transform:translateY(60px);}
@@ -28,21 +28,21 @@
   .fall{transform:translateY(-2000px);}
   .slide.active{transform:none !important;}
 
-  h1{font-size:48px;font-weight:900;margin:20px 0;}
-  h2{font-size:42px;font-weight:800;margin:15px 0;}
-  p{font-size:32px;line-height:1.5;margin:10px 0;}
-  .small{font-size:26px;opacity:0.9;}
-  .law{font-style:italic;background:rgba(255,255,255,0.08);padding:35px 70px;border-radius:22px;margin:30px 0;max-width:1700px;}
+  h1{font-size:52px;font-weight:900;margin:20px 0;}
+  h2{font-size:44px;font-weight:800;margin:15px 0;}
+  p{font-size:34px;line-height:1.5;margin:12px 0;}
+  .small{font-size:28px;opacity:0.9;}
+  .law{font-style:italic;background:rgba(255,255,255,0.08);padding:40px 80px;border-radius:24px;margin:30px 0;max-width:1750px;}
 
-  .red{color:#ff1744;text-shadow:0 0 40px #ff1744;}
-  .green{color:#00e676;text-shadow:0 0 40px #00e676;}
-  .yellow{color:#ffc107;text-shadow:0 0 40px #ffc107;}
+  .red{color:#ff1744;text-shadow:0 0 45px #ff1744;}
+  .green{color:#00e676;text-shadow:0 0 45px #00e676;}
+  .yellow{color:#ffc107;text-shadow:0 0 45px #ffc107;}
 
-  canvas,img{max-width:1650px;max-height:780px;margin:30px auto;border-radius:20px;box-shadow:0 30px 80px #000;}
+  canvas,img{max-width:1750px;max-height:820px;margin:30px auto;border-radius:22px;box-shadow:0 35px 90px #000;}
   img{object-fit:contain;background:#111;}
 
-  #counter{position:fixed;top:30px;right:50px;background:rgba(0,255,100,0.2);padding:15px 45px;border-radius:60px;font-size:42px;z-index:999;border:4px solid #00ff88;}
-  #progress{position:fixed;bottom:0;left:0;height:20px;background:#00ff88;width:0%;transition:0.6s;z-index:999;}
+  #counter{position:fixed;top:30px;right:50px;background:rgba(0,255,100,0.2);padding:16px 50px;border-radius:70px;font-size:44px;z-index:999;border:5px solid #00ff88;}
+  #progress{position:fixed;bottom:0;left:0;height:22px;background:#00ff88;width:0%;transition:0.6s;z-index:999;}
 
   .vines{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
   .vine{position:absolute;background:linear-gradient(to bottom,transparent,#1b5e20 40%,#2e7d32 80%);border-radius:100px;}
@@ -55,10 +55,10 @@
 <div class="frame">
   <div class="presentation grow" id="pres">
     <div class="vines">
-      <div class="vine" style="top:-10%;left:8%;width:28px;height:68vh;transform:rotate(18deg);"></div>
-      <div class="vine" style="top:-15%;right:12%;width:26px;height:64vh;transform:rotate(-32deg);"></div>
-      <div class="vine" style="bottom:-10%;left:10%;width:30px;height:70vh;transform:rotate(155deg);"></div>
-      <div class="vine" style="top:10%;left:-5%;width:24px;height:58vh;transform:rotate(80deg);"></div>
+      <div class="vine" style="top:-10%;left:8%;width:30px;height:70vh;transform:rotate(18deg);"></div>
+      <div class="vine" style="top:-15%;right:12%;width:28px;height:66vh;transform:rotate(-32deg);"></div>
+      <div class="vine" style="bottom:-10%;left:10%;width:32px;height:72vh;transform:rotate(155deg);"></div>
+      <div class="vine" style="top:10%;left:-5%;width:26px;height:60vh;transform:rotate(80deg);"></div>
     </div>
 
     <div id="counter">1 / 12</div>
@@ -91,11 +91,9 @@
       <p>Blaberus giganteus</p>
     </section>
 
-    <!-- 5 -->
+    <!-- 5 – ONLY THE HUGE GRAPH, NO TITLE -->
     <section class="slide zoom">
-      <h1 class="red">VISI DATI VIENĀ ATTĒLĀ</h1>
       <canvas id="overview"></canvas>
-      <p class="small">Kopā 210 izlaistas barošanas reizes</p>
     </section>
 
     <!-- 6–9 -->
@@ -115,7 +113,7 @@
       </div>
     </section>
 
-    <!-- 11 – B VARIANTS (134. + 97. pants) -->
+    <!-- 11 – 134. + 97. pants -->
     <section class="slide pulse">
       <h1 class="red">Darba likums – 134. un 97. pants</h1>
       <div class="law">
@@ -170,21 +168,38 @@ document.addEventListener('touchend', e => {
   if (Math.abs(diff) > 50) go(current + (diff > 0 ? 1 : -1));
 });
 
-/* BIG VISIBLE OVERVIEW */
+/* ONLY THE GRAPH – NO TEXT – SPEAKS FOR ITSELF */
 new Chart(document.getElementById('overview'), {
   type: 'bar',
   data: {
-    labels: ['2. stāva čūskas\n(10 voljēri)', 'Lielās čūskas\n1. stāvs', 'Tūkstoškāji', 'Citi + mirušais'],
-    datasets: [{ data:[110,60,10,40], backgroundColor:['#ff1744','#ff5722','#ff9800','#c62828'], borderRadius:20, barThickness:110 }]
+    labels: [
+      '2. stāva čūskas (10 voljēri)',
+      'Lielās čūskas 1. stāvs',
+      'Citi + mirušais dzīvnieks',
+      'Tūkstoškāji'
+    ],
+    datasets: [{
+      data: [110, 60, 40, 10],
+      backgroundColor: ['#ff1744', '#ff5722', '#ff8a65', '#ff9800'],
+      borderRadius: 24,
+      barThickness: 130
+    }]
   },
   options: {
-    indexAxis:'y',
-    plugins:{legend:false},
-    scales:{ x:{display:false,max:130}, y:{grid:{display:false},ticks:{color:'#e8f5e9',font:{size:46,weight:'bold'},padding:30}} },
-    animation:{duration:2000}
+    indexAxis: 'y',
+    plugins: { legend: { display: false }, tooltip: { enabled: true } },
+    scales: {
+      x: { display: false, max: 120 },
+      y: {
+        grid: { display: false },
+        ticks: { color: '#e8f5e9', font: { size: 52, weight: 'bold' }, padding: 40 }
+      }
+    },
+    animation: { duration: 2200, easing: 'easeOutQuart' }
   }
 });
 
+/* Other charts */
 new Chart(document.getElementById('c1'),{type:'doughnut',data:{datasets:[{data:[110,100],backgroundColor:['#ff1744','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c2'),{type:'doughnut',data:{datasets:[{data:[10,203],backgroundColor:['#ff5722','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c3'),{type:'doughnut',data:{datasets:[{data:[60,150],backgroundColor:['#ff9800','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
