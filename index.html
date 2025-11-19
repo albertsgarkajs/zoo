@@ -61,7 +61,7 @@
       <div class="vine" style="top:10%;left:-5%;width:24px;height:58vh;transform:rotate(80deg);"></div>
     </div>
 
-    <div id="counter">1 / 14</div>
+    <div id="counter">1 / 12</div>
     <div id="progress"></div>
 
     <!-- 1 -->
@@ -72,7 +72,8 @@
 
     <!-- 2 -->
     <section class="slide fade">
-      <h1 class="red">1 dzīvnieks aizgāja bojā</h1>
+      <h1 class="red">1 dzīvnieks</h1>
+      <h2 class="red">gāja bojā</h2>
       <p>Dievlūdzējs (voljērs 1.30)</p>
     </section>
 
@@ -90,67 +91,64 @@
       <p>Blaberus giganteus</p>
     </section>
 
-    <!-- 5 – MAIN GRAPH – NOW 100 % VISIBLE -->
+    <!-- 5 – VISI DATI VIENĀ ATTĒLĀ – BIG RED BAR GRAPH -->
     <section class="slide zoom">
       <h1 class="red">VISI DATI VIENĀ ATTĒLĀ</h1>
       <canvas id="overview"></canvas>
       <p class="small">Kopā 210 izlaistas barošanas reizes</p>
     </section>
 
-    <!-- 6–14 -->
+    <!-- 6 -->
     <section class="slide rotate">
       <h1 class="red">110 reizes izlaistas</h1>
       <p>10 čūskas 2. stāvā</p>
       <canvas id="c1"></canvas>
     </section>
 
+    <!-- 7 -->
     <section class="slide flip">
       <h1 class="red">10 reizes izlaisti</h1>
       <p>Tūkstoškāji</p>
       <canvas id="c2"></canvas>
     </section>
 
+    <!-- 8 -->
     <section class="slide fall">
       <h1 class="red">60 reizes izlaistas</h1>
       <p>Lielās čūskas 1. stāvā</p>
       <canvas id="c3"></canvas>
     </section>
 
+    <!-- 9 -->
     <section class="slide slide-left">
       <img src="https://i46.servimg.com/u/f46/14/10/26/20/screen10.jpg">
       <h2 class="red">Aizgāja 14:35</h2>
       <p>Darba diena līdz 15:30</p>
     </section>
 
+    <!-- 10 -->
     <section class="slide zoom">
       <h1 class="yellow">Darba likums – 145. pants (2)</h1>
       <div class="law">
         <p>Pārtraukumu piešķir ne vēlāk kā pēc četrām stundām no darba sākuma.</p>
-        <p>Pārtraukuma ilgumu nosaka darba devējs pēc konsultēšanās ar darbinieku pārstāvjiem, taču tas nedrīkst būt īsāks par 30 minūtēm.</p>
+        <p>Pārtraukuma ilgumu nosada darba devējs pēc konsultēšanās ar darbinieku pārstāvjiem, taču tas nedrīkst būt īsāks par 30 minūtēm.</p>
         <p>Ievērojot darba drošības un veselības aizsardzības principus, darba koplīgumā var noteikt citu pārtraukuma piešķiršanas kārtību.</p>
         <p><strong>Pārtraukumu neieskaita darba laikā,</strong> ja darba līgumā vai darba koplīgumā nav noteikts citādi.</p>
       </div>
     </section>
 
+    <!-- 11 -->
     <section class="slide pulse">
-      <h1 class="red">Darba likums – 131. pants</h1>
-      <div class="law">
-        <p>Darbiniekam jāpilda darba pienākumi visu nolīgto darba laiku.</p>
-        <p>Darba devējs nedrīkst pieļaut, ka darbinieks pamet darbu pirms laika beigām, ja darbs nav pabeigts.</p>
-      </div>
-    </section>
-
-    <section class="slide slide-right">
-      <canvas id="line"></canvas>
-      <h2 class="red">Situācija tikai pasliktinās</h2>
-    </section>
-
-    <section class="slide fade">
-      <h1 class="green">Mēs g Rnā tikai:</h1>
+      <h1 class="green">Mēs gribam tikai:</h1>
       <p>2 apgaitas dienā</p>
       <p>1 atbildīgo par 2. stāvu</p>
       <p>0 izlaistus voljērus</p>
-      <h2 class="green">PALDIES, ka rūpējaties</h2>
+    </section>
+
+    <!-- 12 -->
+    <section class="slide fade">
+      <h1 class="green">PALDIES</h1>
+      <h2 class="green">ka rūpējaties par dzīvniekiem</h2>
       <p class="small">Nākamā pārbaude pēc 7 dienām</p>
     </section>
 
@@ -177,7 +175,7 @@ function go(n) {
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(current + 1); }
   if (e.key === 'ArrowLeft') { e.preventDefault(); go(current - 1); }
-  if (e.key === 'f' || e.key === 'F') {
+  if (e.key.toLowerCase() === 'f') {
     if (!document.fullscreenElement) document.documentElement.requestFullscreen();
     else document.exitFullscreen();
   }
@@ -190,22 +188,17 @@ document.addEventListener('touchend', e => {
   if (Math.abs(diff) > 50) go(current + (diff > 0 ? 1 : -1));
 });
 
-/* MAIN OVERVIEW GRAPH – BIG AND VISIBLE */
+/* MAIN OVERVIEW GRAPH – GUARANTEED VISIBLE */
 new Chart(document.getElementById('overview'), {
   type: 'bar',
   data: {
-    labels: [
-      '2. stāva čūskas\n(10 voljēri)',
-      'Lielās čūskas\n1. stāvs',
-      'Tūkstoškāji',
-      'Citi + mirušais dzīvnieks'
-    ],
+    labels: ['2. stāva čūskas\n(10 voljēri)', 'Lielās čūskas\n1. stāvs', 'Tūkstoškāji', 'Citi + mirušais'],
     datasets: [{
-      label: 'Izlaistas barošanas',
+      label: 'Izlaistas',
       data: [110, 60, 10, 40],
       backgroundColor: ['#ff1744', '#ff5722', '#ff9800', '#c62828'],
-      borderRadius: 16,
-      barThickness: 100
+      borderRadius: 20,
+      barThickness: 110
     }]
   },
   options: {
@@ -213,12 +206,12 @@ new Chart(document.getElementById('overview'), {
     plugins: { legend: { display: false } },
     scales: {
       x: { display: false, max: 130 },
-      y: {
+      y: { 
         grid: { display: false },
-        ticks: { color: '#e8f5e9', font: { size: 44, weight: 'bold' }, padding: 20 }
+        ticks: { color: '#e8f5e9', font: { size: 46, weight: 'bold' }, padding: 30 }
       }
     },
-    animation: { duration: 1500 }
+    animation: { duration: 2000, easing: 'easeOutQuart' }
   }
 });
 
@@ -226,7 +219,6 @@ new Chart(document.getElementById('overview'), {
 new Chart(document.getElementById('c1'),{type:'doughnut',data:{datasets:[{data:[110,100],backgroundColor:['#ff1744','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c2'),{type:'doughnut',data:{datasets:[{data:[10,203],backgroundColor:['#ff5722','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c3'),{type:'doughnut',data:{datasets:[{data:[60,150],backgroundColor:['#ff9800','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
-new Chart(document.getElementById('line'),{type:'line',data:{datasets:[{data:[15,18,12,20,28,25,10,18,35,20,22,24],borderColor:'#ff1744',backgroundColor:'rgba(255,23,68,0.3)',fill:true,tension:0.4,pointRadius:16,pointBackgroundColor:'#ff1744'}]},options:{plugins:{legend:false},scales:{x:{display:false},y:{display:false}}}});
 
 go(0);
 </script>
