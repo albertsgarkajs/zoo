@@ -15,45 +15,78 @@
   }
   .slide{
     position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;color:#e8f5e9;padding:60px 120px;opacity:0;transition:opacity 1.2s ease;
+    text-align:center;color:#e8f5e9;opacity:0;transition:opacity 1.4s ease;
   }
   .slide.active{opacity:1;z-index:10;}
 
-  h1{font-size:78px;font-weight:900;margin:20px 0;letter-spacing:2px;}
-  h2{font-size:62px;font-weight:800;margin:20px 0;}
-  p{font-size:42px;line-height:1.5;margin:12px 0;}
-  .small{font-size:36px;opacity:0.9;margin-top:30px;}
-  .law{font-style:italic;background:rgba(255,255,255,0.06);padding:50px 100px;border-radius:30px;margin:40px 0;max-width:1700px;line-height:1.7;font-size:42px;}
+  h1{font-size:82px;font-weight:900;margin:30px 0;letter-spacing:3px;}
+  h2{font-size:66px;font-weight:800;margin:25px 0;}
+  p{font-size:44px;line-height:1.5;margin:15px 0;}
+  .small{font-size:38px;opacity:0.92;margin-top:40px;}
+  .law{font-style:italic;background:rgba(255,255,255,0.06);padding:55px 110px;border-radius:32px;margin:40px 0;max-width:1720px;line-height:1.8;font-size:44px;}
 
-  .red{color:#ff1744;text-shadow:0 0 60px #ff1744;}
-  .yellow{color:#ffc107;text-shadow:0 0 60px #ffc107;}
+  .red{color:#ff1744;text-shadow:0 0 65px #ff1744;}
+  .yellow{color:#ffc107;text-shadow:0 0 65px #ffc107;}
 
-  .img-pair{position:relative;width:1650px;height:850px;margin:40px auto;border-radius:30px;overflow:hidden;
-            box-shadow:0 40px 120px #000;background:#111;}
-  .img-pair img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:30px;}
-  .img-pair .highlight{opacity:0;transition:opacity 2.4s ease 0.6s;}
-  .slide.active .img-pair .highlight{opacity:1;}
+  /* HUGE seamless images – no black box */
+  .img-pair{
+    position:relative;
+    width:1880px;
+    height:960px;
+    margin:20px auto;
+    border-radius:36px;
+    overflow:hidden;
+  }
+  .img-pair img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+  }
+  .img-pair .highlight{
+    opacity:0;
+    transition:opacity 2.8s ease-in-out 0.4s;
+  }
+  .slide.active .img-pair .highlight{
+    opacity:1;
+  }
 
-  #counter{position:fixed;top:40px;right:60px;background:rgba(0,255,100,0.25);padding:20px 60px;border-radius:80px;font-size:50px;z-index:999;border:6px solid #00ff88;}
+  #counter{
+    position:fixed;top:40px;right:60px;
+    background:rgba(0,255,100,0.25);
+    padding:22px 65px;
+    border-radius:90px;
+    font-size:52px;
+    z-index:999;
+    border:6px solid #00ff88;
+  }
 
-  /* Progress bar – almost invisible, never covers text */
-  #progress{position:fixed;bottom:0;left:0;height:18px;background:rgba(0,255,136,0.08);width:0%;transition:width 0.8s ease;z-index:1;}
+  /* Progress bar = almost invisible */
+  #progress{
+    position:fixed;bottom:0;left:0;
+    height:12px;
+    background:rgba(0,255,136,0.06);
+    width:0%;
+    transition:width 0.9s ease;
+    z-index:1;
+  }
 
   .vines{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
   .vine{position:absolute;background:linear-gradient(to bottom,transparent,#1b5e20 40%,#2e7d32 80%);border-radius:100px;}
   .grow .vine{animation:grow 4s ease-out forwards;}
   @keyframes grow{0%{transform:scaleY(0);opacity:0;}70%{opacity:0.4;}100%{transform:scaleY(1);opacity:0.35;}}
 
-  /* BAR CHART – now with explanation */
-  .chart{width:1700px;display:flex;flex-direction:column;gap:65px;justify-content:center;height:820px;}
-  .bar-row{display:flex;align-items:center;gap:80px;height:145px;position:relative;}
-  .bar-label{width:820px;text-align:right;font-size:58px;font-weight:900;color:#e8f5e9;text-shadow:0 0 35px #fff;}
-  .bar-bg{flex:1;height:135px;background:rgba(255,255,255,0.07);border-radius:80px;overflow:hidden;position:relative;
-          box-shadow:0 0 70px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,0,0,0.6);}
-  .bar-fill{height:100%;width:0;background:linear-gradient(90deg,#ff1744,#ff5722);border-radius:80px;
-            box-shadow:0 0 90px #ff1744;animation:fill 3s ease-out forwards;}
-  .bar-value{position:absolute;right:50px;top:50%;transform:translateY(-50%);
-             font-size:96px;font-weight:900;color:#fff;text-shadow:0 0 40px #000;}
+  /* BAR CHART */
+  .chart{width:1780px;display:flex;flex-direction:column;gap:70px;justify-content:center;height:840px;}
+  .bar-row{display:flex;align-items:center;gap:90px;height:150px;position:relative;}
+  .bar-label{width:860px;text-align:right;font-size:60px;font-weight:900;color:#e8f5e9;text-shadow:0 0 40px #fff;}
+  .bar-bg{flex:1;height:140px;background:rgba(255,255,255,0.07);border-radius:90px;overflow:hidden;position:relative;
+          box-shadow:0 0 80px rgba(0,0,0,0.8), inset 0 0 50px rgba(0,0,0,0.6);}
+  .bar-fill{height:100%;width:0;background:linear-gradient(90deg,#ff1744,#ff5722);border-radius:90px;
+            box-shadow:0 0 100px #ff1744;animation:fill 3.2s ease-out forwards;}
+  .bar-value{position:absolute;right:60px;top:50%;transform:translateY(-50%);
+             font-size:100px;font-weight:900;color:#fff;text-shadow:0 0 45px #000;}
   @keyframes fill{to{width:100%}}
   .r1 .bar-fill{width:100%}
   .r2 .bar-fill{width:54.5%}
@@ -66,10 +99,10 @@
 <div class="frame">
   <div class="presentation grow" id="pres">
     <div class="vines">
-      <div class="vine" style="top:-10%;left:8%;width:32px;height:72vh;transform:rotate(18deg);"></div>
-      <div class="vine" style="top:-15%;right:12%;width:30px;height:68vh;transform:rotate(-32deg);"></div>
-      <div class="vine" style="bottom:-10%;left:10%;width:34px;height:74vh;transform:rotate(155deg);"></div>
-      <div class="vine" style="top:10%;left:-5%;width:28px;height:62vh;transform:rotate(80deg);"></div>
+      <div class="vine" style="top:-10%;left:8%;width:34px;height:74vh;transform:rotate(18deg);"></div>
+      <div class="vine" style="top:-15%;right:12%;width:32px;height:70vh;transform:rotate(-32deg);"></div>
+      <div class="vine" style="bottom:-10%;left:10%;width:36px;height:76vh;transform:rotate(155deg);"></div>
+      <div class="vine" style="top:10%;left:-5%;width:30px;height:64vh;transform:rotate(80deg);"></div>
     </div>
 
     <div id="counter">1 / 8</div>
@@ -88,7 +121,7 @@
       <p>Dievlūdzējs (voljērs 1.30)</p>
     </section>
 
-    <!-- 3 – Dry enclosure -->
+    <!-- 3 – Dry enclosure (huge seamless) -->
     <section class="slide">
       <h2 class="red">PILNĪGI SAUSS VOLJĒRS</h2>
       <div class="img-pair">
@@ -98,7 +131,7 @@
       <p>Extatosoma tiaratum</p>
     </section>
 
-    <!-- 4 – Empty water -->
+    <!-- 4 – Empty water dish (huge seamless) -->
     <section class="slide">
       <h2 class="red">TUKŠS ŪDENS TRAUKS</h2>
       <div class="img-pair">
@@ -108,9 +141,9 @@
       <p>Blaberus giganteus</p>
     </section>
 
-    <!-- 5 – Bar chart + explanation -->
+    <!-- 5 – Bar chart -->
     <section class="slide">
-      <h2 class="red" style="margin-bottom:50px;">Kuras grupas cieta visvairāk</h2>
+      <h2 class="red" style="margin-bottom:60px;">Kuras grupas cieta visvairāk</h2>
       <div class="chart">
         <div class="bar-row r1"><div class="bar-label">2. stāva čūskas (10 voljēri)</div><div class="bar-bg"><div class="bar-fill"></div><div class="bar-value">110×</div></div></div>
         <div class="bar-row r2"><div class="bar-label">1. stāva čūskas</div><div class="bar-bg"><div class="bar-fill"></div><div class="bar-value">60×</div></div></div>
@@ -120,14 +153,14 @@
       <p class="small">Visas šīs ir <strong>izlaistas barošanas un/vai ūdens maiņas</strong></p>
     </section>
 
-    <!-- 6 – Early leaving with highlight -->
+    <!-- 6 – Early leaving (huge seamless) -->
     <section class="slide">
       <div class="img-pair">
         <img src="https://i46.servimg.com/u/f46/14/10/26/20/screen10.jpg">
         <img src="https://i46.servimg.com/u/f46/14/10/26/20/screen11.jpg" class="highlight">
       </div>
-      <h2 class="red" style="margin-top:50px;font-size:90px;">Aizgāja 14:35</h2>
-      <p style="font-size:70px;">Darba diena līdz 15:30</p>
+      <h2 class="red" style="margin-top:60px;font-size:96px;">Aizgāja 14:35</h2>
+      <p style="font-size:76px;">Darba diena līdz 15:30</p>
     </section>
 
     <!-- 7 – Law 145 -->
