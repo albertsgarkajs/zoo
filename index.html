@@ -6,85 +6,90 @@
 <title>Dzīvnieku aprūpe – 5.–18.11.2025</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{height:100%;overflow:hidden;background:#000;font-family:"Segoe UI",Arial,sans-serif;}
-  .frame{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;}
+  html,body{height:100%;overflow:hidden;background:#000;font-family:"Segoe UI",Arial,sans-serif;color:#e8f5e9;}
+  
   .presentation{
     width:1920px;height:1080px;max-width:100vw;max-height:100vh;
     background:radial-gradient(circle at 40% 30%,#1b3a1e,#081a0d);
     position:relative;overflow:hidden;
   }
+
   .slide{
-    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;color:#e8f5e9;opacity:0;transition:opacity 1.4s ease;
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+    opacity:0;transition:opacity 1.6s ease;
   }
   .slide.active{opacity:1;z-index:10;}
 
-  h1{font-size:82px;font-weight:900;margin:30px 0;letter-spacing:3px;}
-  h2{font-size:66px;font-weight:800;margin:25px 0;}
-  p{font-size:44px;line-height:1.5;margin:15px 0;}
-  .small{font-size:38px;opacity:0.92;margin-top:40px;}
-  .law{font-style:italic;background:rgba(255,255,255,0.06);padding:55px 110px;border-radius:32px;margin:40px 0;max-width:1720px;line-height:1.8;font-size:44px;}
+  h1{font-size:86px;font-weight:900;letter-spacing:3px;margin:30px 0;text-shadow:0 0 80px #ff1744;}
+  h2{font-size:70px;font-weight:800;margin:25px 0;text-shadow:0 0 70px #ff1744;}
+  p{font-size:46px;line-height:1.5;margin:15px 0;}
+  .small{font-size:40px;opacity:0.94;margin-top:50px;}
 
-  .red{color:#ff1744;text-shadow:0 0 65px #ff1744;}
-  .yellow{color:#ffc107;text-shadow:0 0 65px #ffc107;}
+  .red{color:#ff1744;text-shadow:0 0 80px #ff1744;}
+  .yellow{color:#ffc107;text-shadow:0 0 80px #ffc107;}
 
-  /* Perfect seamless images – no black box, huge and clean */
-  .img-big{
-    position:relative;
-    width:1880px;
-    height:960px;
-    margin:30px auto;
-    border-radius:48px;
-    overflow:hidden;
-    box-shadow:0 50px 140px rgba(0,0,0,0.9);
-  }
-  .img-big img{
+  /* 2030 IMAGE MAGIC – pure fade from darkness */
+  .img-bg{
     position:absolute;
     inset:0;
-    width:100%;
-    height:100%;
-    object-fit:contain;
-  }
-  .img-big .highlight{
+    background-size:contain;
+    background-position:center;
+    background-repeat:no-repeat;
     opacity:0;
-    transition:opacity 2.8s ease-in-out 0.5s;
+    animation:fadeInImg 4s ease-out forwards;
   }
-  .slide.active .img-big .highlight{
-    opacity:1;
+  .highlight-bg{
+    position:absolute;
+    inset:0;
+    background-size:contain;
+    background-position:center;
+    background-repeat:no-repeat;
+    opacity:0;
+    animation:fadeInHighlight 4s ease-out 1.2s forwards;
+  }
+
+  @keyframes fadeInImg{
+    0%{opacity:0;filter:brightness(0.4) blur(6px);}
+    70%{opacity:0.94;filter:brightness(0.7) blur(2px);}
+    100%{opacity:1;filter:brightness(1) blur(0);}
+  }
+  @keyframes fadeInHighlight{
+    0%,60%{opacity:0;}
+    100%{opacity:1;}
+  }
+
+  .law{
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(12px);
+    padding:60px 120px;
+    border-radius:40px;
+    max-width:1760px;
+    font-size:46px;
+    line-height:1.8;
+    box-shadow:0 20px 80px rgba(0,0,0,0.7);
   }
 
   #counter{
     position:fixed;top:40px;right:60px;
-    background:rgba(0,255,100,0.25);
-    padding:22px 65px;
-    border-radius:90px;
-    font-size:52px;
+    background:rgba(0,255,100,0.22);
+    padding:22px 70px;
+    border-radius:100px;
+    font-size:54px;
+    font-weight:900;
+    border:7px solid #00ff88;
+    backdrop-filter:blur(8px);
     z-index:999;
-    border:6px solid #00ff88;
-  }
-  #progress{
-    position:fixed;bottom:0;left:0;
-    height:10px;
-    background:rgba(0,255,136,0.05);
-    width:0%;
-    transition:width 0.9s ease;
-    z-index:1;
   }
 
-  .vines{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
-  .vine{position:absolute;background:linear-gradient(to bottom,transparent,#1b5e20 40%,#2e7d32 80%);border-radius:100px;}
-  .grow .vine{animation:grow 4s ease-out forwards;}
-  @keyframes grow{0%{transform:scaleY(0);opacity:0;}70%{opacity:0.4;}100%{transform:scaleY(1);opacity:0.35;}}
-
-  .chart{width:1780px;display:flex;flex-direction:column;gap:70px;justify-content:center;height:840px;}
-  .bar-row{display:flex;align-items:center;gap:90px;height:150px;position:relative;}
-  .bar-label{width:860px;text-align:right;font-size:60px;font-weight:900;color:#e8f5e9;text-shadow:0 0 40px #fff;}
-  .bar-bg{flex:1;height:140px;background:rgba(255,255,255,0.07);border-radius:90px;overflow:hidden;position:relative;
-          box-shadow:0 0 80px rgba(0,0,0,0.8), inset 0 0 50px rgba(0,0,0,0.6);}
-  .bar-fill{height:100%;width:0;background:linear-gradient(90deg,#ff1744,#ff5722);border-radius:90px;
-            box-shadow:0 0 100px #ff1744;animation:fill 3.2s ease-out forwards;}
-  .bar-value{position:absolute;right:60px;top:50%;transform:translateY(-50%);
-             font-size:100px;font-weight:900;color:#fff;text-shadow:0 0 45px #000;}
+  .chart{width:1800px;margin:60px auto;}
+  .bar-row{display:flex;align-items:center;gap:100px;height:150px;margin:30px 0;}
+  .bar-label{font-size:62px;font-weight:900;text-align:right;width:900px;text-shadow:0 0 40px #fff;}
+  .bar-bg{height:150px;flex:1;background:rgba(255,255,255,0.08);border-radius:100px;overflow:hidden;box-shadow:inset 0 0 60px rgba(0,0,0,0.7);}
+  .bar-fill{height:100%;width:0;background:linear-gradient(90deg,#ff1744,#ff5722);border-radius:100px;
+            box-shadow:0 0 120px #ff1744;animation:fill 3.5s ease-out forwards;}
+  .bar-value{position:absolute;right:80px;font-size:110px;font-weight:900;color:#fff;text-shadow:0 0 50px #000;}
   @keyframes fill{to{width:100%}}
   .r1 .bar-fill{width:100%}
   .r2 .bar-fill{width:54.5%}
@@ -94,126 +99,105 @@
 </head>
 <body>
 
-<div class="frame">
-  <div class="presentation grow" id="pres">
-    <div class="vines">
-      <div class="vine" style="top:-10%;left:8%;width:34px;height:74vh;transform:rotate(18deg);"></div>
-      <div class="vine" style="top:-15%;right:12%;width:32px;height:70vh;transform:rotate(-32deg);"></div>
-      <div class="vine" style="bottom:-10%;left:10%;width:36px;height:76vh;transform:rotate(155deg);"></div>
-      <div class="vine" style="top:10%;left:-5%;width:30px;height:64vh;transform:rotate(80deg);"></div>
+<div class="presentation" id="pres">
+
+  <div id="counter">1 / 8</div>
+
+  <!-- 1 -->
+  <section class="slide active">
+    <h1 class="red">210 izlaistas barošanas/ūdens maiņas reizes</h1>
+    <p>5.–18.11.2025 · 13 darba dienas</p>
+  </section>
+
+  <!-- 2 – Dead animal + voljērs 1.30 -->
+  <section class="slide">
+    <div class="img-bg" style="background-image:ur[](https://i46.servimg.com/u/f46/14/10/26/20/img_2014.jpg)"></div>
+    <h1 class="red">1 dzīvnieks</h1>
+    <h2 class="red">gāja bojā</h2>
+    <p>Dievlūdzējs (voljērs 1.30)</p>
+  </section>
+
+  <!-- 3 – Dry enclosure -->
+  <section class="slide">
+    <div class="img-bg" style="background-image:ur[](https://i46.servimg.com/u/f46/14/10/26/20/img_2010.jpg)"></div>
+    <div class="highlight-bg" style="background-image:ur[](https://i46.servimg.com/u/f46/14/10/26/20/img_2012.jpg)"></div>
+    <h2 class="red">PILNĪGI SAUSS VOLJĒRS</h2>
+    <p>Extatosoma tiaratum</p>
+  </section>
+
+  <!-- 4 – Empty water -->
+  <section class="slide">
+    <div class="img-bg" style="background-image:ur[](https://i46.servimg.com/u/f46/14/10/26/20/img_2011.jpg)"></div>
+    <div class="highlight-bg" style="background-image:ur[](https://i46.servimg.com/u/f46/14/10/26/20/img_2013.jpg)"></div>
+    <h2 class="red">TUKŠS ŪDENS TRAUKS</h2>
+    <p>Blaberus giganteus</p>
+  </section>
+
+  <!-- 5 – Bar chart -->
+  <section class="slide">
+    <h2 class="red" style="margin-bottom:80px;">Kuras grupas cieta visvairāk</h2>
+    <div class="chart">
+      <div class="bar-row r1"><div class="bar-label">2. stāva čūskas (10 voljēri)</div><div class="bar-bg"><div class="bar-fill"></div><div class="bar-value">110×</div></div></div>
+      <div class="bar-row r2"><div class="bar-label">1. stāva čūskas</div><div class="bar-bg"><div class="bar-fill"></div><div class="bar-value">60×</div></div></div>
+      <div class="bar-row r3"><div class="bar-label">Citi + mirušais dzīvnieks</div><div class="bar-bg"><div class="bar-fill"></div><div class="bar-value">40×</div></div></div>
+      <div class="bar-row r4"><div class="bar-label">Tūkstoškāji</div><div class="bar-bg"><div class="bar-fill"></div><div class="bar-value">10×</div></div></div>
     </div>
+    <p class="small">Visas šīs ir <strong>izlaistas barošanas un/vai ūdens maiņas</strong></p>
+  </section>
 
-    <div id="counter">1 / 8</div>
-    <div id="progress"></div>
+  <!-- 6 – Early leaving -->
+  <section class="slide">
+    <div class="img-bg" style="background-image:ur[](https://i46.servimg.com/u/f46/14/10/26/20/screen10.jpg)"></div>
+    <div class="highlight-bg" style="background-image:ur[](https://i46.servimg.com/u/f46/14/10/26/20/screen11.jpg)"></div>
+    <h2 class="red" style="margin-top:80px;font-size:100px;">Aizgāja 14:35</h2>
+    <p style="font-size:80px;">Darba diena līdz 15:30</p>
+  </section>
 
-    <!-- 1 -->
-    <section class="slide active">
-      <h1 class="red">210 izlaistas barošanas/ūdens maiņas reizes</h1>
-      <p>5.–18.11.2025 · 13 darba dienas</p>
-    </section>
+  <!-- 7 – Law 145 -->
+  <section class="slide">
+    <h1 class="yellow">Darba likums – 145. pants (2)</h1>
+    <div class="law">
+      <p>Pārtraukumu piešķir ne vēlāk kā pēc četrām stundām no darba sākuma.</p>
+      <p>Pārtraukuma ilgumu nosaka darba devējs pēc konsultēšanās ar darbinieku pārstāvjiem, taču tas nedrīkst būt īsāks par 30 minūtēm.</p>
+      <p><strong>Pārtraukumu neieskaita darba laikā,</strong> ja darba līgumā vai darba koplīgumā nav noteikts citādi.</p>
+    </div>
+  </section>
 
-    <!-- 2 – Dead animal + voljērs 1.30 -->
-    <section class="slide">
-      <h1 class="red">1 dzīvnieks</h1>
-      <h2 class="red">gāja bojā</h2>
-      <div class="img-big">
-        <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2014.jpg">
-      </div>
-      <p>Dievlūdzējs (voljērs 1.30)</p>
-    </section>
+  <!-- 8 – Final law -->
+  <section class="slide">
+    <h1 class="red">Darba likums – 134. un 97. pants</h1>
+    <div class="law">
+      <p>Darbiniekam <strong>jāpilda darba pienākumi visu nolīgto darba laiku</strong>.</p>
+      <p>Darba devējs <strong>nedrīkst pieļaut darbinieka priekšlaicīgu aiziešanu</strong>,<br>ja darbs nav pabeigts.</p>
+    </div>
+  </section>
 
-    <!-- 3 – Dry enclosure -->
-    <section class="slide">
-      <h2 class="red">PILNĪGI SAUSS VOLJĒRS</h2>
-      <div class="img-big">
-        <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2010.jpg">
-        <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2012.jpg" class="highlight">
-      </div>
-      <p>Extatosomaed tiaratum</p>
-    </section>
-
-    <!-- 4 – Empty water dish -->
-    <section class="slide">
-      <h2 class="red">TUKŠS ŪDENS TRAUKS</h2>
-      <div class="img-big">
-        <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2011.jpg">
-        <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2013.jpg" class="highlight">
-      </div>
-      <p>Blaberus giganteus</p>
-    </section>
-
-    <!-- 5 – Bar chart -->
-    <section class="slide">
-      <h2 class="red" style="margin-bottom:60px;">Kuras grupas cieta visvairāk</h2>
-      <div class="chart">
-        <div class="bar-row r1"><div class="bar-label">2. stāva čūskas (10 voljēri)</div><div class="bar-bg"><div class="bar-fill"></div><div class="bar-value">110×</div></div></div>
-        <div class="bar-row r2"><div class="bar-label">1. stāva čūskas</div><div class="bar-bg"><div class="bar-fill"></div><div class="bar-value">60×</div></div></div>
-        <div class="bar-row r3"><div class="bar-label">Citi + mirušais dzīvnieks</div><div class="bar-bg"><div class="bar-fill"></div><div class="bar-value">40×</div></div></div>
-        <div class="bar-row r4"><div class="bar-label">Tūkstoškāji</div><div class="bar-bg"><div class="bar-fill"></div><div class="bar-value">10×</div></div></div>
-      </div>
-      <p class="small">Visas šīs ir <strong>izlaistas barošanas un/vai ūdens maiņas</strong></p>
-    </section>
-
-    <!-- 6 – Early leaving -->
-    <section class="slide">
-      <div class="img-big">
-        <img src="https://i46.servimg.com/u/f46/14/10/26/20/screen10.jpg">
-        <img src="https://i46.servimg.com/u/f46/14/10/26/20/screen11.jpg" class="highlight">
-      </div>
-      <h2 class="red" style="margin-top:60px;font-size:96px;">Aizgāja 14:35</h2>
-      <p style="font-size:76px;">Darba diena līdz 15:30</p>
-    </section>
-
-    <!-- 7 – Law 145 -->
-    <section class="slide">
-      <h1 class="yellow">Darba likums – 145. pants (2)</h1>
-      <div class="law">
-        <p>Pārtraukumu piešķir ne vēlāk kā pēc četrām stundām no darba sākuma.</p>
-        <p>Pārtraukuma ilgumu nosaka darba devējs pēc konsultēšanās ar darbinieku pārstāvjiem, taču tas nedrīkst būt īsāks par 30 minūtēm.</p>
-        <p><strong>Pārtraukumu neieskaita darba laikā,</strong> ja darba līgumā vai darba koplīgumā nav noteikts citādi.</p>
-      </div>
-    </section>
-
-    <!-- 8 – Final law -->
-    <section class="slide">
-      <h1 class="red">Darba likums – 134. un 97. pants</h1>
-      <div class="law">
-        <p>Darbiniekam <strong>jāpilda darba pienākumi visu nolīgto darba laiku</strong>.</p>
-        <p>Darba devējs <strong>nedrīkst pieļaut darbinieka priekšlaicīgu aiziešanu</strong>,<br>ja darbs nav pabeigts.</p>
-      </div>
-    </section>
-
-  </div>
 </div>
 
 <script>
 const slides = document.querySelectorAll('.slide');
-const pres = document.getElementById('pres');
 let current = 0;
 const total = slides.length;
 
-function go(n) {
+function go(n){
   current = Math.max(0, Math.min(n, total-1));
-  slides.forEach((s,i) => s.classList.toggle('active', i===current));
+  slides.forEach((s,i)=>s.classList.toggle('active',i===current));
   document.getElementById('counter').textContent = (current+1)+' / '+total;
-  document.getElementById('progress').style.width = (current+1)/total*100+'%';
-  pres.classList.remove('grow');void pres.offsetWidth;pres.classList.add('grow');
 }
 
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === ' ') {e.preventDefault();go(current + 1);}
-  if (e.key === 'ArrowLeft') {e.preventDefault();go(current - 1);}
-  if (e.key.toLowerCase() === 'f') {
-    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-    else document.exitFullscreen();
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight' || e.key===' ') {e.preventDefault();go(current+1);}
+  if(e.key==='ArrowLeft') {e.preventDefault();go(current-1);}
+  if(e.key.toLowerCase()==='f'){
+    document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
   }
 });
 
-let startX = 0;
-document.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
-document.addEventListener('touchend', e => {
+let startX=0;
+document.addEventListener('touchstart',e=>startX=e.touches[0].clientX,{passive:true});
+document.addEventListener('touchend',e=>{
   const diff = startX - e.changedTouches[0].clientX;
-  if (Math.abs(diff) > 50) go(current + (diff > 0 ? 1 : -1));
+  if(Math.abs(diff)>50) go(current + (diff>0?1:-1));
 });
 
 go(0);
