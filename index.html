@@ -32,7 +32,7 @@
   h2{font-size:42px;font-weight:800;margin:15px 0;}
   p{font-size:32px;line-height:1.5;margin:10px 0;}
   .small{font-size:26px;opacity:0.9;}
-  .law{font-style:italic;background:rgba(255,255,255,0.08);padding:30px 60px;border-radius:20px;margin:30px 0;max-width:1650px;}
+  .law{font-style:italic;background:rgba(255,255,255,0.08);padding:35px 70px;border-radius:22px;margin:30px 0;max-width:1700px;}
 
   .red{color:#ff1744;text-shadow:0 0 40px #ff1744;}
   .green{color:#00e676;text-shadow:0 0 40px #00e676;}
@@ -91,42 +91,20 @@
       <p>Blaberus giganteus</p>
     </section>
 
-    <!-- 5 – VISI DATI VIENĀ ATTĒLĀ – BIG RED BAR GRAPH -->
+    <!-- 5 -->
     <section class="slide zoom">
       <h1 class="red">VISI DATI VIENĀ ATTĒLĀ</h1>
       <canvas id="overview"></canvas>
       <p class="small">Kopā 210 izlaistas barošanas reizes</p>
     </section>
 
-    <!-- 6 -->
-    <section class="slide rotate">
-      <h1 class="red">110 reizes izlaistas</h1>
-      <p>10 čūskas 2. stāvā</p>
-      <canvas id="c1"></canvas>
-    </section>
+    <!-- 6–9 -->
+    <section class="slide rotate"><h1 class="red">110 reizes izlaistas</h1><p>10 čūskas 2. stāvā</p><canvas id="c1"></canvas></section>
+    <section class="slide flip"><h1 class="red">10 reizes izlaisti</h1><p>Tūkstoškāji</p><canvas id="c2"></canvas></section>
+    <section class="slide fall"><h1 class="red">60 reizes izlaistas</h1><p>Lielās čūskas 1. stāvā</p><canvas id="c3"></canvas></section>
+    <section class="slide slide-left"><img src="https://i46.servimg.com/u/f46/14/10/26/20/screen10.jpg"><h2 class="red">Aizgāja 14:35</h2><p>Darba diena līdz 15:30</p></section>
 
-    <!-- 7 -->
-    <section class="slide flip">
-      <h1 class="red">10 reizes izlaisti</h1>
-      <p>Tūkstoškāji</p>
-      <canvas id="c2"></canvas>
-    </section>
-
-    <!-- 8 -->
-    <section class="slide fall">
-      <h1 class="red">60 reizes izlaistas</h1>
-      <p>Lielās čūskas 1. stāvā</p>
-      <canvas id="c3"></canvas>
-    </section>
-
-    <!-- 9 -->
-    <section class="slide slide-left">
-      <img src="https://i46.servimg.com/u/f46/14/10/26/20/screen10.jpg">
-      <h2 class="red">Aizgāja 14:35</h2>
-      <p>Darba diena līdz 15:30</p>
-    </section>
-
-    <!-- 10 -->
+    <!-- 10 – 145. pants -->
     <section class="slide zoom">
       <h1 class="yellow">Darba likums – 145. pants (2)</h1>
       <div class="law">
@@ -137,18 +115,22 @@
       </div>
     </section>
 
-    <!-- 11 -->
+    <!-- 11 – B VARIANTS (134. + 97. pants) -->
     <section class="slide pulse">
-      <h1 class="green">Mēs gribam tikai:</h1>
-      <p>2 apgaitas dienā</p>
-      <p>1 atbildīgo par 2. stāvu</p>
-      <p>0 izlaistus voljērus</p>
+      <h1 class="red">Darba likums – 134. un 97. pants</h1>
+      <div class="law">
+        <p>Darbiniekam <strong>jāpilda darba pienākumi visu nolīgto darba laiku</strong>.</p>
+        <p>Darba devējs <strong>nedrīkst pieļaut darbinieka priekšlaicīgu aiziešanu</strong>,<br>ja darbs nav pabeigts.</p>
+      </div>
     </section>
 
     <!-- 12 -->
     <section class="slide fade">
-      <h1 class="green">PALDIES</h1>
-      <h2 class="green">ka rūpējaties par dzīvniekiem</h2>
+      <h1 class="green">Mēs gribam tikai:</h1>
+      <p>2 apgaitas dienā</p>
+      <p>1 atbildīgo par 2. stāvu</p>
+      <p>0 izlaistus voljērus</p>
+      <h2 class="green">PALDIES, ka rūpējaties par dzīvniekiem</h2>
       <p class="small">Nākamā pārbaude pēc 7 dienām</p>
     </section>
 
@@ -188,34 +170,21 @@ document.addEventListener('touchend', e => {
   if (Math.abs(diff) > 50) go(current + (diff > 0 ? 1 : -1));
 });
 
-/* MAIN OVERVIEW GRAPH – GUARANTEED VISIBLE */
+/* BIG VISIBLE OVERVIEW */
 new Chart(document.getElementById('overview'), {
   type: 'bar',
   data: {
     labels: ['2. stāva čūskas\n(10 voljēri)', 'Lielās čūskas\n1. stāvs', 'Tūkstoškāji', 'Citi + mirušais'],
-    datasets: [{
-      label: 'Izlaistas',
-      data: [110, 60, 10, 40],
-      backgroundColor: ['#ff1744', '#ff5722', '#ff9800', '#c62828'],
-      borderRadius: 20,
-      barThickness: 110
-    }]
+    datasets: [{ data:[110,60,10,40], backgroundColor:['#ff1744','#ff5722','#ff9800','#c62828'], borderRadius:20, barThickness:110 }]
   },
   options: {
-    indexAxis: 'y',
-    plugins: { legend: { display: false } },
-    scales: {
-      x: { display: false, max: 130 },
-      y: { 
-        grid: { display: false },
-        ticks: { color: '#e8f5e9', font: { size: 46, weight: 'bold' }, padding: 30 }
-      }
-    },
-    animation: { duration: 2000, easing: 'easeOutQuart' }
+    indexAxis:'y',
+    plugins:{legend:false},
+    scales:{ x:{display:false,max:130}, y:{grid:{display:false},ticks:{color:'#e8f5e9',font:{size:46,weight:'bold'},padding:30}} },
+    animation:{duration:2000}
   }
 });
 
-/* Other charts */
 new Chart(document.getElementById('c1'),{type:'doughnut',data:{datasets:[{data:[110,100],backgroundColor:['#ff1744','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c2'),{type:'doughnut',data:{datasets:[{data:[10,203],backgroundColor:['#ff5722','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c3'),{type:'doughnut',data:{datasets:[{data:[60,150],backgroundColor:['#ff9800','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
