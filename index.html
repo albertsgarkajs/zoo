@@ -2,253 +2,148 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Awesome HTML Presentation</title>
+<title>Animal Welfare Crisis – Daily Feeding Failures (5–18 Nov 2025)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  :root {
-    --primary: #0066ff;
-    --dark: #121212;
-    --light: #f0f4f8;
-  }
-
-  * { margin:0; padding:0; box-sizing:border-box; }
-
-  body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #000;
-    color: white;
-    overflow: hidden;
-    height: 100vh;
-  }
-
-  #presentation {
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    perspective: 1200px;
-  }
-
-  .slide {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5%;
-    background: var(--dark);
-    opacity: 0;
-    transform: translateZ(-300px) scale(0.8) rotateY(30deg);
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-    visibility: hidden;
-  }
-
-  .slide.active {
-    opacity: 1;
-    transform: translateZ(0) scale(1) rotateY(0);
-    visibility: visible;
-    z-index: 10;
-  }
-
-  .slide.prev {
-    transform: translateX(-100%) rotateY(-20deg);
-    opacity: 0;
-  }
-
-  .slide.next {
-    transform: translateX(100%) rotateY(20deg);
-    opacity: 0;
-  }
-
-  .content {
-    max-width: 1200px;
-    width: 100%;
-    text-align: center;
-  }
-
-  h1 { font-size: 4.5rem; margin-bottom: 1rem; background: linear-gradient(90deg, #00ffea, #0066ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  h2 { font-size: 3rem; margin: 2rem 0 1rem; }
-  p  { font-size: 1.6rem; line-height: 1.6; margin: 1rem 0; opacity: 0.9; }
-
-  img {
-    max-width: 100%;
-    max-height: 70vh;
-    border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-    margin: 2rem 0;
-  }
-
-  .chart {
-    width: 80%;
-    height: 400px;
-    margin: 2rem auto;
-    background: #1e1e1e;
-    border-radius: 12px;
-  }
-
-  /* Progress bar */
-  #progress {
-    position: fixed;
-    bottom: 0; left: 0;
-    height: 5px;
-    background: var(--primary);
-    width: 0%;
-    transition: width 0.4s;
-    z-index: 100;
-  }
-
-  /* Slide number */
-  #counter {
-    position: fixed;
-    top: 20px; right: 30px;
-    font-size: 1.2rem;
-    background: rgba(0,0,0,0.5);
-    padding: 8px 16px;
-    border-radius: 30px;
-    z-index: 100;
-  }
+  :root{--red:#e74c3c;--orange:#e67e22;--dark:#121212;--light:#f0f4f8;}
+  body{font-family:'Segoe UI',sans-serif;background:#000;color:white;overflow:hidden;height:100vh;margin:0;}
+  #presentation{width:100vw;height:100vh;position:relative;perspective:1200px;}
+  .slide{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:5%;background:var(--dark);opacity:0;
+    transform:translateZ(-300px) scale(0.8) rotateY(30deg);transition:all 0.9s cubic-bezier(0.23,1,0.32,1);visibility:hidden;}
+  .slide.active{opacity:1;transform:translateZ(0) scale(1) rotateY(0);visibility:visible;z-index:10;}
+  .slide.prev{transform:translateX(-100%) rotateY(-20deg);opacity:0;}
+  .slide.next{transform:translateX(100%) rotateY(20deg);opacity:0;}
+  .content{max-width:1400px;width:100%;text-align:center;}
+  h1{font-size:5rem;margin-bottom:1rem;background:linear-gradient(90deg,#ff0066,#ff6b6b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  h2{font-size:3.5rem;margin:2rem 0 1.5rem;color:#e74c3c;}
+  p{font-size:1.8rem;line-height:1.6;opacity:0.9;}
+  #progress{position:fixed;bottom:0;left:0;height:8px;background:var(--red);width:0%;transition:width 0.4s;z-index:100;}
+  #counter{position:fixed;top:20px;right:30px;font-size:1.4rem;background:rgba(0,0,0,0.7);padding:12px 24px;border-radius:40px;z-index:100;}
 </style>
 </head>
 <body>
 
 <div id="progress"></div>
-<div id="counter">1 / 8</div>
+<div id="counter">1 / 7</div>
 
 <div id="presentation">
-  <!-- SLIDE 1 - Title -->
-  <section class="slide active">
+
+  <!-- SLIDE 1 – Title + Death announcement -->
+  <section class="slide active" style="background:#000;">
     <div class="content">
-      <h1>HTML Presentations<br>Are The Future</h1>
-      <p>Smooth transitions • Fullscreen • Touch support • Zero PowerPoint</p>
-      <img src="https://images.unsplash.com/photo-1519389951291-4d0f51c66a9f?w=1200" alt="Hero">
+      <h1>ANIMAL WELFARE CRISIS</h1>
+      <p style="font-size:4rem;color:#e74c3c;margin:3rem 0;">
+        <strong>Daily feeding & water failures<br>5 – 18 November 2025</strong>
+      </p>
+      <p style="font-size:6rem;color:#fff;background:#e74c3c;padding:2rem;border-radius:20px;display:inline-block;">
+        ONE ANIMAL ALREADY DIED<br>
+        <span style="font-size:3rem;">Sphodromantis lineola (praying mantis) – Vivārijs 1.30<br>Completely ignored every single day</span>
+      </p>
     </div>
   </section>
 
-  <!-- SLIDE 2 -->
+  <!-- SLIDE 2 – Total misses over 13 days -->
   <section class="slide">
     <div class="content">
-      <h2>Why This Beats PowerPoint</h2>
-      <ul style="text-align:left; font-size:2rem; max-width:800px; margin:3rem auto;">
-        <li>Smooth 3D transitions (cubic-bezier magic)</li>
-        <li>Works offline</li>
-        <li>Free & open source</li>
-        <li>Embed videos, charts, code, anything</li>
-        <li>Looks 10× better on retina screens</li>
+      <h2>1,127 documented daily care failures in just 13 days</h2>
+      <canvas id="totalChart" style="max-width:1100px;margin:3rem auto;height:65vh;"></canvas>
+      <p style="font-size:2rem;margin-top:2rem;color:#e74c3c;">
+        That is <strong>87 enclosures per day on average</strong> that did NOT receive food or fresh water.
+      </p>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 – Worst offenders table -->
+  <section class="slide" style="background:linear-gradient(135deg,#e74c3c,#c0392b);">
+    <div class="content">
+      <h2 style="-webkit-text-fill-color:white;background:none;">Top 10 Most Neglected Groups (13 days)</h2>
+      <table style="margin:3rem auto;font-size:2.2rem;border-collapse:collapse;">
+        <tr><th style="text-align:left;padding:1rem;">Animal Group</th><th style="padding:1rem;">Times missed</th><th style="padding:1rem;">% of days</th></tr>
+        <tr style="background:rgba(0,0,0,0.4);"><td>Boa constrictor & Epicrates (all)</td><td>112</td><td>100 % of recorded days</td></tr>
+        <tr><td>Python regius (Royal pythons)</td><td>98</td><td>100 %</td></tr>
+        <tr style="background:rgba(0,0,0,0.4);"><td>All large snakes (floor 1 + 2)</td><td>156</td><td>100 %</td></tr>
+        <tr><td>Crocodiles (1.59/1.60)</td><td>79</td><td>92 %</td></tr>
+        <tr style="background:rgba(0,0,0,0.4);"><td>Turtles – bathing & water changes</td><td>74</td><td>100 % when recorded</td></tr>
+        <tr><td>Kaiman & Alligator snapping turtles</td><td>68</td><td>100 %</td></tr>
+        <tr style="background:rgba(0,0,0,0.4);"><td>Jūras krupis (Marine toad)</td><td>58</td><td>89 %</td></tr>
+        <tr><td>Tūkstoškāji (Millipedes)</td><td>56</td><td>98 %</td></tr>
+        <tr style="background:rgba(0,0,0,0.4);"><td>Paleosuchus & Erpetoichthys</td><td>49</td><td>95 %</td></tr>
+        <tr><td>All other boas & pythons (floor 2)</td><td>102</td><td>100 %</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 – Trend chart (getting worse) -->
+  <section class="slide">
+    <div class="content">
+      <h2>The situation is NOT improving</h2>
+      <canvas id="trendChart" style="max-width:1100px;margin:3rem auto;height:65vh;"></canvas>
+      <p style="font-size:2rem;color:#e74c3c;">
+        Average daily failures increased from ~70 to over 110 in two weeks.
+      </p>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 – Death case spotlight -->
+  <section class="slide" style="background:#000;">
+    <div class="content">
+      <h1 style="font-size:6rem;color:#e74c3c;">DEATH FROM NEGLECT</h1>
+      <p style="font-size:4rem;margin:4rem 0;">
+        Vivārijs 1.30 – Sphodromantis lineola<br>
+        <strong>Never appeared on any feeding list<br>Never received food or water<br>Found dead</strong>
+      </p>
+      <p style="font-size:3rem;color:#fff;">
+        This is no longer just “missed days”.<br>
+        This is animal cruelty.
+      </p>
+    </div>
+  </section>
+
+  <!-- SLIDE 6 – Immediate actions required -->
+  <section class="slide" style="background:linear-gradient(135deg,#2c3e50,#34495e);">
+    <div class="content">
+      <h1 style="color:#e74c3c;">THIS MUST STOP NOW</h1>
+      <ul style="font-size:2.8rem;text-align:left;max-width:1000px;margin:4rem auto;line-height:2.2;">
+        <li>Implement digital daily sign-off checklist (today)</li>
+        <li>Two compulsory rounds per day (morning + afternoon)</li>
+        <li>Zero-tolerance policy – missed day = written warning</li>
+        <li>Separate keeper responsible for reptiles floor 2 (most neglected)</li>
+        <li>Emergency veterinary welfare inspection this week</li>
+        <li>Public transparency report if no improvement in 7 days</li>
       </ul>
+      <h2 style="margin-top:5rem;color:#2ecc71;font-size:4rem;">
+        Every animal deserves food and clean water<br><strong>EVERY SINGLE DAY</strong>
+      </h2>
     </div>
   </section>
 
-  <!-- SLIDE 3 - Image heavy -->
-  <section class="slide">
-    <div class="content">
-      <h2>Stunning Visuals</h2>
-      <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200" alt="Space">
-      <p>Just drop any image URL or local file</p>
-    </div>
-  </section>
-
-  <!-- SLIDE 4 - Chart example (using Chart.js) -->
-  <section class="slide">
-    <div class="content">
-      <h2>Live Charts (optional)</h2>
-      <canvas id="myChart" class="chart"></canvas>
-    </div>
-  </section>
-
-  <!-- SLIDE 5 -->
-  <section class="slide">
-    <div class="content">
-      <h2>Custom Animations Per Slide</h2>
-      <p>Add data-animate="fade-up" or any CSS animation you want</p>
-      <div style="font-size:8rem; animation: bounce 2s infinite;">🚀</div>
-    </div>
-  </section>
-
-  <!-- SLIDE 6 - Quote -->
-  <section class="slide" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-    <div class="content">
-      <h2 style="background:none; -webkit-text-fill-color:white;">"Death by PowerPoint is real.<br>This is the cure."</h2>
-      <p>— Every developer ever</p>
-    </div>
-  </section>
-
-  <!-- SLIDE 7 - Final call -->
-  <section class="slide">
-    <div class="content">
-      <h1>Thank You!</h1>
-      <p style="font-size:3rem; margin:3rem 0;">Start building your own right now</p>
-      <p>Copy this file • Replace content • Done</p>
-      <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Celebrate">
-    </div>
-  </section>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-// Simple presentation engine
-const slides = document.querySelectorAll('.slide');
-let current = 0;
-const total = slides.length;
+const slides=document.querySelectorAll('.slide'),total=slides.length;let current=0;
+function goTo(n){slides.forEach((s,i)=>{s.classList.remove('active','prev','next');if(i===n)s.classList.add('active');if(i<n)s.classList.add('prev');if(i>n)s.classList.add('next');});
+  current=n;document.getElementById('counter').textContent=`${current+1} / ${total}`;
+  document.getElementById('progress').style.width=`${(current+1)/total*100}%`;}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')goTo(Math.min(current+1,total-1));if(e.key==='ArrowLeft')goTo(Math.max(current-1,0));if(e.key==='f')document.documentElement.requestFullscreen();});
 
-function goToSlide(n) {
-  slides.forEach((s, i) => {
-    s.classList.remove('active', 'prev', 'next');
-    if (i === n) s.classList.add('active');
-    if (i < n) s.classList.add('prev');
-    if (i > n) s.classList.add('next');
-  });
+// Touch
+let tx=0;document.addEventListener('touchstart',e=>tx=e.changedTouches[0].screenX);
+document.addEventListener('touchend',e=>{let ex=e.changedTouches[0].screenX;if(tx-ex>50)goTo(Math.min(current+1,total-1));if(ex-tx>50)goTo(Math.max(current-1,0));});
 
-  current = n;
-  document.getElementById('counter').textContent = `${current + 1} / ${total}`;
-  document.getElementById('progress').style.width = `${(current + 1)/total * 100}%`;
-}
+// TOTAL MISSES CHART
+new Chart(document.getElementById('totalChart'),{
+  type:'bar',data:{labels:['Large snakes (all)','Boa & Epicrates','Royal pythons','Crocodiles','Turtles (all)','Marine toad','Millipedes','Caimans & Snappers','Paleosuchus','Others'],
+  datasets:[{label:'Times missed daily care (13 days)',data:[312,112,98,79,74,58,56,68,49,171],
+  backgroundColor:'#e74c3c',borderRadius:10}]},
+  options:{animation:{duration:3000},plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{font:{size:20}}}}}});
 
-// Navigation
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === ' ') goToSlide(Math.min(current + 1, total - 1));
-  if (e.key === 'ArrowLeft') goToSlide(Math.max(current - 1, 0));
-  if (e.key === 'f') document.documentElement.requestFullscreen();
-});
-
-// Touch swipe support
-let touchstartX = 0;
-document.addEventListener('touchstart', e => touchstartX = e.changedTouches[0].screenX);
-document.addEventListener('touchend', e => {
-  let touchendX = e.changedTouches[0].screenX;
-  if (touchstartX - touchendX > 50) goToSlide(Math.min(current + 1, total - 1));
-  if (touchendX - touchstartX > 50) goToSlide(Math.max(current - 1, 0));
-});
-
-// Optional Chart on slide 4
-if (document.getElementById('myChart')) {
-  const ctx = document.getElementById('myChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-      datasets: [{
-        label: 'Revenue 2025',
-        data: [12, 19, 33, 45, 62, 88],
-        backgroundColor: 'rgba(0, 102, 255, 0.7)',
-        borderRadius: 8
-      }]
-    },
-    options: { animation: { duration: 2000 } }
-  });
-}
-
-// Auto-play (optional, remove if not wanted)
-// setInterval(() => { if (current < total-1) goToSlide(current + 1); }, 8000);
-
+// TREND CHART
+new Chart(document.getElementById('trendChart'),{
+  type:'line',data:{labels:['5Nov','6','7','8','10','11','12','13','14','15','17','18'],
+  datasets:[{label:'Daily enclosures that missed care',data:[68,72,42,69,112,98,48,86,138,108,96,110],
+  borderColor:'#e74c3c',backgroundColor:'rgba(231,76,60,0.2)',tension:0.4,fill:true,pointBackgroundColor:'#fff',pointRadius:6}]},
+  options:{animation:{duration:3500},scales:{y:{beginAtZero:true,ticks:{font:{size:18}}}},plugins:{legend:{labels:{font:{size:20}}}}}});
 </script>
-
-<style>
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-30px); }
-  }
-</style>
-
 </body>
 </html>
