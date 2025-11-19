@@ -2,11 +2,42 @@
   "version": 2,
   "builds": [
     {
-      "src": "server.js",
+      "src": "api/auth.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "server.js" }
+    {
+      "src": "/api/auth/(.*)",
+      "dest": "/api/auth.js"
+    },
+    {
+      "src": "/index-pc.html",
+      "dest": "/index-pc.html"
+    },
+    {
+      "src": "/index-mobile.html",
+      "dest": "/index-mobile.html"
+    },
+    {
+      "src": "/visitorcount.html",
+      "dest": "/visitorcount.html"
+    },
+      {
+      "src": "/boardgame.html",
+      "dest": "/boardgame.html"
+    },
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ]
 }
