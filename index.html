@@ -2,37 +2,36 @@
 <html lang="lv">
 <head>
 <meta charset="UTF-8">
-<title>Dzīvnieku ikdienas aprūpe – 5.–18.11.2025</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=10.0, user-scalable=yes">
+<title>Dzīvnieku ikdienas aprūpe</title>
 <style>
-  body{margin:0;background:#0a1a0f;color:#e8f5e9;font-family:'Segoe UI',sans-serif;overflow:hidden;height:100vh;}
-  #presentation{width:100vw;height:100vh;position:relative;background:radial-gradient(circle at center,#1b3a1e,#0a1a0f);}
-  .slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-    opacity:0;transform:scale(0.85);transition:all 0.9s cubic-bezier(0.25,0.8,0.25,1);}
-  .slide.active{opacity:1;transform:scale(1);z-index:10;}
-  .content{padding:6vh 5vw;max-width:95vw;text-align:center;position:relative;}
-  h1{font-size:9vw;margin:0;background:linear-gradient(90deg,#00ff88,#00bf6f);
-     -webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.5));}
-  h2{font-size:6.5vw;margin:3vh 0;color:#b2ff59;}
-  .big{font-size:15vw;font-weight:900;color:#fff;opacity:0;transform:translateY(30px);}
-  .big.show{opacity:1;transform:none;transition:2s ease-out;}
-  .text{font-size:5.2vw;line-height:1.5;color:#e8f5e9;}
-  .img{height:35vh;width:90vw;max-width:900px;background:rgba(0,0,0,0.3);border-radius:20px;margin:4vh auto;
-       border:3px dashed #558b2f;display:flex;align-items:center;justify-content:center;font-size:4.5vw;color:#a5d6a7;}
-  canvas{max-width:90vw;height:45vh !important;margin:3vh auto;}
-  .bar-container{max-width:90vw;margin:4vh auto;}
-  .bar{height:11vw;line-height:11vw;padding:0 5vw;margin:2.5vh 0;border-radius:60px;
-       background:linear-gradient(90deg,#2e7d32,#66bb6a);color:#000;font-size:4.8vw;font-weight:bold;
-       text-align:right;overflow:hidden;white-space:nowrap;width:0%;transition:width 2.2s ease-out;
-       box-shadow:0 4px 15px rgba(0,0,0,0.4);}
-  #progress{position:fixed;bottom:0;left:0;height:10px;background:#00ff88;width:0%;transition:0.5s;z-index:100;}
-  #counter{position:fixed;top:3vh;right:4vw;font-size:5vw;background:rgba(0,0,0,0.6);padding:2vw 5vw;border-radius:50px;z-index:100;}
-  /* Vīnogulāji un lapas dekorācija */
-  .vine{position:absolute;width:30vw;opacity:0.15;pointer-events:none;}
-  .vine1{top:0;left:0;transform:rotate(20deg);}
-  .vine2{top:0;right:0;transform:rotate(-40deg);}
-  .vine3{bottom:0;left:10%;transform:rotate(150deg);}
-  .vine4{bottom:0;right:10%;transform:rotate(-120deg);}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:Arial,sans-serif;background:#0a1a0f;color:#e8f5e9;overflow:hidden;height:100vh;}
+  .slide{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+        background:radial-gradient(circle at center,#1b3a1e,#0a1a0f);opacity:0;transition:opacity 0.8s;}
+  .slide.active{opacity:1;z-index:10;}
+  .content{padding:20px;max-width:95%;text-align:center;}
+  h1{font-size:9vw;max-width:100%;background:linear-gradient(90deg,#00ff88,#00bf6f);
+     -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  h2{font-size:7vw;color:#b2ff59;margin:15px 0;}
+  .big{font-size:18vw;font-weight:900;color:#fff;margin:10px 0;}
+  .text{font-size:5vw;line-height:1.5;}
+  .img{height:32vh;width:90vw;max-width:600px;margin:20px auto;background:rgba(0,0,0,0.4);
+       border:2px dashed #558b2f;border-radius:15px;display:flex;align-items:center;
+       justify-content:center;color:#a5d6a7;font-size:4.5vw;}
+  canvas{max-width:90vw;height:40vh;margin:20px auto;display:block;}
+  .bar{margin:12px auto;height:42px;line-height:42px;background:#2e7d32;color:#fff;
+       border-radius:50px;padding:0 15px;font-size:4.5vw;font-weight:bold;text-align:right;
+       width:0;transition:width 2s ease-out;overflow:hidden;}
+  #counter{position:fixed;top:10px;right:10px;background:rgba(0,0,0,0.7);padding:8px 15px;
+           border-radius:30px;font-size:5vw;z-index:100;}
+  #progress{position:fixed;bottom:0;left:0;height:6px;background:#00ff88;width:0%;transition:width 0.5s;z-index:100;}
+  /* Vīnogulāji (mazie, neaizsedz tekstu) */
+  .vine{position:absolute;width:40vw;opacity:0.12;pointer-events:none;z-index:1;}
+  .vine1{top:0;left:0;transform:rotate(15deg);}
+  .vine2{top:0;right:0;transform:rotate(-30deg);}
+  .vine3{bottom:0;left:5%;transform:rotate(140deg);}
+  .vine4{bottom:0;right:5%;transform:rotate(-140deg);}
 </style>
 </head>
 <body>
@@ -42,134 +41,115 @@
 <img class="vine vine3" src="https://assets.codepen.io/3838366/vine3.png">
 <img class="vine vine4" src="https://assets.codepen.io/3838366/vine4.png">
 
-<div id="progress"></div>
 <div id="counter">1 / 6</div>
+<div id="progress"></div>
 
-<div id="presentation">
-
-  <!-- 1. Skaists ievads -->
+<div id="slides">
+  <!-- 1 -->
   <section class="slide active">
     <div class="content">
       <h1>Ikdienas aprūpe</h1>
-      <p class="text">5.–18. novembris 2025</p>
-      <p class="text" style="color:#a5d6a7;">(bez krokodiliem un lielajiem bruņurupučiem)</p>
-      <div class="big" data-num="210">210</div>
-      <p class="text">reizes dzīvnieki nesaņēma ēdienu vai ūdeni</p>
-      <div class="big" data-num="16">16</div>
+      <p class="text">5.–18.11.2025</p>
+      <div class="big">210</div>
+      <p class="text">reizes nesaņēma ēdienu/ūdeni</p>
+      <div class="big">16</div>
       <p class="text">voljēri vidēji katru dienu</p>
-      <p class="text" style="font-size:6vw;color:#ff5252;background:rgba(0,0,0,0.4);padding:3vw;border-radius:20px;margin-top:4vh;">
-        Viens dievlūdzējs aizgāja bojā<br>Vivārijs 1.30
+      <p class="text" style="color:#ff5252;font-size:6vw;margin-top:20px;">
+        Viens dievlūdzējs aizgāja bojā (1.30)
       </p>
       <div class="img">← Foto: dievlūdzējs</div>
     </div>
   </section>
 
-  <!-- 2. Trīs zaļi doughnut grafiki -->
+  <!-- 2 -->
   <section class="slide">
     <div class="content">
       <h2>Visvairāk aizmirstie</h2>
-      <div style="display:flex;flex-wrap:wrap;gap:4vw;justify-content:center;">
-        <canvas id="d1" width="280" height="280"></canvas>
-        <canvas id="d2" width="280" height="280"></canvas>
-        <canvas id="d3" width="280" height="280"></canvas>
-      </div>
+      <canvas id="d1"></canvas>
+      <canvas id="d2"></canvas>
+      <canvas id="d3"></canvas>
       <div class="img">← Foto: 2. stāva čūskas</div>
     </div>
   </section>
 
-  <!-- 3. Tendence -->
+  <!-- 3 -->
   <section class="slide">
     <div class="content">
       <h2>Problēma joprojām ir</h2>
       <canvas id="line"></canvas>
-      <div class="img">← Foto: tukšs bļodiņš</div>
     </div>
   </section>
 
-  <!-- 4. Top 10 -->
+  <!-- 4 -->
   <section class="slide">
     <div class="content">
-      <h2>10 vissliktākie gadījumi</h2>
-      <div class="bar-container">
-        <div class="bar" data-val="13">2. stāva čūskas – 13 no 13 dienām</div>
+      <h2>Top 10</h2>
+      <div style="max-width:90vw;margin:0 auto;">
+        <div class="bar" data-val="13">2. stāva čūskas – 13/13</div>
         <div class="bar" data-val="10">Tūkstoškāji</div>
-        <div class="bar" data-val="9">Lielās čūskas 1. stāvā</div>
+        <div class="bar" data-val="9">Lielās čūskas 1.st.</div>
         <div class="bar" data-val="8">Jūras krupis</div>
         <div class="bar" data-val="7">Circeņi & Zofobas</div>
         <div class="bar" data-val="6">Zaļais bazilisks</div>
         <div class="bar" data-val="6">Felzumas</div>
         <div class="bar" data-val="5">Garneles & aksolotls</div>
         <div class="bar" data-val="4">Eublefāri</div>
-        <div class="bar" data-val="4">Citi ikdienas dzīvnieki</div>
+        <div class="bar" data-val="4">Citi</div>
       </div>
     </div>
   </section>
 
-  <!-- 5. Pozitīvs nobeigums -->
+  <!-- 5 -->
   <section class="slide">
     <div class="content">
       <h1 style="color:#b2ff59;">Mēs to varam atrisināt</h1>
-      <div style="display:flex;justify-content:center;gap:10vw;flex-wrap:wrap;margin:6vh 0;">
-        <div><div class="big" data-num="2">2</div><p class="text">apgaitas dienā</p></div>
-        <div><div class="big" data-num="1">1</div><p class="text">atbildīgais 2. stāvam</p></div>
-        <div><div class="big" data-num="0">0</div><p class="text">izlaisti voljēri</p></div>
+      <div style="display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin:30px 0;">
+        <div><div class="big">2</div><p class="text">apgaitas dienā</p></div>
+        <div><div class="big">1</div><p class="text">atbildīgais 2.stāvam</p></div>
+        <div><div class="big">0</div><p class="text">izlaisti voljēri</p></div>
       </div>
-      <h2 style="color:#b2ff59;font-size:8vw;">
-        Katrs dzīvnieks pelna ēst<br><strong>KATRU dienu</strong>
-      </h2>
-      <div class="img">← Foto: laimīgi dzīvnieki / checklist</div>
+      <h2 style="color:#b2ff59;font-size:8vw;">Katru dienu – katram dzīvniekam</h2>
+      <div class="img">← Foto: laimīgi dzīvnieki</div>
     </div>
   </section>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const slides=document.querySelectorAll('.slide'),total=slides.length;let current=0;
+const slides = document.querySelectorAll('.slide');
+let current = 0;
+const total = slides.length;
+
 function goTo(n){
-  slides.forEach((s,i)=>{s.classList.remove('active');if(i===n)s.classList.add('active');});
-  current=n;document.getElementById('counter').textContent=(n+1)+' / '+total;
-  document.getElementById('progress').style.width=((n+1)/total*100)+'%';
-  if(n===1) setTimeout(drawDoughnuts,600);
-  if(n===3) setTimeout(animateBars,700);
-  if(n===4) setTimeout(countUp,600);
+  slides.forEach(s=>s.classList.remove('active'));
+  slides[n].classList.add('active');
+  current = n;
+  document.getElementById('counter').textContent = (n+1) + ' / ' + total;
+  document.getElementById('progress').style.width = ((n+1)/total*100) + '%';
+  if(n===1) setTimeout(drawCharts,300);
+  if(n===3) setTimeout(animateBars,400);
 }
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'||e.key===' ')goTo(Math.min(current+1,total-1));
-  if(e.key==='ArrowLeft')goTo(Math.max(current-1,0));
-  if(e.key==='f')document.documentElement.requestFullscreen();
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight' || e.key===' ') goTo(Math.min(current+1,total-1));
+  if(e.key==='ArrowLeft') goTo(Math.max(current-1,0));
 });
-let tx=0;
-document.addEventListener('touchstart',e=>tx=e.touches[0].screenX);
+let startX=0;
+document.addEventListener('touchstart',e=>startX=e.touches[0].clientX);
 document.addEventListener('touchend',e=>{
-  let diff=tx-e.changedTouches[0].screenX;
-  if(diff>50)goTo(Math.min(current+1,total-1));
-  if(diff<-50)goTo(Math.max(current-1,0));
+  let diff = startX - e.changedTouches[0].clientX;
+  if(diff>50) goTo(Math.min(current+1,total-1));
+  if(diff<-50) goTo(Math.max(current-1,0));
 });
 
-function drawDoughnuts(){
-  ['d1','d2','d3'].forEach((id,i)=>{
-    new Chart(document.getElementById(id),{type:'doughnut',
-      data:{datasets:[{data:i===0?[130,80]:i===1?[50,160]:[60,150],
-        backgroundColor:i===0?['#43a047','#1b5e20']:i===1?['#66bb6a','#2e7d32']:['#81c784','#4caf50']}]},
-      options:{cutout:'72%',animation:{duration:2800},plugins:{legend:{display:false}}}});
-  });
+function drawCharts(){
+  new Chart(document.getElementById('d1'),{type:'doughnut',data:{datasets:[{data:[130,80],backgroundColor:['#43a047','#1b5e20']}]},options:{cutout:'70%',plugins:{legend:false}}});
+  new Chart(document.getElementById('d2'),{type:'doughnut',data:{datasets:[{data:[50,160],backgroundColor:#66bb6a}]},options:{cutout:'70%',plugins:{legend:false}}});
+  new Chart(document.getElementById('d3'),{type:'doughnut',data:{datasets:[{data:[60,150],backgroundColor:['#81c784','#4caf50']}]},options:{cutout:'70%',plugins:{legend:false}}});
 }
-
-new Chart(document.getElementById('line'),{
-  type:'line',data:{labels:['5','6','7','8','10','11','12','13','14','15','17','18 nov'],
-    datasets:[{data:[15,18,12,20,28,25,10,18,35,20,22,24],
-      borderColor:'#00ff88',backgroundColor:'rgba(0,255,136,0.15)',tension:0.4,fill:true,pointRadius:7,borderWidth:4}]},
-  options:{animation:{duration:3800},scales:{y:{beginAtZero:true,ticks:{color:'#a5d6a7'}}}}});
+new Chart(document.getElementById('line'),{type:'line',data:{labels:['5','6','7','8','10','11','12','13','14','15','17','18'],datasets:[{data:[15,18,12,20,28,25,10,18,35,20,22,24],borderColor:'#00ff88',backgroundColor:'rgba(0,255,136,0.2)',tension:0.4,fill:true}]},options:{plugins:{legend:false}}});
 
 function animateBars(){
-  document.querySelectorAll('.bar').forEach((b,i)=>setTimeout(()=>{b.style.width=(b.dataset.val*6.8)+'vw';},i*220));
-}
-function countUp(){
-  document.querySelectorAll('.big').forEach(el=>{el.classList.add('show');
-    let target=+el.dataset.num,c=0,inc=target/40;
-    let int=setInterval(()=>{c+=inc;el.textContent=Math.round(c);if(c>=target){el.textContent=target;clearInterval(int);}},30);
-  });
+  document.querySelectorAll('.bar').forEach((b,i)=>setTimeout(()=>b.style.width=(b.dataset.val*6.9)+'vw',i*200));
 }
 </script>
 </body>
