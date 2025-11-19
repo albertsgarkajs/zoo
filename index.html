@@ -15,7 +15,7 @@
   }
   .slide{
     position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;color:#e8f5e9;padding:60px 120px;opacity:0;transition:opacity 1s ease;
+    text-align:center;color:#e8f5e9;padding:80px 140px;opacity:0;transition:opacity 1s ease;
   }
   .slide.active{opacity:1;z-index:10;}
   .fade{transform:translateY(60px);}
@@ -31,11 +31,9 @@
   h1{font-size:52px;font-weight:900;margin:20px 0;}
   h2{font-size:44px;font-weight:800;margin:15px 0;}
   p{font-size:34px;line-height:1.5;margin:12px 0;}
-  .small{font-size:28px;opacity:0.9;}
   .law{font-style:italic;background:rgba(255,255,255,0.08);padding:40px 80px;border-radius:24px;margin:30px 0;max-width:1750px;}
 
   .red{color:#ff1744;text-shadow:0 0 45px #ff1744;}
-  .green{color:#00e676;text-shadow:0 0 45px #00e676;}
   .yellow{color:#ffc107;text-shadow:0 0 45px #ffc107;}
 
   canvas,img{max-width:1750px;max-height:820px;margin:30px auto;border-radius:22px;box-shadow:0 35px 90px #000;}
@@ -48,6 +46,35 @@
   .vine{position:absolute;background:linear-gradient(to bottom,transparent,#1b5e20 40%,#2e7d32 80%);border-radius:100px;}
   .grow .vine{animation:grow 4s ease-out forwards;}
   @keyframes grow{0%{transform:scaleY(0);opacity:0;}70%{opacity:0.4;}100%{transform:scaleY(1);opacity:0.35;}}
+
+  /* PURE CSS BAR CHART – SLIDE 5 */
+  .css-chart{
+    width:1650px;height:780px;display:flex;flex-direction:column;justify-content:space-around;
+    padding:80px 0;font-size:50px;font-weight:900;color:#e8f5e9;
+  }
+  .bar-row{
+    display:flex;align-items:center;gap:60px;height:140px;position:relative;
+  }
+  .bar-label{
+    width:780px;text-align:right;letter-spacing:2px;text-shadow:0 0 30px #fff;
+  }
+  .bar-container{
+    flex:1;height:120px;background:rgba(255,255,255,0.05);border-radius:60px;overflow:hidden;
+    box-shadow:inset 0 0 40px rgba(0,0,0,0.8);
+  }
+  .bar{
+    height:100%;width:0;background:#ff1744;border-radius:60px;
+    box-shadow:0 0 60px #ff1744;animation:fill 2.5s ease-out forwards;
+  }
+  .bar-num{
+    position:absolute;right:-130px;top:50%;transform:translateY(-50%);
+    font-size:64px;color:#ff1744;text-shadow:0 0 40px #ff1744;
+  }
+  @keyframes fill{to{width:100%}}
+  .bar1 .bar{width:100%}   /* 110 */
+  .bar2 .bar{width:54.5%}  /* 60 */
+  .bar3 .bar{width:36.4%}  /* 40 */
+  .bar4 .bar{width:9.1%}   /* 10 */
 </style>
 </head>
 <body>
@@ -61,7 +88,7 @@
       <div class="vine" style="top:10%;left:-5%;width:26px;height:60vh;transform:rotate(80deg);"></div>
     </div>
 
-    <div id="counter">1 / 12</div>
+    <div id="counter">1 / 11</div>
     <div id="progress"></div>
 
     <!-- 1 -->
@@ -91,18 +118,21 @@
       <p>Blaberus giganteus</p>
     </section>
 
-    <!-- 5 – ONLY THE HUGE GRAPH, NO TITLE -->
+    <!-- 5 – PURE CSS BAR CHART (always works) -->
     <section class="slide zoom">
-      <canvas id="overview"></canvas>
+      <div class="css-chart">
+        <div class="bar-row bar1"><div class="bar-label">2. stāva čūskas (10 voljēri)</div><div class="bar-container"><div class="bar"></div></div><div class="bar-num">110×</div></div>
+        <div class="bar-row bar2"><div class="bar-label">Lielās čūskas 1. stāvs</div><div class="bar-container"><div class="bar"></div></div><div class="bar-num">60×</div></div>
+        <div class="bar-row bar3"><div class="bar-label">Citi + mirušais dzīvnieks</div><div class="bar-container"><div class="bar"></div></div><div class="bar-num">40×</div></div>
+        <div class="bar-row bar4"><div class="bar-label">Tūkstoškāji</div><div class="bar-container"><div class="bar"></div></div><div class="bar-num">10×</div></div>
+      </div>
     </section>
 
-    <!-- 6–9 -->
+    <!-- 6–11 -->
     <section class="slide rotate"><h1 class="red">110 reizes izlaistas</h1><p>10 čūskas 2. stāvā</p><canvas id="c1"></canvas></section>
     <section class="slide flip"><h1 class="red">10 reizes izlaisti</h1><p>Tūkstoškāji</p><canvas id="c2"></canvas></section>
     <section class="slide fall"><h1 class="red">60 reizes izlaistas</h1><p>Lielās čūskas 1. stāvā</p><canvas id="c3"></canvas></section>
     <section class="slide slide-left"><img src="https://i46.servimg.com/u/f46/14/10/26/20/screen10.jpg"><h2 class="red">Aizgāja 14:35</h2><p>Darba diena līdz 15:30</p></section>
-
-    <!-- 10 – 145. pants -->
     <section class="slide zoom">
       <h1 class="yellow">Darba likums – 145. pants (2)</h1>
       <div class="law">
@@ -112,24 +142,12 @@
         <p><strong>Pārtraukumu neieskaita darba laikā,</strong> ja darba līgumā vai darba koplīgumā nav noteikts citādi.</p>
       </div>
     </section>
-
-    <!-- 11 – 134. + 97. pants -->
     <section class="slide pulse">
       <h1 class="red">Darba likums – 134. un 97. pants</h1>
       <div class="law">
         <p>Darbiniekam <strong>jāpilda darba pienākumi visu nolīgto darba laiku</strong>.</p>
         <p>Darba devējs <strong>nedrīkst pieļaut darbinieka priekšlaicīgu aiziešanu</strong>,<br>ja darbs nav pabeigts.</p>
       </div>
-    </section>
-
-    <!-- 12 -->
-    <section class="slide fade">
-      <h1 class="green">Mēs gribam tikai:</h1>
-      <p>2 apgaitas dienā</p>
-      <p>1 atbildīgo par 2. stāvu</p>
-      <p>0 izlaistus voljērus</p>
-      <h2 class="green">PALDIES, ka rūpējaties par dzīvniekiem</h2>
-      <p class="small">Nākamā pārbaude pēc 7 dienām</p>
     </section>
 
   </div>
@@ -168,38 +186,6 @@ document.addEventListener('touchend', e => {
   if (Math.abs(diff) > 50) go(current + (diff > 0 ? 1 : -1));
 });
 
-/* ONLY THE GRAPH – NO TEXT – SPEAKS FOR ITSELF */
-new Chart(document.getElementById('overview'), {
-  type: 'bar',
-  data: {
-    labels: [
-      '2. stāva čūskas (10 voljēri)',
-      'Lielās čūskas 1. stāvs',
-      'Citi + mirušais dzīvnieks',
-      'Tūkstoškāji'
-    ],
-    datasets: [{
-      data: [110, 60, 40, 10],
-      backgroundColor: ['#ff1744', '#ff5722', '#ff8a65', '#ff9800'],
-      borderRadius: 24,
-      barThickness: 130
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    plugins: { legend: { display: false }, tooltip: { enabled: true } },
-    scales: {
-      x: { display: false, max: 120 },
-      y: {
-        grid: { display: false },
-        ticks: { color: '#e8f5e9', font: { size: 52, weight: 'bold' }, padding: 40 }
-      }
-    },
-    animation: { duration: 2200, easing: 'easeOutQuart' }
-  }
-});
-
-/* Other charts */
 new Chart(document.getElementById('c1'),{type:'doughnut',data:{datasets:[{data:[110,100],backgroundColor:['#ff1744','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c2'),{type:'doughnut',data:{datasets:[{data:[10,203],backgroundColor:['#ff5722','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c3'),{type:'doughnut',data:{datasets:[{data:[60,150],backgroundColor:['#ff9800','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
