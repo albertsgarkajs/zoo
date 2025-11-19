@@ -6,151 +6,183 @@
 <title>Dzīvnieku ikdienas aprūpe</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:Arial,sans-serif;background:#0a1a0f;color:#e8f5e9;overflow:hidden;height:100vh;}
-  .slide{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-        background:radial-gradient(circle at center,#1b3a1e,#0a1a0f);opacity:0;transition:opacity 0.8s;}
+  body{
+    font-family:Arial,sans-serif;
+    background:#081a0d;
+    color:#e8f5e9;
+    overflow:hidden;
+    height:100vh;
+    background:radial-gradient(circle at center, #1b3a1e, #081a0d);
+  }
+  .slide{
+    position:fixed;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;transition:opacity 0.9s;
+  }
   .slide.active{opacity:1;z-index:10;}
-  .content{padding:20px;max-width:95%;text-align:center;}
-  h1{font-size:9vw;max-width:100%;background:linear-gradient(90deg,#00ff88,#00bf6f);
+
+  .content{padding:20px 5%;max-width:100%;text-align:center;}
+
+  h1{font-size:9vw;background:linear-gradient(90deg,#00ff88,#00bf6f);
      -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
   h2{font-size:7vw;color:#b2ff59;margin:15px 0;}
-  .big{font-size:18vw;font-weight:900;color:#fff;margin:10px 0;}
-  .text{font-size:5vw;line-height:1.5;}
-  .img{height:32vh;width:90vw;max-width:600px;margin:20px auto;background:rgba(0,0,0,0.4);
-       border:2px dashed #558b2f;border-radius:15px;display:flex;align-items:center;
-       justify-content:center;color:#a5d6a7;font-size:4.5vw;}
+  .big{font-size:18vw;font-weight:900;color:#fff;margin:15px 0;}
+  .big.show{opacity:1;transform:none;transition:2s ease-out;}
+  .text{font-size:5.2vw;line-height:1.5;}
+  .img{
+    height:32vh;width:90vw;max-width:600px;margin:25px auto;
+    background:rgba(0,0,0,0.4);border:2px dashed #558b2f;border-radius:15px;
+    display:flex;align-items:center;justify-content:center;color:#a5d6a7;font-size:4.5vw;
+  }
   canvas{max-width:90vw;height:40vh;margin:20px auto;display:block;}
-  .bar{margin:12px auto;height:42px;line-height:42px;background:#2e7d32;color:#fff;
-       border-radius:50px;padding:0 15px;font-size:4.5vw;font-weight:bold;text-align:right;
-       width:0;transition:width 2s ease-out;overflow:hidden;}
-  #counter{position:fixed;top:10px;right:10px;background:rgba(0,0,0,0.7);padding:8px 15px;
-           border-radius:30px;font-size:5vw;z-index:100;}
-  #progress{position:fixed;bottom:0;left:0;height:6px;background:#00ff88;width:0%;transition:width 0.5s;z-index:100;}
-  /* Vīnogulāji (mazie, neaizsedz tekstu) */
-  .vine{position:absolute;width:40vw;opacity:0.12;pointer-events:none;z-index:1;}
-  .vine1{top:0;left:0;transform:rotate(15deg);}
-  .vine2{top:0;right:0;transform:rotate(-30deg);}
-  .vine3{bottom:0;left:5%;transform:rotate(140deg);}
-  .vine4{bottom:0;right:5%;transform:rotate(-140deg);}
+  .bar{
+    margin:12px auto;height:45px;line-height:45px;
+    background:linear-gradient(90deg,#2e7d32,#66bb6a);color:#000;
+    border-radius:50px;padding:0 18px;font-size:4.8vw;font-weight:bold;
+    text-align:right;width:0;transition:width 2s ease-out;overflow:hidden;
+    box-shadow:0 4px 12px rgba(0,0,0,0.5);
+  }
+  #counter{
+    position:fixed;top:10px;right:10px;background:rgba(0,0,0,0.7);
+    padding:8px 18px;border-radius:30px;font-size:5vw;z-index:100;
+  }
+  #progress{
+    position:fixed;bottom:0;left:0;height:7px;background:#00ff88ff;width:0%;transition:0.5s;z-index:100;
+  }
+
+  /* Pure CSS vines & leaves */
+  .decor{
+    position:absolute;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:1;
+  }
+  .vine{
+    position:absolute;width:60px;height:300px;background:linear-gradient(90deg,transparent,#1b5e20 50%,transparent);
+    border-radius:50%;opacity:0.25;
+  }
+  .vine:nth-child(1){top:-10%;left:5%;transform:rotate(20deg);}
+  .vine:nth-child(2){top:-15%;right:8%;transform:rotate(-35deg);}
+  .vine:nth-child(3){bottom:-10%;left:10%;transform:rotate(150deg);}
+  .vine:nth-child(4){bottom:-15%;right:5%;transform:rotate(-150deg);}
+
+  .leaf{
+    position:absolute;width:40px;height:60px;background:#2e7d32;
+    border-radius:0 100% 0 100%;opacity:0.4;box-shadow:0 0 15px rgba(0,0,0,0.4);
+  }
+  .leaf:nth-child(5){top:15%;left:8%;transform:rotate(30deg);}
+  .leaf:nth-child(6){top:20%;right:12%;transform:rotate(-60deg);}
+  .leaf:nth-child(7){bottom:18%;left:15%;transform:rotate(120deg);}
+  .leaf:nth-child(8){bottom:22%;right:10%;transform:rotate(-100deg);}
+  .leaf:nth-child(9){top:45%;left:2%;transform:rotate(80deg);}
+  .leaf:nth-child(10){top:50%;right:3%;transform:rotate(-120deg);}
 </style>
 </head>
 <body>
 
-<img class="vine vine1" src="https://assets.codepen.io/3838366/vine1.png">
-<img class="vine vine2" src="https://assets.codepen.io/3838366/vine2.png">
-<img class="vine vine3" src="https://assets.codepen.io/3838366/vine3.png">
-<img class="vine vine4" src="https://assets.codepen.io/3838366/vine4.png">
+<div class="decor">
+  <div class="vine"></div><div class="vine"></div><div class="vine"></div><div class="vine"></div>
+  <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
+  <div class="leaf"></div><div class="leaf"></div>
+</div>
 
 <div id="counter">1 / 6</div>
 <div id="progress"></div>
 
-<div id="slides">
-  <!-- 1 -->
-  <section class="slide active">
-    <div class="content">
-      <h1>Ikdienas aprūpe</h1>
-      <p class="text">5.–18.11.2025</p>
-      <div class="big">210</div>
-      <p class="text">reizes nesaņēma ēdienu/ūdeni</p>
-      <div class="big">16</div>
-      <p class="text">voljēri vidēji katru dienu</p>
-      <p class="text" style="color:#ff5252;font-size:6vw;margin-top:20px;">
-        Viens dievlūdzējs aizgāja bojā (1.30)
-      </p>
-      <div class="img">← Foto: dievlūdzējs</div>
-    </div>
-  </section>
+<div class="slide active">
+  <div class="content">
+    <h1>Ikdienas aprūpe</h1>
+    <p class="text">5.–18. novembris 2025</p>
+    <div class="big">210</div>
+    <p class="text">reizes nesaņēma ēdienu/ūdeni</p>
+    <div class="big">16</div>
+    <p class="text">voljēri vidēji dienā</p>
+    <p class="text" style="color:#ff5252;font-size:6.5vw;margin-top:25px;">
+      Viens dievlūdzējs aizgāja bojā (1.30)
+    </p>
+    <div class="img">← Foto: dievlūdzējs</div>
+  </div>
+</div>
 
-  <!-- 2 -->
-  <section class="slide">
-    <div class="content">
-      <h2>Visvairāk aizmirstie</h2>
-      <canvas id="d1"></canvas>
-      <canvas id="d2"></canvas>
-      <canvas id="d3"></canvas>
-      <div class="img">← Foto: 2. stāva čūskas</div>
-    </div>
-  </section>
+<div class="slide">
+  <div class="content">
+    <h2>Visvairāk aizmirstie</h2>
+    <canvas id="d1"></canvas>
+    <canvas id="d2"></canvas>
+    <canvas id="d3"></canvas>
+    <div class="img">← Foto: 2. stāva čūskas</div>
+  </div>
+</div>
 
-  <!-- 3 -->
-  <section class="slide">
-    <div class="content">
-      <h2>Problēma joprojām ir</h2>
-      <canvas id="line"></canvas>
-    </div>
-  </section>
+<div class="slide">
+  <div class="content">
+    <h2>Problēma joprojām ir</h2>
+    <canvas id="line"></canvas>
+  </div>
+</div>
 
-  <!-- 4 -->
-  <section class="slide">
-    <div class="content">
-      <h2>Top 10</h2>
-      <div style="max-width:90vw;margin:0 auto;">
-        <div class="bar" data-val="13">2. stāva čūskas – 13/13</div>
-        <div class="bar" data-val="10">Tūkstoškāji</div>
-        <div class="bar" data-val="9">Lielās čūskas 1.st.</div>
-        <div class="bar" data-val="8">Jūras krupis</div>
-        <div class="bar" data-val="7">Circeņi & Zofobas</div>
-        <div class="bar" data-val="6">Zaļais bazilisks</div>
-        <div class="bar" data-val="6">Felzumas</div>
-        <div class="bar" data-val="5">Garneles & aksolotls</div>
-        <div class="bar" data-val="4">Eublefāri</div>
-        <div class="bar" data-val="4">Citi</div>
-      </div>
-    </div>
-  </section>
+<div class="slide">
+  <div class="content">
+    <h2>Top 10</h2>
+    <div class="bar" data-val="13">2. stāva čūskas – 13/13</div>
+    <div class="bar" data-val="10">Tūkstoškāji</div>
+    <div class="bar" data-val="9">Lielās čūskas 1.st.</div>
+    <div class="bar" data-val="8">Jūras krupis</div>
+    <div class="bar" data-val="7">Circeņi & Zofobas</div>
+    <div class="bar" data-val="6">Zaļais bazilisks</div>
+    <div class="bar" data-val="6">Felzumas</div>
+    <div class="bar" data-val="5">Garneles & aksolotls</div>
+    <div class="bar" data-val="4">Eublefāri</div>
+    <div class="bar" data-val="4">Citi</div>
+  </div>
+</div>
 
-  <!-- 5 -->
-  <section class="slide">
-    <div class="content">
-      <h1 style="color:#b2ff59;">Mēs to varam atrisināt</h1>
-      <div style="display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin:30px 0;">
-        <div><div class="big">2</div><p class="text">apgaitas dienā</p></div>
-        <div><div class="big">1</div><p class="text">atbildīgais 2.stāvam</p></div>
-        <div><div class="big">0</div><p class="text">izlaisti voljēri</p></div>
-      </div>
-      <h2 style="color:#b2ff59;font-size:8vw;">Katru dienu – katram dzīvniekam</h2>
-      <div class="img">← Foto: laimīgi dzīvnieki</div>
+<div class="slide">
+  <div class="content">
+    <h1 style="color:#b2ff59;">Mēs to varam atrisināt</h1>
+    <div style="display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin:40px 0;">
+      <div><div class="big">2</div><p class="text">apgaitas dienā</p></div>
+      <div><div class="big">1</div><p class="text">atbildīgais 2.stāvam</p></div>
+      <div><div class="big">0</div><p class="text">izlaisti voljēri</p></div>
     </div>
-  </section>
+    <h2 style="color:#b2ff59;font-size:8vw;">Katru dienu – katram dzīvniekam</h2>
+    <div class="img">← Foto: laimīgi dzīvnieki</div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 const slides = document.querySelectorAll('.slide');
-let current = 0;
-const total = slides.length;
-
-function goTo(n){
+let cur = 0;
+function go(n){
   slides.forEach(s=>s.classList.remove('active'));
   slides[n].classList.add('active');
-  current = n;
-  document.getElementById('counter').textContent = (n+1) + ' / ' + total;
-  document.getElementById('progress').style.width = ((n+1)/total*100) + '%';
-  if(n===1) setTimeout(drawCharts,300);
-  if(n===3) setTimeout(animateBars,400);
+  cur = n;
+  document.getElementById('counter').textContent = (n+1)+'/6';
+  document.getElementById('progress').style.width = (n+1)/6*100 + '%';
+  if(n===1) setTimeout(()=>drawCharts(),400);
+  if(n===3) setTimeout(()=>bars.forEach((b,i)=>setTimeout(()=>b.style.width=b.dataset.val*7+'vw',i*180)),500);
 }
-document.addEventListener('keydown', e=>{
-  if(e.key==='ArrowRight' || e.key===' ') goTo(Math.min(current+1,total-1));
-  if(e.key==='ArrowLeft') goTo(Math.max(current-1,0));
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' ')go(Math.min(cur+1,5));
+  if(e.key==='ArrowLeft')go(Math.max(cur-1,0));
 });
-let startX=0;
-document.addEventListener('touchstart',e=>startX=e.touches[0].clientX);
+let tx=0;
+document.addEventListener('touchstart',e=>tx=e.touches[0].clientX);
 document.addEventListener('touchend',e=>{
-  let diff = startX - e.changedTouches[0].clientX;
-  if(diff>50) goTo(Math.min(current+1,total-1));
-  if(diff<-50) goTo(Math.max(current-1,0));
+  if(tx-e.changedTouches[0].clientX>50)go(Math.min(cur+1,5));
+  if(e.changedTouches[0].clientX-tx>50)go(Math.max(cur-1,0));
 });
+const bars = document.querySelectorAll('.bar');
 
 function drawCharts(){
-  new Chart(document.getElementById('d1'),{type:'doughnut',data:{datasets:[{data:[130,80],backgroundColor:['#43a047','#1b5e20']}]},options:{cutout:'70%',plugins:{legend:false}}});
-  new Chart(document.getElementById('d2'),{type:'doughnut',data:{datasets:[{data:[50,160],backgroundColor:#66bb6a}]},options:{cutout:'70%',plugins:{legend:false}}});
-  new Chart(document.getElementById('d3'),{type:'doughnut',data:{datasets:[{data:[60,150],backgroundColor:['#81c784','#4caf50']}]},options:{cutout:'70%',plugins:{legend:false}}});
+  ['d1','d2','d3'].forEach((id,i)=>new Chart(document.getElementById(id),{type:'doughnut',
+    data:{datasets:[{data:i==0?[130,80]:i==1?[50,160]:[60,150],
+      backgroundColor:i==0?['#43a047','#1b5e20']:'#66bb6a'}]},
+    options:{cutout:'72%',animation:{duration:2500},plugins:{legend:{display:false}}}}));
 }
-new Chart(document.getElementById('line'),{type:'line',data:{labels:['5','6','7','8','10','11','12','13','14','15','17','18'],datasets:[{data:[15,18,12,20,28,25,10,18,35,20,22,24],borderColor:'#00ff88',backgroundColor:'rgba(0,255,136,0.2)',tension:0.4,fill:true}]},options:{plugins:{legend:false}}});
-
-function animateBars(){
-  document.querySelectorAll('.bar').forEach((b,i)=>setTimeout(()=>b.style.width=(b.dataset.val*6.9)+'vw',i*200));
-}
+new Chart(document.getElementById('line'),{type:'line',
+  data:{labels:['5','6','7','8','10','11','12','13','14','15','17','18'],
+        datasets:[{data:[15,18,12,20,28,25,10,18,35,20,22,24],
+          borderColor:'#00ff88',backgroundColor:'rgba(0,255,136,0.18)',fill:true,tension:0.4}]},
+  options:{plugins:{legend:{display:false}}}});
 </script>
 </body>
 </html>
