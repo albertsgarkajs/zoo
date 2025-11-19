@@ -6,140 +6,154 @@
 <title>Dzīvnieku ikdienas aprūpe</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:Arial,sans-serif;background:#0a1a0f;color:#e8f5e9;overflow-y:auto;height:100vh;}
-  .slide{display:none;align-items:center;justify-content:center;padding:10px;background:radial-gradient(circle at center,#1b3a1e,#0a1a0f);min-height:100vh;}
-  .slide.active{display:flex;}
-  .content{max-width:90vw;text-align:center;}
-  h1{font-size:8vw;background:linear-gradient(90deg,#00ff88,#00bf6f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-  h2{font-size:6vw;color:#b2ff59;margin:10px 0;}
-  .big{font-size:16vw;font-weight:900;color:#fff;margin:10px 0;}
-  .text{font-size:4.5vw;line-height:1.5;}
-  .img{height:30vh;width:85vw;max-width:500px;margin:15px auto;background:rgba(0,0,0,0.4);border:2px dashed #558b2f;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#a5d6a7;font-size:4vw;}
-  canvas{max-width:85vw !important;height:35vh !important;margin:15px auto;}
-  .bar{margin:10px auto;height:40px;line-height:40px;background:linear-gradient(90deg,#2e7d32,#66bb6a);color:#000;border-radius:50px;padding:0 15px;font-size:4.2vw;font-weight:bold;text-align:right;width:0;transition:width 1.8s ease-out;overflow:hidden;}
-  #counter{position:fixed;top:10px;right:10px;background:rgba(0,0,0,0.7);padding:6px 12px;border-radius:25px;font-size:4.5vw;}
-  #progress{position:fixed;bottom:0;left:0;height:5px;background:#00ff88;width:0%;transition:0.5s;}
-  .vine{position:absolute;width:50px;height:200px;background:linear-gradient(90deg,transparent,#1b5e20 50%,transparent);border-radius:50%;opacity:0.2;}
-  .vine:nth-child(1){top:-5%;left:3%;transform:rotate(15deg);}
-  .vine:nth-child(2){top:-10%;right:5%;transform:rotate(-25deg);}
-  .vine:nth-child(3){bottom:-5%;left:8%;transform:rotate(140deg);}
-  .leaf{position:absolute;width:30px;height:50px;background:#2e7d32;border-radius:0 100% 0 100%;opacity:0.35;}
-  .leaf:nth-child(4){top:10%;left:5%;transform:rotate(40deg);}
-  .leaf:nth-child(5){top:15%;right:8%;transform:rotate(-50deg);}
-  .leaf:nth-child(6){bottom:12%;left:10%;transform:rotate(110deg);}
+  body{font-family:Arial,sans-serif;background:#0a1a0f;color:#e8f5e9;height:100vh;overflow:hidden;}
+  .slide{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+         background:radial-gradient(circle at center,#1b3a1e,#0a1a0f);opacity:0;transition:opacity 1s;}
+  .slide.active{opacity:1;z-index:10;}
+  .content{padding:20px 5%;max-width:100%;text-align:center;}
+  h1{font-size:9vw;background:linear-gradient(90deg,#00ff88,#00bf6f);
+     -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:10px 0;}
+  h2{font-size:7vw;color:#b2ff59;margin:15px 0;}
+  p{font-size:5vw;line-height:1.6;margin:12px 0;}
+  .big{font-size:18vw;font-weight:900;color:#fff;margin:15px 0;}
+  .highlight{color:#ff5252;font-weight:bold;}
+  canvas{max-width:90vw !important;height:45vh !important;margin:20px auto;display:block;}
+  #counter{position:fixed;top:10px;right:10px;background:rgba(0,0,0,0.7);padding:8px 16px;border-radius:30px;font-size:5vw;z-index:100;}
+  #progress{position:fixed;bottom:0;left:0;height:6px;background:#00ff88;width:0%;transition:0.5s;z-index:100;}
+  /* Pure CSS vines & leaves */
+  .deco{position:absolute;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:1;}
+  .vine{position:absolute;width:60px;height:250px;background:linear-gradient(90deg,transparent,#1b5e20 50%,transparent);
+        border-radius:50%;opacity:0.15;}
+  .vine:nth-child(1){top:-5%;left:5%;transform:rotate(20deg);}
+  .vine:nth-child(2){top:-10%;right:8%;transform:rotate(-40deg);}
+  .vine:nth-child(3){bottom:-5%;left:10%;transform:rotate(150deg);}
+  .vine:nth-child(4){bottom:-10%;right:5%;transform:rotate(-150deg);}
+  .leaf{position:absolute;width:35px;height:55px;background:#2e7d32;border-radius:0 100% 0 100%;opacity:0.35;}
+  .leaf:nth-child(5){top:12%;left:6%;transform:rotate(40deg);}
+  .leaf:nth-child(6){top:18%;right:10%;transform:rotate(-60deg);}
+  .leaf:nth-child(7){bottom:15%;left:12%;transform:rotate(120deg);}
 </style>
 </head>
 <body>
-<div class="vine"></div><div class="vine"></div><div class="vine"></div>
-<div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
-<div id="counter">1/6</div>
+
+<div class="deco">
+  <div class="vine"></div><div class="vine"></div><div class="vine"></div><div class="vine"></div>
+  <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
+</div>
+
+<div id="counter">1/7</div>
 <div id="progress"></div>
 
+<!-- 1. Ievads -->
 <div class="slide active">
   <div class="content">
     <h1>Ikdienas aprūpe</h1>
-    <p class="text">5.–18.11.2025</p>
+    <p>5.–18. novembris 2025 (13 dienas)</p>
     <div class="big">210</div>
-    <p class="text">reizes nesaņēma ēdienu/ūdeni</p>
+    <p>reizes dzīvnieki, kam jāēd <strong>katru dienu</strong>,<br>nesaņēma ēdienu vai ūdeni</p>
     <div class="big">16</div>
-    <p class="text">voljēri vidēji dienā</p>
-    <p class="text" style="color:#ff5252;font-size:5.5vw;margin-top:15px;">
-      Viens dievlūdzējs aizgāja bojā (1.30)
-    </p>
-    <div class="img">← Foto: dievlūdzējs</div>
+    <p>voljēri vidēji katru dienu</p>
+    <p class="highlight">Viens dievlūdzējs jau aizgāja bojā<br>(Vivārijs 1.30 – nekad nav barots)</p>
   </div>
 </div>
 
+<!-- 2. Galvenā problēma – 2. stāva čūskas -->
 <div class="slide">
   <div class="content">
-    <h2>Visvairāk aizmirstie</h2>
-    <canvas id="d1"></canvas>
-    <canvas id="d2"></canvas>
-    <canvas id="d3"></canvas>
-    <div class="img">← Foto: 2. stāva čūskas</div>
+    <h2>Lielākā problēma</h2>
+    <p style="font-size:6vw;">Visas čūskas 2. stāvā<br>(Boa, Python, Epicrates utt.)</p>
+    <canvas id="chart1"></canvas>
+    <p>Izlaistas <strong>130 reizes</strong> no 13 dienām<br>→ katru dienu pilnīgi aizmirstas</p>
   </div>
 </div>
 
+<!-- 3. Tūkstoškāji -->
 <div class="slide">
   <div class="content">
-    <h2>Problēma turpinās</h2>
+    <h2>Otrā lielākā problēma</h2>
+    <p style="font-size:6vw;">Tūkstoškāji</p>
+    <canvas id="chart2"></canvas>
+    <p>Izlaisti <strong>50 reižu</strong> (10 no 13 dienām)</p>
+  </div>
+</div>
+
+<!-- 4. Lielās čūskas 1. stāvā -->
+<div class="slide">
+  <div class="content">
+    <h2>Trešā lielākā problēma</h2>
+    <p style="font-size:6vw;">Lielās žņaudzējčūskas 1. stāvā</p>
+    <canvas59 id="chart3"></canvas>
+    <p>Izlaistas <strong>60 reizes</strong> (9 no 13 dienām)</p>
+  </div>
+</div>
+
+<!-- 5. Kā mainījās pa dienām -->
+<div class="slide">
+  <div class="content">
+    <h2>Situācija neuzlabojas</h2>
     <canvas id="line"></canvas>
-    <div class="img">← Foto: tukšs bļodiņš</div>
+    <p>Sākās ar 15 izlaistiem voljēriem (5. nov)<br>Beidzās ar 24 (18. nov)</p>
   </div>
 </div>
 
+<!-- 6. Top 10 saraksts -->
 <div class="slide">
   <div class="content">
-    <h2>Top 10</h2>
-    <div class="bar" data-val="13">2. stāva čūskas – 13/13</div>
-    <div class="bar" data-val="10">Tūkstoškāji</div>
-    <div class="bar" data-val="9">Lielās čūskas 1.st.</div>
-    <div class="bar" data-val="8">Jūras krupis</div>
-    <div class="bar" data-val="7">Circeņi & Zofobas</div>
-    <div class="bar" data-val="6">Zaļais bazilisks</div>
-    <div class="bar" data-val="6">Felzumas</div>
-    <div class="bar" data-val="5">Garneles & aksolotls</div>
-    <div class="bar" data-val="4">Eublefāri</div>
-    <div class="bar" data-val="4">Citi</div>
+    <h2>Top 10 vissliktākie</h2>
+    <p>1. 2. stāva čūskas – <strong>13 no 13 dienām</strong></p>
+    <p>2. Tūkstoškāji – 10 dienas</p>
+    <p>3. Lielās čūskas 1.st. – 9 dienas</p>
+    <p>4. Jūras krupis – 8 dienas</p>
+    <p>5. Circeņi & Zofobas – 7 dienas</p>
+    <p>6. Zaļais bazilisks – 6 dienas</p>
+    <p>7. Felzumas – 6 dienas</p>
+    <p>8. Garneles & aksolotls – 5 dienas</p>
+    <p>9. Eublefāri – 4 dienas</p>
+    <p>10. Citi – 4 dienas</p>
   </div>
 </div>
 
+<!-- 7. Risinājums -->
 <div class="slide">
   <div class="content">
     <h1 style="color:#b2ff59;">Mēs to varam atrisināt</h1>
-    <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin:20px 0;">
-      <div><div class="big">2</div><p class="text">apgaitas dienā</p></div>
-      <div><div class="big">1</div><p class="text">atbildīgais 2.stāvam</p></div>
-      <div><div class="big">0</div><p class="text">izlaisti voljēri</p></div>
+    <div style="display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin:30px 0;">
+      <div><div class="big">2</div><p>apgaitas dienā</p></div>
+      <div><div class="big">1</div><p>atbildīgais<br>par 2. stāvu</p></div>
+      <div><div class="big">0</div><p>izlaisti<br>voljēri</p></div>
     </div>
-    <h2 style="color:#b2ff59;font-size:7vw;">Katru dienu – katram dzīvniekam</h2>
-    <div class="img">← Foto: laimīgi dzīvnieki</div>
+    <h2 style="color:#b2ff59;font-size:8vw;">Katram dzīvniekam<br>ēdiens un ūdens<br><strong>KATRU dienu</strong></h2>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const slides=document.querySelectorAll('.slide');let current=0;
-function goTo(n){
+const slides=document.querySelectorAll('.slide');
+let cur=0;
+function go(n){
   slides.forEach(s=>s.classList.remove('active'));
   slides[n].classList.add('active');
-  current=n;
-  document.getElementById('counter').textContent=(n+1)+'/5';
-  document.getElementById('progress').style.width=((n+1)/5*100)+'%';
-  if(n===1)setTimeout(drawDoughnuts,300);
-  if(n===3)setTimeout(animateBars,400);
+  cur=n;
+  document.getElementById('counter').textContent=(n+1)+'/7';
+  document.getElementById('progress').style.width=((n+1)/7*100)+'%';
 }
 document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'||e.key===' ')goTo(Math.min(current+1,4));
-  if(e.key==='ArrowLeft')goTo(Math.max(current-1,0));
+  if(e.key==='ArrowRight'||e.key===' ')go(Math.min(cur+1,6));
+  if(e.key==='ArrowLeft')go(Math.max(cur-1,0));
 });
-let startX=0;
-document.addEventListener('touchstart',e=>startX=e.touches[0].clientX);
+let tx=0;
+document.addEventListener('touchstart',e=>tx=e.touches[0].clientX);
 document.addEventListener('touchend',e=>{
-  let diff=startX-e.changedTouches[0].clientX;
-  if(diff>50)goTo(Math.min(current+1,4));
-  if(diff<-50)goTo(Math.max(current-1,0));
+  let diff=tx-e.changedTouches[0].clientX;
+  if(diff>50)go(Math.min(cur+1,6));
+  if(diff<-50)go(Math.max(cur-1,0));
 });
-function drawDoughnuts(){
-  new Chart(document.getElementById('d1'),{type:'doughnut',
-    data:{labels:['2. st. čūskas','Pārējie'],datasets:[{data:[130,80],backgroundColor:['#43a047','#1b5e20']}]},
-    options:{cutout:'70%',animation:{duration:2000},plugins:{legend:{labels:{color:'#e8f5e9',font:{size:12}}}}}});
-  new Chart(document.getElementById('d2'),{type:'doughnut',
-    data:{labels:['Tūkstoškāji','Pārējie'],datasets:[{data:[50,160],backgroundColor:['#66bb6a','#2e7d32']}]},
-    options:{cutout:'70%',animation:{duration:2000},plugins:{legend:{labels:{color:'#e8f5e9',font:{size:12}}}}}});
-  new Chart(document.getElementById('d3'),{type:'doughnut',
-    data:{labels:['1. st. čūskas','Pārējie'],datasets:[{data:[60,150],backgroundColor:['#81c784','#4caf50']}]},
-    options:{cutout:'70%',animation:{duration:2000},plugins:{legend:{labels:{color:'#e8f5e9',font:{size:12}}}}}});
-}
-new Chart(document.getElementById('line'),{type:'line',
-  data:{labels:['5','6','7','8','10','11','12','13','14','15','17','18'],
-        datasets:[{label:'Izlaistie voljēri',data:[15,18,12,20,28,25,10,18,35,20,22,24],
-                   borderColor:'#00ff88',backgroundColor:'rgba(0,255,136,0.2)',fill:true,tension:0.4}]},
-  options:{animation:{duration:2500},scales:{y:{beginAtZero:true,ticks:{color:'#e8f5e9'}},x:{ticks:{color:'#e8f5e9'}}},
-           plugins:{legend:{labels:{color:'#e8f5e9'}}}}});
-function animateBars(){
-  document.querySelectorAll('.bar').forEach((b,i)=>setTimeout(()=>{b.style.width=(b.dataset.val*6.5)+'%';},i*200));
-}
+
+// Charts
+new Chart(document.getElementById('chart1'),{type:'doughnut',data:{labels:['2. stāva čūskas','Pārējie'],datasets:[{data:[130,80],backgroundColor:['#e74c3c','#2e7d32']}]},options:{cutout:'75%',plugins:{legend:{labels:{color:'#e8f5e9',font:{size:14}}}}}});
+new Chart(document.getElementById('chart2'),{type:'doughnut',data:{labels:['Tūkstoškāji','Pārējie'],datasets:[{data:[50,160],backgroundColor:['#f39c12','#2e7d32']}]},options:{cutout:'75%',plugins:{legend:{labels:{color:'#e8f5e9',font:{size:14}}}}}});
+new Chart(document.getElementById('chart3'),{type:'doughnut',data:{labels:['1. stāva čūskas','Pārējie'],datasets:[{data:[60,150],backgroundColor:['#ff9800','#2e7d32']}]},options:{cutout:'75%',plugins:{legend:{labels:{color:'#e8f5e9',font:{size:14}}}}}});
+new Chart(document.getElementById('line'),{type:'line',data:{labels:['5','6','7','8','10','11','12','13','14','15','17','18 nov'],datasets:[{label:'Izlaistie voljēri dienā',data:[15,18,12,20,28,25,10,18,35,20,22,24],borderColor:'#00ff88',backgroundColor:'rgba(0,255,136,0.2)',fill:true,tension:0.4,pointRadius:5}]},options:{plugins:{legend:{labels:{color:'#e8f5e9'}}},scales:{y:{ticks:{color:'#e8f5e9'}},x:{ticks:{color:'#e8f5e9'}}}}});
 </script>
 </body>
 </html>
