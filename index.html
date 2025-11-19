@@ -1,118 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lv">
 <head>
 <meta charset="UTF-8">
-<title>Animal Welfare Crisis – Daily Feeding Failures (5–18 Nov 2025)</title>
+<title>Dzīvnieku ikdienas aprūpes pārskats</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  :root{--red:#e74c3c;--orange:#e67e22;--dark:#121212;--light:#f0f4f8;}
-  body{font-family:'Segoe UI',sans-serif;background:#000;color:white;overflow:hidden;height:100vh;margin:0;}
-  #presentation{width:100vw;height:100vh;position:relative;perspective:1200px;}
-  .slide{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:5%;background:var(--dark);opacity:0;
-    transform:translateZ(-300px) scale(0.8) rotateY(30deg);transition:all 0.9s cubic-bezier(0.23,1,0.32,1);visibility:hidden;}
-  .slide.active{opacity:1;transform:translateZ(0) scale(1) rotateY(0);visibility:visible;z-index:10;}
-  .slide.prev{transform:translateX(-100%) rotateY(-20deg);opacity:0;}
-  .slide.next{transform:translateX(100%) rotateY(20deg);opacity:0;}
-  .content{max-width:1400px;width:100%;text-align:center;}
-  h1{font-size:5rem;margin-bottom:1rem;background:linear-gradient(90deg,#ff0066,#ff6b6b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-  h2{font-size:3.5rem;margin:2rem 0 1.5rem;color:#e74c3c;}
-  p{font-size:1.8rem;line-height:1.6;opacity:0.9;}
-  #progress{position:fixed;bottom:0;left:0;height:8px;background:var(--red);width:0%;transition:width 0.4s;z-index:100;}
-  #counter{position:fixed;top:20px;right:30px;font-size:1.4rem;background:rgba(0,0,0,0.7);padding:12px 24px;border-radius:40px;z-index:100;}
+  body {margin:0;font-family:'Segoe UI',Arial,sans-serif;background:#000;color:white;height:100vh;overflow:hidden;}
+  #presentation {width:100vw;height:100vh;position:relative;perspective:1200px;}
+  .slide {position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:5%;background:#0f0f0f;
+    opacity:0;transform:translateZ(-300px) scale(0.8) rotateY(25deg);transition:all 0.9s cubic-bezier(0.23,1,0.32,1);visibility:hidden;}
+  .slide.active {opacity:1;transform:none;visibility:visible;z-index:10;}
+  .slide.prev {transform:translateX(-100%) rotateY(-20deg);opacity:0;}
+  .slide.next {transform:translateX(100%) rotateY(20deg);opacity:0;}
+  .content {max-width:1300px;width:100%;text-align:center;}
+  h1 {font-size:4.8rem;margin:1rem;background:linear-gradient(90deg,#00ffea,#0066ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  h2 {font-size:3.2rem;margin:2rem 0 1.5rem;color:#e74c3c;}
+  p {font-size:1.9rem;line-height:1.7;}
+  .img-placeholder {
+    width:90%;max-width:1000px;height:45vh;background:#1a1a1a;border:3px dashed #444;border-radius:16px;
+    display:flex;align-items:center;justify-content:center;font-size:2rem;color:#666;margin:3rem auto;
+  }
+  #progress {position:fixed;bottom:0;left:0;height:8px;background:#0066ff;width:0%;transition:width 0.4s;z-index:100;}
+  #counter {position:fixed;top:20px;right:30px;font-size:1.4rem;background:rgba(0,0,0,0.7);padding:12px 28px;border-radius:40px;z-index:100;}
 </style>
 </head>
 <body>
 
 <div id="progress"></div>
-<div id="counter">1 / 7</div>
+<div id="counter">1 / 6</div>
 
 <div id="presentation">
 
-  <!-- SLIDE 1 – Title + Death announcement -->
-  <section class="slide active" style="background:#000;">
+  <!-- 1. Sākums + nāve -->
+  <section class="slide active">
     <div class="content">
-      <h1>ANIMAL WELFARE CRISIS</h1>
-      <p style="font-size:4rem;color:#e74c3c;margin:3rem 0;">
-        <strong>Daily feeding & water failures<br>5 – 18 November 2025</strong>
+      <h1>Dzīvnieku ikdienas aprūpe</h1>
+      <p style="font-size:3rem;">2025. gada 5.–18. novembris<br>(13 dienu ieraksti)</p>
+      <p style="font-size:3rem;color:#e74c3c;margin:3rem 0;">
+        Kopā <strong>378 reizes</strong> dzīvnieki nesaņēma ēdienu vai svaigu ūdeni<br>
+        Vidēji <strong>29 voljēri katru dienu</strong>
       </p>
-      <p style="font-size:6rem;color:#fff;background:#e74c3c;padding:2rem;border-radius:20px;display:inline-block;">
-        ONE ANIMAL ALREADY DIED<br>
-        <span style="font-size:3rem;">Sphodromantis lineola (praying mantis) – Vivārijs 1.30<br>Completely ignored every single day</span>
+      <p style="font-size:4rem;color:#e74c3c;background:rgba(231,76,60,0.2);padding:2rem;border-radius:20px;">
+        Viens dzīvnieks aizgāja bojā no pilnīgas neaprūpes<br>
+        <strong>Sphodromantis lineola</strong> (dievlūdzējs)<br>
+        Vivārijs 1.30 – nekad nav barots, nekad nav minēts sarakstos
       </p>
+      <div class="img-placeholder">← Šeit ieliec foto no bojāgājušā dievlūdzēja/voljēra</div>
     </div>
   </section>
 
-  <!-- SLIDE 2 – Total misses over 13 days -->
+  <!-- 2. Vissliktāk apsekotās grupas -->
   <section class="slide">
     <div class="content">
-      <h2>1,127 documented daily care failures in just 13 days</h2>
-      <canvas id="totalChart" style="max-width:1100px;margin:3rem auto;height:65vh;"></canvas>
-      <p style="font-size:2rem;margin-top:2rem;color:#e74c3c;">
-        That is <strong>87 enclosures per day on average</strong> that did NOT receive food or fresh water.
-      </p>
+      <h2>Visvairāk aizmirstās grupas (no 13 dienām)</h2>
+      <canvas id="mainChart" style="max-width:1000px;margin:3rem auto;height:55vh;"></canvas>
+      <div class="img-placeholder">← Šeit vari ielikt čūsku vai krokodilu foto</div>
     </div>
   </section>
 
-  <!-- SLIDE 3 – Worst offenders table -->
-  <section class="slide" style="background:linear-gradient(135deg,#e74c3c,#c0392b);">
-    <div class="content">
-      <h2 style="-webkit-text-fill-color:white;background:none;">Top 10 Most Neglected Groups (13 days)</h2>
-      <table style="margin:3rem auto;font-size:2.2rem;border-collapse:collapse;">
-        <tr><th style="text-align:left;padding:1rem;">Animal Group</th><th style="padding:1rem;">Times missed</th><th style="padding:1rem;">% of days</th></tr>
-        <tr style="background:rgba(0,0,0,0.4);"><td>Boa constrictor & Epicrates (all)</td><td>112</td><td>100 % of recorded days</td></tr>
-        <tr><td>Python regius (Royal pythons)</td><td>98</td><td>100 %</td></tr>
-        <tr style="background:rgba(0,0,0,0.4);"><td>All large snakes (floor 1 + 2)</td><td>156</td><td>100 %</td></tr>
-        <tr><td>Crocodiles (1.59/1.60)</td><td>79</td><td>92 %</td></tr>
-        <tr style="background:rgba(0,0,0,0.4);"><td>Turtles – bathing & water changes</td><td>74</td><td>100 % when recorded</td></tr>
-        <tr><td>Kaiman & Alligator snapping turtles</td><td>68</td><td>100 %</td></tr>
-        <tr style="background:rgba(0,0,0,0.4);"><td>Jūras krupis (Marine toad)</td><td>58</td><td>89 %</td></tr>
-        <tr><td>Tūkstoškāji (Millipedes)</td><td>56</td><td>98 %</td></tr>
-        <tr style="background:rgba(0,0,0,0.4);"><td>Paleosuchus & Erpetoichthys</td><td>49</td><td>95 %</td></tr>
-        <tr><td>All other boas & pythons (floor 2)</td><td>102</td><td>100 %</td></tr>
-      </table>
-    </div>
-  </section>
-
-  <!-- SLIDE 4 – Trend chart (getting worse) -->
+  <!-- 3. Tendence pa dienām -->
   <section class="slide">
     <div class="content">
-      <h2>The situation is NOT improving</h2>
-      <canvas id="trendChart" style="max-width:1100px;margin:3rem auto;height:65vh;"></canvas>
-      <p style="font-size:2rem;color:#e74c3c;">
-        Average daily failures increased from ~70 to over 110 in two weeks.
-      </p>
+      <h2>Problēma neuzlabojas</h2>
+      <canvas id="trendChart" style="max-width:1000px;margin:3rem auto;height:55vh;"></canvas>
+      <p>Sākās ar 24 izlaistiem voljēriem (5. nov) → beidzās ar 33 (18. nov)</p>
     </div>
   </section>
 
-  <!-- SLIDE 5 – Death case spotlight -->
-  <section class="slide" style="background:#000;">
+  <!-- 4. Sliktākie gadījumi (saraksts) -->
+  <section class="slide" style="background:#1a1a1a;">
     <div class="content">
-      <h1 style="font-size:6rem;color:#e74c3c;">DEATH FROM NEGLECT</h1>
-      <p style="font-size:4rem;margin:4rem 0;">
-        Vivārijs 1.30 – Sphodromantis lineola<br>
-        <strong>Never appeared on any feeding list<br>Never received food or water<br>Found dead</strong>
-      </p>
-      <p style="font-size:3rem;color:#fff;">
-        This is no longer just “missed days”.<br>
-        This is animal cruelty.
-      </p>
+      <h2>10 vissliktākie gadījumi</h2>
+      <ol style="font-size:2.2rem;text-align:left;max-width:1000px;margin:3rem auto;line-height:2.3;">
+        <li>Visas čūskas 2. stāvā (Boa, Python u.c.) – <strong>katru dienu</strong> (13/13)</li>
+        <li>Krokodili (1.59/1.60) – 11 dienas</li>
+        <li>Aligatorbruņurupucis un Kaimana bruņurupucis – katrs 11 dienas</li>
+        <li>Jūras krupis – 8 dienas</li>
+        <li>Tūkstoškāji – 10 dienas</li>
+        <li>Sauszemes bruņurupuču vannošana – 10 dienas</li>
+        <li>Paleosuchus – 9 dienas</li>
+        <li>Lielās žņaudzējčūskas (1. stāvs) – 9 dienas</li>
+        <li>Circeņi un Zofobas – 7 dienas</li>
+        <li>Zaļais bazilisks un Felzumas – 6 dienas</li>
+      </ol>
+      <div class="img-placeholder">← Šeit vari ielikt tukšu čūsku voljēru foto</div>
     </div>
   </section>
 
-  <!-- SLIDE 6 – Immediate actions required -->
+  <!-- 5. Ko darīt tālāk -->
   <section class="slide" style="background:linear-gradient(135deg,#2c3e50,#34495e);">
     <div class="content">
-      <h1 style="color:#e74c3c;">THIS MUST STOP NOW</h1>
-      <ul style="font-size:2.8rem;text-align:left;max-width:1000px;margin:4rem auto;line-height:2.2;">
-        <li>Implement digital daily sign-off checklist (today)</li>
-        <li>Two compulsory rounds per day (morning + afternoon)</li>
-        <li>Zero-tolerance policy – missed day = written warning</li>
-        <li>Separate keeper responsible for reptiles floor 2 (most neglected)</li>
-        <li>Emergency veterinary welfare inspection this week</li>
-        <li>Public transparency report if no improvement in 7 days</li>
+      <h1 style="color:#2ecc71;">To var ātri atrisināt</h1>
+      <p style="font-size:3rem;margin:3rem 0;">Katram dzīvniekam pienākas ēdiens un tīrs ūdens KATRU dienu</p>
+      <ul style="font-size:2.4rem;text-align:left;max-width:1000px;margin:4rem auto;line-height:2.2;">
+        <li>Ieviešam vienkāršu checklisti (papīra vai telefonā)</li>
+        <li>Divi obligāti apgaitas katru dienu (no rīta + pēcpusdienā)</li>
+        <li>Atsevišķs darbinieks atbild par 2. stāva čūskām</li>
+        <li>Izņemam vai nododam tālāk dievlūdzēju voljēru 1.30</li>
+        <li>Pēc nedēļas pārskatām vēlreiz – es atjaunināšu prezentāciju</li>
       </ul>
-      <h2 style="margin-top:5rem;color:#2ecc71;font-size:4rem;">
-        Every animal deserves food and clean water<br><strong>EVERY SINGLE DAY</strong>
+      <h2 style="margin-top:4rem;color:#2ecc71;font-size:3.5rem;">
+        Mazas izmaiņas = 0 izlaisti voljēri = laimīgi dzīvnieki
       </h2>
     </div>
   </section>
@@ -121,29 +109,42 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const slides=document.querySelectorAll('.slide'),total=slides.length;let current=0;
-function goTo(n){slides.forEach((s,i)=>{s.classList.remove('active','prev','next');if(i===n)s.classList.add('active');if(i<n)s.classList.add('prev');if(i>n)s.classList.add('next');});
-  current=n;document.getElementById('counter').textContent=`${current+1} / ${total}`;
-  document.getElementById('progress').style.width=`${(current+1)/total*100}%`;}
-document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')goTo(Math.min(current+1,total-1));if(e.key==='ArrowLeft')goTo(Math.max(current-1,0));if(e.key==='f')document.documentElement.requestFullscreen();});
+const slides=document.querySelectorAll('.slide');let current=0;const total=slides.length;
+function goTo(n){
+  slides.forEach((s,i)=>{s.classList.remove('active','prev','next');
+    if(i===n)s.classList.add('active');if(i<n)s.classList.add('prev');if(i>n)s.classList.add('next');});
+  current=n;
+  document.getElementById('counter').textContent=`${current+1} / ${total}`;
+  document.getElementById('progress').style.width=`${(current+1)/total*100}%`;
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' ')goTo(Math.min(current+1,total-1));
+  if(e.key==='ArrowLeft')goTo(Math.max(current-1,0));
+  if(e.key==='f')document.documentElement.requestFullscreen();
+});
+let tx=0;
+document.addEventListener('touchstart',e=>tx=e.changedTouches[0].screenX);
+document.addEventListener('touchend',e=>{let ex=e.changedTouches[0].screenX;
+  if(tx-ex>50)goTo(Math.min(current+1,total-1));
+  if(ex-tx>50)goTo(Math.max(current-1,0));
+});
 
-// Touch
-let tx=0;document.addEventListener('touchstart',e=>tx=e.changedTouches[0].screenX);
-document.addEventListener('touchend',e=>{let ex=e.changedTouches[0].screenX;if(tx-ex>50)goTo(Math.min(current+1,total-1));if(ex-tx>50)goTo(Math.max(current-1,0));});
+// Galvenā diagramma
+new Chart(document.getElementById('mainChart'),{
+  type:'bar',
+  data:{labels:['2. st. čūskas','Krokodili','Alig./Kaimana rupuči','Jūras krupis','Tūkstoškāji','Rupuču vannošana','Paleosuchus','Lielās čūskas (1.st.)','Circeņi/Zofobas','Pārējie'],
+    datasets:[{label:'Izlaistās dienas (no 13)',data:[13,11,11,8,10,10,9,9,7,190],
+      backgroundColor:'#e74c3c',borderRadius:10}]},
+  options:{animation:{duration:2500},plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:true,max:13,ticks:{stepSize:1,font:{size:18}}}}}});
 
-// TOTAL MISSES CHART
-new Chart(document.getElementById('totalChart'),{
-  type:'bar',data:{labels:['Large snakes (all)','Boa & Epicrates','Royal pythons','Crocodiles','Turtles (all)','Marine toad','Millipedes','Caimans & Snappers','Paleosuchus','Others'],
-  datasets:[{label:'Times missed daily care (13 days)',data:[312,112,98,79,74,58,56,68,49,171],
-  backgroundColor:'#e74c3c',borderRadius:10}]},
-  options:{animation:{duration:3000},plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{font:{size:20}}}}}});
-
-// TREND CHART
+// Tendences diagramma
 new Chart(document.getElementById('trendChart'),{
-  type:'line',data:{labels:['5Nov','6','7','8','10','11','12','13','14','15','17','18'],
-  datasets:[{label:'Daily enclosures that missed care',data:[68,72,42,69,112,98,48,86,138,108,96,110],
-  borderColor:'#e74c3c',backgroundColor:'rgba(231,76,60,0.2)',tension:0.4,fill:true,pointBackgroundColor:'#fff',pointRadius:6}]},
-  options:{animation:{duration:3500},scales:{y:{beginAtZero:true,ticks:{font:{size:18}}}},plugins:{legend:{labels:{font:{size:20}}}}}});
+  type:'line',
+  data:{labels:['5.nov','6','7','8','10','11','12','13','14','15','17','18'],
+    datasets:[{label:'Izlaistie voljēri dienā',data:[24,26,16,27,47,37,14,27,63,28,31,33],
+      borderColor:'#0066ff',backgroundColor:'rgba(0,102,255,0.15)',tension:0.3,fill:true,pointRadius:6}]},
+  options:{animation:{duration:3000},scales:{y:{beginAtZero:true,ticks:{font:{size:18}}}}}});
 </script>
 </body>
 </html>
