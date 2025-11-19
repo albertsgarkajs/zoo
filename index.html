@@ -6,74 +6,63 @@
 <title>Dzīvnieku aprūpe – 5.–18.11.2025</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{
-    background:#081a0d;
-    color:#e8f5e9;
-    font-family:Arial,Helvetica,sans-serif;
-    overflow:hidden;
-    height:100vh;
+  html,body{height:100%;overflow:hidden;background:#081a0d;color:#e8f5e9;font-family:Arial,sans-serif;}
+
+  /* PC / projector → horizontal 16:9 */
+  @media (min-width: 901px) {
+    .deck{display:flex;height:100vh;overflow:hidden;}
+    .slide{width:100vw;height:100vh;flex:none;scroll-snap-align:start;}
+    .deck{scroll-snap-type:x mandatory;overflow-x:scroll;overflow-y:hidden;}
   }
 
-  /* Horizontal 16:9 on screens wider than 900px (PC, projector) */
-  @media (min-width: 900px) {
-    .deck{display:flex;height:100vh;width:900vw;}
-    .slide{width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;padding:5vw;}
+  /* Phone / tablet → vertical */
+  @media (max-width: 900px) {
+    .deck{height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+    .slide{height:100vh;width:100vw;flex:none;scroll-snap-align:start;}
+    .deck{scroll-snap-type:y mandatory;overflow-y:scroll;overflow-x:hidden;}
   }
 
-  /* Vertical on phones & tablets */
-  @media (max-width: 899px) {
-    .deck{height:900vh;}
-    .slide{height:100vh;width:100vw;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8vh 6vw;}
-  }
-
-  .deck{scroll-snap-type:x mandatory;overflow-x:auto;overflow-y:hidden;display:flex;}
   .slide{
-    flex:none;
-    scroll-snap-align:start;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:5vh 8vw;text-align:center;
     background:radial-gradient(circle at 40% 30%,#1b3a1e,#081a0d);
-    text-align:center;
-    position:relative;
+    scroll-snap-stop:always;
   }
 
   .big{font-size:18vw;font-weight:900;line-height:1;}
-  @media (min-width:900px){.big{font-size:11vw;}}
-  .huge{font-size:24vw;font-weight:900;}
-  @media (min-width:900px){.huge{font-size:14vw;}}
-  .med{font-size:9vw;}
-  @media (min-width:900px){.med{font-size:5.5vw;}}
+  .huge{font-size:26vw;font-weight:900;line-height:1;}
+  .med{font-size:9vw;margin:2vh 0;}
   .small{font-size:5.5vw;opacity:0.9;}
-  @media (min-width:900px){.small{font-size:3.2vw;}}
+  @media (min-width:901px){
+    .big{font-size:11vw;}
+    .huge{font-size:15vw;}
+    .med{font-size:5.5vw;}
+    .small{font-size:3.2vw;}
+  }
 
   .red{color:#ff5252;}
   .green{color:#b2ff59;}
+  canvas{max-width:82vw !important;max-height:52vh !important;margin:4vh auto;}
 
-  canvas{max-width:80vw !important;max-height:55vh !important;margin:4vh auto;}
+  #counter{position:fixed;top:15px;right:15px;background:rgba(0,0,0,0.7);padding:10px 24px;border-radius:40px;font-size:1.8rem;z-index:999;}
+  @media (max-width:900px){#counter{font-size:5vw;padding:8px 16px;}}
+  #progress{position:fixed;bottom:0;left:0;height:8px;background:#00ff88;width:0%;transition:0.4s;z-index:999;}
 
-  #counter{
-    position:fixed;top:15px;right:15px;background:rgba(0,0,0,0.7);
-    padding:10px 22px;border-radius:30px;font-size:1.8rem;z-index:999;
-  }
-  @media (max-width:899px){#counter{font-size:5vw;padding:8px 16px;}}
-
-  #progress{
-    position:fixed;bottom:0;left:0;height:8px;background:#00ff88;width:0%;transition:0.4s;z-index:999;
-  }
-
-  /* Jungle decoration */
-  .jungle{position:fixed;inset:0;pointer-events:none;z-index:1;}
-  .vine{position:absolute;background:#1b5e20;opacity:0.15;border-radius:100px;}
-  .leaf{position:absolute;background:#2e7d32;border-radius:60% 10% 60% 10%;opacity:0.4;}
-  .vine:nth-child(1){top:0;left:5%;width:90px;height:45vh;transform:rotate(20deg);}
-  .vine:nth-child(2){top:0;right:8%;width:80px;height:42vh;transform:rotate(-35deg);}
-  .vine:nth-child(3){bottom:0;left:12%;width:100px;height:48vh;transform:rotate(155deg);}
-  .leaf:nth-child(4){width:60px;height:100px;top:12%;left:8%;transform:rotate(40deg);}
-  .leaf:nth-child(5){width:55px;height:90px;top:18%;right:10%;transform:rotate(-70deg);}
-  .leaf:nth-child(6){width:65px;height:110px;bottom:15%;left:15%;transform:rotate(130deg);}
+  /* Vines & leaves – back and better */
+  .jung25{position:fixed;inset:0;pointer-events:none;z-index:1;}
+  .vine{position:absolute;background:#1b5e20;opacity:0.18;border-radius:100px;}
+  .leaf{position:absolute;background:#2e7d32;border-radius:60% 10% 60% 10%;opacity:0.38;}
+  .vine:nth-child(1){top:-10%;left:5%;width:90px;height:45vh;transform:rotate(22deg);}
+  .vine:nth-child(2){top:-12%;right:7%;width:80px;height:42vh;transform:rotate(-38deg);}
+  .vine:nth-child(3){bottom:-10%;left:10%;width:100px;height:48vh;transform:rotate(152deg);}
+  .leaf:nth-child(4){width:65px;height:100px;top:12%;left:8%;transform:rotate(40deg);}
+  .leaf:nth-child(5){width:60px;height:95px;top:18%;right:10%;transform:rotate(-70deg);}
+  .leaf:nth-child(6){width:70px;height:110px;bottom:15%;left:14%;transform:rotate(125deg);}
 </style>
 </head>
 <body>
 
-<div class="jungle">
+<div class="jung25">
   <div class="vine"></div><div class="vine"></div><div class="vine"></div>
   <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
 </div>
@@ -81,8 +70,7 @@
 <div id="counter">1 / 9</div>
 <div id="progress"></div>
 
-<div class="deck">
-
+<div class="deck" id="deck">
   <section class="slide"><div>
     <div class="huge red">210</div>
     <div class="med">reizes dzīvnieki palika bez ēdiena</div>
@@ -115,7 +103,7 @@
   </div></section>
 
   <section class="slide"><div>
-    <canvas id="line"></canvas>
+    <canvas id="line" style="max-height:55vh !important;"></canvas>
     <div class="med red">Situācija neuzlabojas</div>
   </div></section>
 
@@ -126,9 +114,8 @@
   </div></section>
 
   <section class="slide"><div>
-    <div class="huge green">MĒS</div>
-    <div class="huge green">TO</div>
-    <div class="huge green">VAR</div>
+    <div class="huge green">MĒS TO</div>
+    <div class="huge green">VARAM</div>
     <div class="huge green">ATRISINĀT</div>
   </div></section>
 
@@ -137,46 +124,51 @@
     <div class="huge green">DIENU</div>
     <div class="big green">katram dzīvniekam</div>
   </div></section>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+const deck = document.getElementById('deck');
 const slides = document.querySelectorAll('.slide');
 let current = 0;
 const total = slides.length;
 
-function update(){
-  document.getElementById('counter').textContent = (current+1) + ' / ' + total;
-  document.getElementById('progress').style.width = (current+1)/total*100 + '%';
-  // horizontal scroll on PC
-  if(window.innerWidth >= 900){
-    document.querySelector('.deck').scrollLeft = current * window.innerWidth;
+function go(to){
+  current = Math.max(0, Math.min(to, total-1));
+  if(window.innerWidth > 900){
+    deck.scrollLeft = current * window.innerWidth;
+  } else {
+    deck.scrollTop = current * window.innerHeight;
   }
+  document.getElementById('counter').textContent = (current+1)+' / '+total;
+  document.getElementById('progress').style.width = (current+1)/total*100 + '%';
 }
 
-// Navigation
+// Keyboard & touch
 document.addEventListener('keydown', e=>{
-  if(e.key==='ArrowRight' || e.key===' ') {if(current<total-1) current++; update();}
-  if(e.key==='ArrowLeft') {if(current>0) current--; update();}
-  if(e.key.toLowerCase()==='f') document.documentElement.requestFullscreen?.() || document.documentElement.webkitRequestFullscreen?.();
+  if(e.key==='ArrowRight' || e.key===' ') go(current+1);
+  if(e.key==='ArrowLeft') go(current-1);
+  if(e.key.toLowerCase()==='f') document.documentElement.requestFullscreen();
 });
-
-let touchX = 0;
-document.addEventListener('touchstart', e=> touchX = e.touches[0].clientX);
+let startX = 0, startY = 0;
+document.addEventListener('touchstart', e=>{startX=e.touches[0].clientX; startY=e.touches[0].clientY;});
 document.addEventListener('touchend', e=>{
-  let diff = touchX - e.changedTouches[0].clientX;
-  if(diff > 50 && current<total-1) {current++; update();}
-  if(diff < -50 && current>0) {current--; update();}
+  const dx = startX - e.changedTouches[0].clientX;
+  const dy = startY - e.changedTouches[0].clientY;
+  if(Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>50){
+    if(dx>0) go(current+1); else go(current-1);
+  } else if(Math.abs(dy)>50){
+    if(dy>0) go(current+1); else go(current-1);
+  }
 });
 
 // Charts
 new Chart(document.getElementById('c1'),{type:'doughnut',data:{datasets:[{data:[130,80],backgroundColor:['#ff5252','#1b5e20']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c2'),{type:'doughnut',data:{datasets:[{data:[50,160],backgroundColor:['#ff9800','#1b5e20']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c3'),{type:'doughnut',data:{datasets:[{data:[60,150],backgroundColor:['#ffb74d','#1b5e20']}]},options:{cutout:'82%',plugins:{legend:false}}});
-new Chart(document.getElementById('line'),{type:'line',data:{datasets:[{data:[15,18,12,20,28,25,10,18,35,20,22,24],borderColor:'#ff5252',backgroundColor:'rgba(255,82,82,0.18)',fill:true,tension:0.4,pointRadius:9,pointBackgroundColor:'#ff5252'}]},options:{plugins:{legend:false},scales:{x:{display:false},y:{display:false}}}});
+new Chart(document.getElementById('line'),{type:'line',data:{datasets:[{data:[15,18,12,20,28,25,10,18,35,20,22,24],borderColor:'#ff5252',backgroundColor:'rgba(255,82,82,0.18)',fill:true,tension:0.4,pointRadius:10,pointBackgroundColor:'#ff5252'}]},options:{plugins:{legend:false},scales:{x:{display:false},y:{display:false}}}});
 
-update();
+go(0);
 </script>
 </body>
 </html>
