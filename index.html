@@ -15,66 +15,57 @@
   }
   .slide{
     position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;color:#e8f5e9;padding:80px 140px;opacity:0;transition:opacity 1s ease;
+    text-align:center;color:#e8f5e9;opacity:0;transition:opacity 1.2s ease;
   }
   .slide.active{opacity:1;z-index:10;}
-  .fade{transform:translateY(60px);}
-  .zoom{transform:scale(0.4);}
-  .slide-left{transform:translateX(-2000px);}
-  .slide-right{transform:translateX(2000px);}
-  .rotate{transform:rotate(-180deg) scale(0.5);}
-  .flip{transform:rotateY(90deg);}
-  .pulse{transform:scale(0);}
-  .fall{transform:translateY(-2000px);}
-  .slide.active{transform:none !important;}
 
-  h1{font-size:52px;font-weight:900;margin:20px 0;}
-  h2{font-size:44px;font-weight:800;margin:15px 0;}
-  p{font-size:34px;line-height:1.5;margin:12px 0;}
-  .law{font-style:italic;background:rgba(255,255,255,0.08);padding:40px 80px;border-radius:24px;margin:30px 0;max-width:1750px;}
+  h1{font-size:76px;font-weight:900;margin:20px 0;letter-spacing:2px;}
+  h2{font-size:60px;font-weight:800;margin:15px 0;}
+  p{font-size:40px;line-height:1.5;margin:12px 0;}
+  .law{font-style:italic;background:rgba(255,255,255,0.06);padding:50px 100px;border-radius:30px;margin:40px 0;max-width:1700px;line-height:1.7;font-size:42px;}
 
-  .red{color:#ff1744;text-shadow:0 0 45px #ff1744;}
-  .yellow{color:#ffc107;text-shadow:0 0 45px #ffc107;}
+  .red{color:#ff1744;text-shadow:0 0 60px #ff1744;}
+  .yellow{color:#ffc107;text-shadow:0 0 60px #ffc107;}
 
-  canvas,img{max-width:1750px;max-height:820px;margin:30px auto;border-radius:22px;box-shadow:0 35px 90px #000;}
-  img{object-fit:contain;background:#111;}
+  img{max-width:1600px;max-height:800px;margin:40px auto;border-radius:30px;box-shadow:0 40px 100px #000;object-fit:contain;background:#111;}
 
-  #counter{position:fixed;top:30px;right:50px;background:rgba(0,255,100,0.2);padding:16px 50px;border-radius:70px;font-size:44px;z-index:999;border:5px solid #00ff88;}
-  #progress{position:fixed;bottom:0;left:0;height:22px;background:#00ff88;width:0%;transition:0.6s;z-index:999;}
+  #counter{position:fixed;top:40px;right:60px;background:rgba(0,255,100,0.2);padding:20px 60px;border-radius:80px;font-size:50px;z-index:999;border:6px solid #00ff88;}
+  #progress{position:fixed;bottom:0;left:0;height:25px;background:#00ff88;width:0%;transition:0.7s;z-index:999;}
 
   .vines{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
   .vine{position:absolute;background:linear-gradient(to bottom,transparent,#1b5e20 40%,#2e7d32 80%);border-radius:100px;}
   .grow .vine{animation:grow 4s ease-out forwards;}
   @keyframes grow{0%{transform:scaleY(0);opacity:0;}70%{opacity:0.4;}100%{transform:scaleY(1);opacity:0.35;}}
 
-  /* PURE CSS BAR CHART – SLIDE 5 */
-  .css-chart{
-    width:1650px;height:780px;display:flex;flex-direction:column;justify-content:space-around;
-    padding:80px 0;font-size:50px;font-weight:900;color:#e8f5e9;
+  /* MODERN GLOWING BAR CHART – SLIDE 5 */
+  .chart{
+    width:1700px;display:flex;flex-direction:column;gap:70px;justify-content:center;height:800px;
   }
   .bar-row{
-    display:flex;align-items:center;gap:60px;height:140px;position:relative;
+    display:flex;align-items:center;gap:80px;height:140px;position:relative;
   }
   .bar-label{
-    width:780px;text-align:right;letter-spacing:2px;text-shadow:0 0 30px #fff;
+    width:800px;text-align:right;font-size:56px;font-weight:900;color:#e8f5e9;text-shadow:0 0 30px #fff;
   }
-  .bar-container{
-    flex:1;height:120px;background:rgba(255,255,255,0.05);border-radius:60px;overflow:hidden;
-    box-shadow:inset 0 0 40px rgba(0,0,0,0.8);
+  .bar-bg{
+    flex:1;height:130px;background:rgba(255,255,255,0.07);border-radius:80px;overflow:hidden;position:relative;
+    box-shadow:0 0 60px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,0,0,0.6);
   }
-  .bar{
-    height:100%;width:0;background:#ff1744;border-radius:60px;
-    box-shadow:0 0 60px #ff1744;animation:fill 2.5s ease-out forwards;
+  .bar-fill{
+    height:100%;width:0;background:linear-gradient(90deg,#ff1744,#ff5722);border-radius:80px;
+    box-shadow:0 0 80px #ff1744;animation:fill 2.8s ease-out forwards;position:relative;
   }
-  .bar-num{
-    position:absolute;right:-130px;top:50%;transform:translateY(-50%);
-    font-size:64px;color:#ff1744;text-shadow:0 0 40px #ff1744;
+  .bar-value{
+    position:absolute;right:40px;top:50%;transform:translateY(-50%);
+    font-size:90px;font-weight:900;color:#fff;text-shadow:0 0 40px #000;
   }
   @keyframes fill{to{width:100%}}
-  .bar1 .bar{width:100%}   /* 110 */
-  .bar2 .bar{width:54.5%}  /* 60 */
-  .bar3 .bar{width:36.4%}  /* 40 */
-  .bar4 .bar{width:9.1%}   /* 10 */
+
+  /* Percentages relative to the worst (110) */
+  .r1 .bar-fill{width:100%}    /* 110 */
+  .r2 .bar-fill{width:54.5%}   /* 60 */
+  .r3 .bar-fill{width:36.4%}   /* 40 */
+  .r4 .bar-fill{width:9.1%}    /* 10 */
 </style>
 </head>
 <body>
@@ -82,58 +73,39 @@
 <div class="frame">
   <div class="presentation grow" id="pres">
     <div class="vines">
-      <div class="vine" style="top:-10%;left:8%;width:30px;height:70vh;transform:rotate(18deg);"></div>
-      <div class="vine" style="top:-15%;right:12%;width:28px;height:66vh;transform:rotate(-32deg);"></div>
-      <div class="vine" style="bottom:-10%;left:10%;width:32px;height:72vh;transform:rotate(155deg);"></div>
-      <div class="vine" style="top:10%;left:-5%;width:26px;height:60vh;transform:rotate(80deg);"></div>
+      <div class="vine" style="top:-10%;left:8%;width:32px;height:72vh;transform:rotate(18deg);"></div>
+      <div class="vine" style="top:-15%;right:12%;width:30px;height:68vh;transform:rotate(-32deg);"></div>
+      <div class="vine" style="bottom:-10%;left:10%;width:34px;height:74vh;transform:rotate(155deg);"></div>
+      <div class="vine" style="top:10%;left:-5%;width:28px;height:62vh;transform:rotate(80deg);"></div>
     </div>
 
-    <div id="counter">1 / 11</div>
+    <div id="counter">1 / 7</div>
     <div id="progress"></div>
 
     <!-- 1 -->
-    <section class="slide active pulse">
-      <h1 class="red">210 izlaistas barošanas reizes</h1>
-      <p>5.–18.11.2025 · 13 darba dienas</p>
-    </section>
+    <section class="slide active"><h1 class="red">210 izlaistas barošanas reizes</h1><p>5.–18.11.2025 · 13 darba dienas</p></section>
 
     <!-- 2 -->
-    <section class="slide fade">
-      <h1 class="red">1 dzīvnieks</h1>
-      <h2 class="red">gāja bojā</h2>
-      <p>Dievlūdzējs (voljērs 1.30)</p>
-    </section>
+    <section class="slide"><h1 class="red">1 dzīvnieks</h1><h2 class="red">gāja bojā</h2><p>Dievlūdzējs (voljērs 1.30)</p></section>
 
     <!-- 3 -->
-    <section class="slide slide-left">
-      <h2 class="red">PILNĪGI SAUSS VOLJĒRS</h2>
-      <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2010.jpg">
-      <p>Extatosoma tiaratum</p>
-    </section>
+    <section class="slide"><h2 class="red">PILNĪGI SAUSS VOLJĒRS</h2><img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2010.jpg"><p>Extatosoma tiaratum</p></section>
 
     <!-- 4 -->
-    <section class="slide slide-right">
-      <h2 class="red">TUKŠS ŪDENS TRAUKS</h2>
-      <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2011.jpg">
-      <p>Blaberus giganteus</p>
-    </section>
+    <section class="slide"><h2 class="red">TUKŠS ŪDENS TRAUKS</h2><img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2011.jpg"><p>Blaberus giganteus</p></section>
 
-    <!-- 5 – PURE CSS BAR CHART (always works) -->
-    <section class="slide zoom">
-      <div class="css-chart">
-        <div class="bar-row bar1"><div class="bar-label">2. stāva čūskas (10 voljēri)</div><div class="bar-container"><div class="bar"></div></div><div class="bar-num">110×</div></div>
-        <div class="bar-row bar2"><div class="bar-label">Lielās čūskas 1. stāvs</div><div class="bar-container"><div class="bar"></div></div><div class="bar-num">60×</div></div>
-        <div class="bar-row bar3"><div class="bar-label">Citi + mirušais dzīvnieks</div><div class="bar-container"><div class="bar"></div></div><div class="bar-num">40×</div></div>
-        <div class="bar-row bar4"><div class="bar-label">Tūkstoškāji</div><div class="bar-container"><div class="bar"></div></div><div class="bar-num">10×</div></div>
+    <!-- 5 – MODERN GLOWING BAR CHART -->
+    <section class="slide">
+      <div class="chart">
+        <div class="bar-row r1"><div class="bar-label">2. stāva čūskas (10 voljēri)</div><div class="bar-bg"><div class="bar-fill"></div><div class="bar-value">110×</div></div></div>
+        <div class="bar-row r2"><div class="bar-label">Lielās čūskas 1. stāvs</div><div class="bar-bg"><div class="bar-fill"></div><div class="bar-value">60×</div></div></div>
+        <div class="bar-row r3"><div class="bar-label">Citi + mirušais dzīvnieks</div><div class="bar-bg"><div class="bar-fill"></div><div class="bar-value">40×</div></div></div>
+        <div class="bar-row r4"><div class="bar-label">Tūkstoškāji</div><div class="bar-bg"><div class="bar-fill"></div><div class="bar-value">10×</div></div></div>
       </div>
     </section>
 
-    <!-- 6–11 -->
-    <section class="slide rotate"><h1 class="red">110 reizes izlaistas</h1><p>10 čūskas 2. stāvā</p><canvas id="c1"></canvas></section>
-    <section class="slide flip"><h1 class="red">10 reizes izlaisti</h1><p>Tūkstoškāji</p><canvas id="c2"></canvas></section>
-    <section class="slide fall"><h1 class="red">60 reizes izlaistas</h1><p>Lielās čūskas 1. stāvā</p><canvas id="c3"></canvas></section>
-    <section class="slide slide-left"><img src="https://i46.servimg.com/u/f46/14/10/26/20/screen10.jpg"><h2 class="red">Aizgāja 14:35</h2><p>Darba diena līdz 15:30</p></section>
-    <section class="slide zoom">
+    <!-- 6 -->
+    <section class="slide">
       <h1 class="yellow">Darba likums – 145. pants (2)</h1>
       <div class="law">
         <p>Pārtraukumu piešķir ne vēlāk kā pēc četrām stundām no darba sākuma.</p>
@@ -142,7 +114,9 @@
         <p><strong>Pārtraukumu neieskaita darba laikā,</strong> ja darba līgumā vai darba koplīgumā nav noteikts citādi.</p>
       </div>
     </section>
-    <section class="slide pulse">
+
+    <!-- 7 – FINAL -->
+    <section class="slide">
       <h1 class="red">Darba likums – 134. un 97. pants</h1>
       <div class="law">
         <p>Darbiniekam <strong>jāpilda darba pienākumi visu nolīgto darba laiku</strong>.</p>
@@ -153,7 +127,6 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 const slides = document.querySelectorAll('.slide');
 const pres = document.getElementById('pres');
@@ -165,14 +138,12 @@ function go(n) {
   slides.forEach((s,i) => s.classList.toggle('active', i===current));
   document.getElementById('counter').textContent = (current+1)+' / '+total;
   document.getElementById('progress').style.width = (current+1)/total*100+'%';
-  pres.classList.remove('grow');
-  void pres.offsetWidth;
-  pres.classList.add('grow');
+  pres.classList.remove('grow');void pres.offsetWidth;pres.classList.add('grow');
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(current + 1); }
-  if (e.key === 'ArrowLeft') { e.preventDefault(); go(current - 1); }
+  if (e.key === 'ArrowRight' || e.key === ' ') {e.preventDefault();go(current + 1);}
+  if (e.key === 'ArrowLeft') {e.preventDefault();go(current - 1);}
   if (e.key.toLowerCase() === 'f') {
     if (!document.fullscreenElement) document.documentElement.requestFullscreen();
     else document.exitFullscreen();
@@ -185,10 +156,6 @@ document.addEventListener('touchend', e => {
   const diff = startX - e.changedTouches[0].clientX;
   if (Math.abs(diff) > 50) go(current + (diff > 0 ? 1 : -1));
 });
-
-new Chart(document.getElementById('c1'),{type:'doughnut',data:{datasets:[{data:[110,100],backgroundColor:['#ff1744','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
-new Chart(document.getElementById('c2'),{type:'doughnut',data:{datasets:[{data:[10,203],backgroundColor:['#ff5722','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
-new Chart(document.getElementById('c3'),{type:'doughnut',data:{datasets:[{data:[60,150],backgroundColor:['#ff9800','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 
 go(0);
 </script>
