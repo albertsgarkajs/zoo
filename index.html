@@ -28,27 +28,29 @@
   .red{color:#ff1744;text-shadow:0 0 65px #ff1744;}
   .yellow{color:#ffc107;text-shadow:0 0 65px #ffc107;}
 
-  /* HUGE seamless images – no black box */
-  .img-pair{
+  /* Unified seamless image container – used for ALL photos */
+  .img-big{
     position:relative;
     width:1880px;
     height:960px;
-    margin:20px auto;
-    border-radius:36px;
+    margin:30px auto;
+    border-radius:48px;
     overflow:hidden;
+    box-shadow:0 50px 140px rgba(0,0,0,0.9);
   }
-  .img-pair img{
+  .img-big img{
     position:absolute;
     inset:0;
     width:100%;
     height:100%;
     object-fit:contain;
+    border-radius:48px;
   }
-  .img-pair .highlight{
+  .img-big .highlight{
     opacity:0;
-    transition:opacity 2.8s ease-in-out 0.4s;
+    transition:opacity 2.8s ease-in-out 0.5s;
   }
-  .slide.active .img-pair .highlight{
+  .slide.active .img-big .highlight{
     opacity:1;
   }
 
@@ -61,12 +63,10 @@
     z-index:999;
     border:6px solid #00ff88;
   }
-
-  /* Progress bar = almost invisible */
   #progress{
     position:fixed;bottom:0;left:0;
-    height:12px;
-    background:rgba(0,255,136,0.06);
+    height:10px;
+    background:rgba(0,255,136,0.05);
     width:0%;
     transition:width 0.9s ease;
     z-index:1;
@@ -77,7 +77,6 @@
   .grow .vine{animation:grow 4s ease-out forwards;}
   @keyframes grow{0%{transform:scaleY(0);opacity:0;}70%{opacity:0.4;}100%{transform:scaleY(1);opacity:0.35;}}
 
-  /* BAR CHART */
   .chart{width:1780px;display:flex;flex-direction:column;gap:70px;justify-content:center;height:840px;}
   .bar-row{display:flex;align-items:center;gap:90px;height:150px;position:relative;}
   .bar-label{width:860px;text-align:right;font-size:60px;font-weight:900;color:#e8f5e9;text-shadow:0 0 40px #fff;}
@@ -114,27 +113,30 @@
       <p>5.–18.11.2025 · 13 darba dienas</p>
     </section>
 
-    <!-- 2 -->
+    <!-- 2 – Dead animal + photo of voljērs 1.30 -->
     <section class="slide">
       <h1 class="red">1 dzīvnieks</h1>
       <h2 class="red">gāja bojā</h2>
+      <div class="img-big">
+        <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2014.jpg">
+      </div>
       <p>Dievlūdzējs (voljērs 1.30)</p>
     </section>
 
-    <!-- 3 – Dry enclosure (huge seamless) -->
+    <!-- 3 – Dry enclosure -->
     <section class="slide">
       <h2 class="red">PILNĪGI SAUSS VOLJĒRS</h2>
-      <div class="img-pair">
+      <div class="img-big">
         <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2010.jpg">
         <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2012.jpg" class="highlight">
       </div>
       <p>Extatosoma tiaratum</p>
     </section>
 
-    <!-- 4 – Empty water dish (huge seamless) -->
+    <!-- 4 – Empty water dish -->
     <section class="slide">
       <h2 class="red">TUKŠS ŪDENS TRAUKS</h2>
-      <div class="img-pair">
+      <div class="img-big">
         <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2011.jpg">
         <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2013.jpg" class="highlight">
       </div>
@@ -153,9 +155,9 @@
       <p class="small">Visas šīs ir <strong>izlaistas barošanas un/vai ūdens maiņas</strong></p>
     </section>
 
-    <!-- 6 – Early leaving (huge seamless) -->
+    <!-- 6 – Early leaving -->
     <section class="slide">
-      <div class="img-pair">
+      <div class="img-big">
         <img src="https://i46.servimg.com/u/f46/14/10/26/20/screen10.jpg">
         <img src="https://i46.servimg.com/u/f46/14/10/26/20/screen11.jpg" class="highlight">
       </div>
