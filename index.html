@@ -15,7 +15,7 @@
   }
   .slide{
     position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;color:#e8f5e9;padding:100px 180px;opacity:0;transition:opacity 1s ease;
+    text-align:center;color:#e8f5e9;padding:90px 160px;opacity:0;transition:opacity 1s ease;
   }
   .slide.active{opacity:1;z-index:10;}
   .fade{transform:translateY(60px);}
@@ -28,21 +28,21 @@
   .fall{transform:translateY(-2000px);}
   .slide.active{transform:none !important;}
 
-  h1{font-size:44px;font-weight:900;margin:15px 0;}
-  h2{font-size:38px;font-weight:800;margin:12px 0;}
+  h1{font-size:46px;font-weight:900;margin:15px 0;}
+  h2{font-size:40px;font-weight:800;margin:12px 0;}
   p{font-size:32px;line-height:1.45;margin:10px 0;}
   .small{font-size:26px;opacity:0.85;}
-  .law{font-style:italic;background:rgba(255,255,255,0.08);padding:25px 45px;border-radius:18px;margin:25px 0;max-width:1600px;}
+  .law{font-style:italic;background:rgba(255,255,255,0.08);padding:25px 50px;border-radius:18px;margin:25px 0;max-width:1600px;}
 
-  .red{color:#ff1744;text-shadow:0 0 30px #ff1744;}
-  .green{color:#00e676;text-shadow:0 0 30px #00e676;}
-  .yellow{color:#ffc107;text-shadow:0 0 30px #ffc107;}
+  .red{color:#ff1744;text-shadow:0 0 35px #ff1744;}
+  .green{color:#00e676;text-shadow:0 0 35px #00e676;}
+  .yellow{color:#ffc107;text-shadow:0 0 35px #ffc107;}
 
-  img,canvas{max-width:1400px;max-height:700px;margin:30px auto;border-radius:20px;box-shadow:0 20px 60px #000;}
+  img,canvas{max-width:1550px;max-height:750px;margin:30px auto;border-radius:20px;box-shadow:0 25px 70px #000;}
   img{object-fit:contain;background:#111;}
 
   #counter{position:fixed;top:30px;right:50px;background:rgba(0,255,100,0.2);padding:15px 40px;border-radius:60px;font-size:40px;z-index:999;border:3px solid #00ff88;}
-  #progress{position:fixed;bottom:0;left:0;height:16px;background:#00ff88;width:0%;transition:0.6s;z-index:999;}
+  #progress{position:fixed;bottom:0;left:0;height:18px;background:#00ff88;width:0%;transition:0.6s;z-index:999;}
 
   .vines{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
   .vine{position:absolute;background:linear-gradient(to bottom,transparent,#1b5e20 40%,#2e7d32 80%);border-radius:100px;}
@@ -60,50 +60,73 @@
       <div class="vine" style="top:10%;left:-5%;width:22px;height:55vh;transform:rotate(80deg);"></div>
     </div>
 
-    <div id="counter">1 / 13</div>
+    <div id="counter">1 / 14</div>
     <div id="progress"></div>
 
-    <section class="slide active pulse"><h1 class="red">210 izlaistas barošanas reizes</h1><p>5.–18.11.2025 (13 darba dienas)</p></section>
-    <section class="slide fade"><h1 class="red">1 dzīvnieks gāja bojā</h1><p>Dievlūdzējs (voljērs 1.30)</p><p>Nekad nav ticis barots</p></section>
-    <section class="slide slide-left"><h2 class="red">PILNĪGI SAUSS VOLJĒRS</h2><img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2010.jpg"><p>Extatosoma tiaratum</p></section>
-    <section class="slide slide-right"><h2 class="red">TUKŠS ŪDENS TRAUKS</h2><img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2011.jpg"><p>Blaberus giganteus</p></section>
+    <!-- 1 -->
+    <section class="slide active pulse">
+      <h1 class="red">210 izlaistas barošanas reizes</h1>
+      <p>5.–18.11.2025 · 13 darba dienas</p>
+    </section>
 
+    <!-- 2 -->
+    <section class="slide fade">
+      <h1 class="red">1 dzīvnieks aizgāja bojā</h1>
+      <p>Dievlūdzējs (voljērs 1.30) – nekad nav barots</p>
+    </section>
+
+    <!-- 3 -->
+    <section class="slide slide-left">
+      <h2 class="red">PILNĪGI SAUSS VOLJĒRS</h2>
+      <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2010.jpg">
+      <p>Extatosoma tiaratum</p>
+    </section>
+
+    <!-- 4 -->
+    <section class="slide slide-right">
+      <h2 class="red">TUKŠS ŪDENS TRAUKS</h2>
+      <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2011.jpg">
+      <p>Blaberus giganteus</p>
+    </section>
+
+    <!-- 5 -->
     <section class="slide zoom">
+      <h1 class="red">VISI DATI VIENĀ ATTĒLĀ</h1>
+      <canvas id="overview"></canvas>
+      <p class="small">Kopā 210 izlaistas barošanas 13 dienās</p>
+    </section>
+
+    <!-- 6 -->
+    <section class="slide rotate">
       <h1 class="red">110 reizes izlaistas</h1>
-      <p>10 čūskas 2. stāvā</p>
-      <p class="red">11 no 13 dienām</p>
       <canvas id="c1"></canvas>
     </section>
 
-    <section class="slide rotate"><h1 class="red">10 reizes izlaisti</h1><p>Tūkstoškāji – 10 no 13 dienām</p><canvas id="c2"></canvas></section>
+    <!-- 7–13 same as before -->
     <section class="slide flip"><h1 class="red">60 reizes izlaistas</h1><p>Lielās čūskas 1. stāvā</p><canvas id="c3"></canvas></section>
     <section class="slide fall"><img src="https://i46.servimg.com/u/f46/14/10/26/20/screen10.jpg"><h2 class="red">Aizgāja 14:35</h2><p>Darba diena līdz 15:30</p></section>
-
     <section class="slide zoom">
-      <h1 class="yellow">Darba likums – 145. pants (2)</h1>
+      <h1 class="yellow">Darba likums – 145. pants (2. daļa)</h1>
       <div class="law">
         <p>Pārtraukumu piešķir ne vēlāk kā pēc četrām stundām no darba sākuma.</p>
-        <p>Pārtraukuma ilgumu nosaka darba devējs pēc konsultēšanās ar darbinieku pārstāvjiem, taču tas nedrīkst būt īsāks par 30 minūtēm.</p>
-        <p>Pārtraukumu <strong>neieskaita darba laikā</strong>, ja darba līgumā vai koplīgumā nav noteikts citādi.</p>
+        <p>Pārtraukuma ilgumu nosaka darba devējs, taču tas nedrīkst būt īsāks par 30 minūtēm.</p>
+        <p><strong>Pārtraukumu neieskaita darba laikā,</strong> ja darba līgumā vai koplīgumā nav noteikts citādi.</p>
       </div>
     </section>
-
     <section class="slide slide-left">
       <h1 class="red">Darba likums – 131. pants</h1>
       <div class="law">
-        <p>Darbiniekam jāpilda darba pienākumi visu nolīgto darba laiku.</p>
-        <p>Darba devējs nedrīkst pieļaut, ka darbinieks pamet darbu pirms darba laika beigām, ja darbs nav pabeigts.</p>
+        <p>Darbiniekam jāpilda pienākumi visu nolīgto darba laiku.</p>
+        <p>Darba devējs nedrīkst pieļaut, ka darbinieks pamet darbu pirms laika beigām, ja darbs nav pabeigts.</p>
       </div>
     </section>
-
     <section class="slide pulse"><canvas id="line"></canvas><h2 class="red">Situācija tikai pasliktinās</h2></section>
-
     <section class="slide fade">
       <h1 class="green">Mēs gribam tikai:</h1>
       <p>2 apgaitas dienā</p>
       <p>1 atbildīgo par 2. stāvu</p>
       <p>0 izlaistus voljērus</p>
-      <h2 class="green">PALDIES, ka rūpējaties par dzīvniekiem</h2>
+      <h2 class="green">PALDIES, ka rūpējaties</h2>
       <p class="small">Nākamā pārbaude pēc 7 dienām</p>
     </section>
 
@@ -143,7 +166,30 @@ document.addEventListener('touchend', e => {
   if (Math.abs(diff) > 50) go(current + (diff > 0 ? 1 : -1));
 });
 
-/* Updated charts – 110 instead of 130 for 2nd floor snakes */
+/* NEW: POWERFUL OVERVIEW CHART
+new Chart(document.getElementById('overview'), {
+  type: 'bar',
+  data: {
+    labels: ['2. stāva čūskas\n(10 voljēri)', 'Lielās čūskas\n1. stāvs', 'Tūkstoškāji', 'Citi + mirušais dzīvnieks'],
+    datasets: [{
+      label: 'Izlaistas barošanas',
+      data: [110, 60, 10, 40],
+      backgroundColor: ['#ff1744', '#ff5722', '#ff9800', '#d50000'],
+      borderWidth: 0,
+      borderRadius: 12,
+      barThickness: 90
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { display: false, max: 140 },
+      y: { grid: { display: false }, ticks: { color: '#e8f5e9', font: { size: 36 } } }
+    }
+  }
+});
+
 new Chart(document.getElementById('c1'), {type:'doughnut',data:{datasets:[{data:[110,100],backgroundColor:['#ff1744','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c2'), {type:'doughnut',data:{datasets:[{data:[10,203],backgroundColor:['#ff5722','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c3'), {type:'doughnut',data:{datasets:[{data:[60,150],backgroundColor:['#ff9800','#111']}]},options:{cutout:'82%',plugins:{legend:false}}});
