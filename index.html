@@ -2,35 +2,73 @@
 <html lang="lv">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Dzīvnieku aprūpe</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dzīvnieku aprūpe – 5.–18.11.2025</title>
 <style>
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  body,html{height:100%;overflow:hidden;background:#081a0d;color:#e8f5e9;font-family:Arial,Helvetica,sans-serif;}
-  .deck{width:100vw;height:100vh;position:relative;}
-  .slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-         padding:6vh 6vw;text-align:center;background:radial-gradient(circle at 50% 30%,#1b3a1e,#081a0d);
-         opacity:0;transform:scale(0.9);transition:all 0.9s ease;}
-  .slide.active{opacity:1;transform:scale(1);z-index:10;}
-  .big{font-size:22vw;font-weight:900;margin:2vh 0;line-height:1;}
-  .huge{font-size:28vw;font-weight:900;}
-  .med{font-size:9vw;margin:1vh 0;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:#081a0d;
+    color:#e8f5e9;
+    font-family:Arial,Helvetica,sans-serif;
+    overflow:hidden;
+    height:100vh;
+  }
+
+  /* Horizontal 16:9 on screens wider than 900px (PC, projector) */
+  @media (min-width: 900px) {
+    .deck{display:flex;height:100vh;width:900vw;}
+    .slide{width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;padding:5vw;}
+  }
+
+  /* Vertical on phones & tablets */
+  @media (max-width: 899px) {
+    .deck{height:900vh;}
+    .slide{height:100vh;width:100vw;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8vh 6vw;}
+  }
+
+  .deck{scroll-snap-type:x mandatory;overflow-x:auto;overflow-y:hidden;display:flex;}
+  .slide{
+    flex:none;
+    scroll-snap-align:start;
+    background:radial-gradient(circle at 40% 30%,#1b3a1e,#081a0d);
+    text-align:center;
+    position:relative;
+  }
+
+  .big{font-size:18vw;font-weight:900;line-height:1;}
+  @media (min-width:900px){.big{font-size:11vw;}}
+  .huge{font-size:24vw;font-weight:900;}
+  @media (min-width:900px){.huge{font-size:14vw;}}
+  .med{font-size:9vw;}
+  @media (min-width:900px){.med{font-size:5.5vw;}}
   .small{font-size:5.5vw;opacity:0.9;}
+  @media (min-width:900px){.small{font-size:3.2vw;}}
+
   .red{color:#ff5252;}
   .green{color:#b2ff59;}
-  canvas{max-width:90vw !important;height:50vh !important;margin:3vh auto;}
-  #counter{position:fixed;top:12px;right:12px;background:rgba(0,0,0,0.7);padding:8px 20px;border-radius:30px;font-size:5vw;z-index:999;}
-  #progress{position:fixed;bottom:0;left:0;height:8px;background:#00ff88;width:0%;transition:width 0.4s;z-index:999;}
-  /* Pure CSS vines & leaves */
+
+  canvas{max-width:80vw !important;max-height:55vh !important;margin:4vh auto;}
+
+  #counter{
+    position:fixed;top:15px;right:15px;background:rgba(0,0,0,0.7);
+    padding:10px 22px;border-radius:30px;font-size:1.8rem;z-index:999;
+  }
+  @media (max-width:899px){#counter{font-size:5vw;padding:8px 16px;}}
+
+  #progress{
+    position:fixed;bottom:0;left:0;height:8px;background:#00ff88;width:0%;transition:0.4s;z-index:999;
+  }
+
+  /* Jungle decoration */
   .jungle{position:fixed;inset:0;pointer-events:none;z-index:1;}
-  .vine{position:absolute;background:#1b5e20;opacity:0.18;}
-  .vine:nth-child(1){top:0;left:5%;width:80px;height:40vh;border-radius:100px;transform:rotate(20deg);}
-  .vine:nth-child(2){top:0;right:8%;width:70px;height:38vh;border-radius:100px;transform:rotate(-35deg);}
-  .vine:nth-child(3){bottom:0;left:10%;width:90px;height:42vh;border-radius:100px;transform:rotate(155deg);}
+  .vine{position:absolute;background:#1b5e20;opacity:0.15;border-radius:100px;}
   .leaf{position:absolute;background:#2e7d32;border-radius:60% 10% 60% 10%;opacity:0.4;}
-  .leaf:nth-child(4){width:50px;height:80px;top:15%;left:10%;transform:rotate(40deg);}
-  .leaf:nth-child(5){width:45px;height:70px;top:20%;right:12%;transform:rotate(-70deg);}
-  .leaf:nth-child(6){width:55px;height:85px;bottom:18%;left:15%;transform:rotate(120deg);}
+  .vine:nth-child(1){top:0;left:5%;width:90px;height:45vh;transform:rotate(20deg);}
+  .vine:nth-child(2){top:0;right:8%;width:80px;height:42vh;transform:rotate(-35deg);}
+  .vine:nth-child(3){bottom:0;left:12%;width:100px;height:48vh;transform:rotate(155deg);}
+  .leaf:nth-child(4){width:60px;height:100px;top:12%;left:8%;transform:rotate(40deg);}
+  .leaf:nth-child(5){width:55px;height:90px;top:18%;right:10%;transform:rotate(-70deg);}
+  .leaf:nth-child(6){width:65px;height:110px;bottom:15%;left:15%;transform:rotate(130deg);}
 </style>
 </head>
 <body>
@@ -45,103 +83,100 @@
 
 <div class="deck">
 
-  <!-- 1 -->
-  <section class="slide active">
+  <section class="slide"><div>
     <div class="huge red">210</div>
     <div class="med">reizes dzīvnieki palika bez ēdiena</div>
-    <div class="small">5.–18.11.2025 (13 dienas)</div>
-  </section>
+    <div class="small">5.–18.11.2025</div>
+  </div></section>
 
-  <!-- 2 -->
-  <section class="slide">
+  <section class="slide"><div>
     <div class="big red">1</div>
     <div class="med red">dzīvnieks aizgāja bojā</div>
-    <div class="small">Dievlūdzējs (1.30)</div>
-  </section>
+    <div class="small">Dievlūdzējs 1.30</div>
+  </div></section>
 
-  <!-- 3 -->
-  <section class="slide">
+  <section class="slide"><div>
     <div class="big">2. stāva čūskas</div>
     <canvas id="c1"></canvas>
     <div class="big red">130×</div>
     <div class="small">13 no 13 dienām</div>
-  </section>
+  </div></section>
 
-  <!-- 4 -->
-  <section class="slide">
+  <section class="slide"><div>
     <div class="big">Tūkstoškāji</div>
     <canvas id="c2"></canvas>
     <div class="big red">50×</div>
-  </section>
+  </div></section>
 
-  <!-- 5 -->
-  <section class="slide">
+  <section class="slide"><div>
     <div class="big">Lielās čūskas 1.st.</div>
     <canvas id="c3"></canvas>
     <div class="big red">60×</div>
-  </section>
+  </div></section>
 
-  <!-- 6 -->
-  <section class="slide">
+  <section class="slide"><div>
     <canvas id="line"></canvas>
     <div class="med red">Situācija neuzlabojas</div>
-  </section>
+  </div></section>
 
-  <!-- 7 -->
-  <section class="slide">
-    <div class="big green">2</div>
-    <div class="med">apgaitas dienā</div>
-    <div class="big green">1</div>
-    <div class="med">atbildīgais 2. stāvam</div>
-    <div class="big green">0</div>
-    <div class="med">izlaisti voljēri</div>
-  </section>
+  <section class="slide"><div>
+    <div class="big green">2</div><div class="med">apgaitas dienā</div>
+    <div class="big green">1</div><div class="med">atbildīgais 2. stāvam</div>
+    <div class="big green">0</div><div class="med">izlaisti voljēri</div>
+  </div></section>
 
-  <!-- 8 -->
-  <section class="slide">
-    <div class="huge green">MĒS TO</div>
-    <div class="huge green">VARAM</div>
+  <section class="slide"><div>
+    <div class="huge green">MĒS</div>
+    <div class="huge green">TO</div>
+    <div class="huge green">VAR</div>
     <div class="huge green">ATRISINĀT</div>
-  </section>
+  </div></section>
 
-  <!-- 9 -->
-  <section class="slide">
+  <section class="slide"><div>
     <div class="huge green">KATRU</div>
     <div class="huge green">DIENU</div>
     <div class="big green">katram dzīvniekam</div>
-  </section>
+  </div></section>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 const slides = document.querySelectorAll('.slide');
-let i = 0;
-function go(n){
-  slides.forEach(s=>s.classList.remove('active'));
-  slides[n].classList.add('active');
-  i = n;
-  document.getElementById('counter').textContent = (n+1)+' / 9';
-  document.getElementById('progress').style.width = (n+1)/9*100 + '%';
+let current = 0;
+const total = slides.length;
+
+function update(){
+  document.getElementById('counter').textContent = (current+1) + ' / ' + total;
+  document.getElementById('progress').style.width = (current+1)/total*100 + '%';
+  // horizontal scroll on PC
+  if(window.innerWidth >= 900){
+    document.querySelector('.deck').scrollLeft = current * window.innerWidth;
+  }
 }
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'||e.key===' ') go(Math.min(i+1,8));
-  if(e.key==='ArrowLeft') go(Math.max(i-1,0));
-  if(e.key.toLowerCase()==='f') document.documentElement.requestFullscreen();
+
+// Navigation
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight' || e.key===' ') {if(current<total-1) current++; update();}
+  if(e.key==='ArrowLeft') {if(current>0) current--; update();}
+  if(e.key.toLowerCase()==='f') document.documentElement.requestFullscreen?.() || document.documentElement.webkitRequestFullscreen?.();
 });
-document.addEventListener('touchstart',e=>ts=e.touches[0].clientX);
-document.addEventListener('touchend',e=>{
-  let d=ts-e.changedTouches[0].clientX;
-  if(d>50) go(Math.min(i+1,8));
-  if(d<-50) go(Math.max(i-1,0));
+
+let touchX = 0;
+document.addEventListener('touchstart', e=> touchX = e.touches[0].clientX);
+document.addEventListener('touchend', e=>{
+  let diff = touchX - e.changedTouches[0].clientX;
+  if(diff > 50 && current<total-1) {current++; update();}
+  if(diff < -50 && current>0) {current--; update();}
 });
-document.addEventListener('dblclick',()=>document.documentElement.requestFullscreen());
 
 // Charts
 new Chart(document.getElementById('c1'),{type:'doughnut',data:{datasets:[{data:[130,80],backgroundColor:['#ff5252','#1b5e20']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c2'),{type:'doughnut',data:{datasets:[{data:[50,160],backgroundColor:['#ff9800','#1b5e20']}]},options:{cutout:'82%',plugins:{legend:false}}});
 new Chart(document.getElementById('c3'),{type:'doughnut',data:{datasets:[{data:[60,150],backgroundColor:['#ffb74d','#1b5e20']}]},options:{cutout:'82%',plugins:{legend:false}}});
-new Chart(document.getElementById('line'),{type:'line',data:{datasets:[{data:[15,18,12,20,28,25,10,18,35,20,22,24],borderColor:'#ff5252',backgroundColor:'rgba(255,82,82,0.15)',fill:true,tension:0.4,pointRadius:8,pointBackgroundColor:'#ff5252'}]},options:{plugins:{legend:false},scales:{x:{display:false},y:{display:false}}}});
+new Chart(document.getElementById('line'),{type:'line',data:{datasets:[{data:[15,18,12,20,28,25,10,18,35,20,22,24],borderColor:'#ff5252',backgroundColor:'rgba(255,82,82,0.18)',fill:true,tension:0.4,pointRadius:9,pointBackgroundColor:'#ff5252'}]},options:{plugins:{legend:false},scales:{x:{display:false},y:{display:false}}}});
+
+update();
 </script>
 </body>
 </html>
