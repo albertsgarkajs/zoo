@@ -28,25 +28,25 @@
   .red{color:#ff1744;text-shadow:0 0 65px #ff1744;}
   .yellow{color:#ffc107;text-shadow:0 0 65px #ffc107;}
 
-  /* Unified seamless image container – used for ALL photos */
+  /* TRUE ROUND CORNERS – no black box, no module */
   .img-big{
-    position:relative;
     width:1880px;
     height:960px;
     margin:30px auto;
-    border-radius:48px;
     overflow:hidden;
+    border-radius:48px;          /* this rounds the container */
     box-shadow:0 50px 140px rgba(0,0,0,0.9);
   }
   .img-big img{
-    position:absolute;
-    inset:0;
     width:100%;
     height:100%;
     object-fit:contain;
-    border-radius:48px;
+    display:block;
+    border-radius:48px;          /* this makes the actual image round */
   }
   .img-big .highlight{
+    position:absolute;
+    inset:0;
     opacity:0;
     transition:opacity 2.8s ease-in-out 0.5s;
   }
@@ -113,12 +113,12 @@
       <p>5.–18.11.2025 · 13 darba dienas</p>
     </section>
 
-    <!-- 2 – Dead animal + photo of voljērs 1.30 -->
+    <!-- 2 – Dead animal + voljērs 1.30 -->
     <section class="slide">
       <h1 class="red">1 dzīvnieks</h1>
       <h2 class="red">gāja bojā</h2>
       <div class="img-big">
-        <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2014.jpg">
+        <img src="https://i46.servimg.com/u/f46/14/10/26/20/img_2014.jpg" alt="voljērs 1.30">
       </div>
       <p>Dievlūdzējs (voljērs 1.30)</p>
     </section>
