@@ -3,58 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dzīvnieku aprūpe + Darba likums</title>
+<title>Dzīvnieku aprūpe + Darba disciplīna</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
   html,body{height:100%;overflow:hidden;background:#081a0d;color:#e8f5e9;font-family:Arial,sans-serif;}
-
-  /* ========== TRUE 16:9 HORIZONTAL ON ANY PC / PROJECTOR ========== */
-  @media (min-width: 861px) {
-    .deck{
-      display:flex;
-      width:100vw;
-      height:100vh;
-      overflow:hidden;
-    }
-    .slide{
-      min-width:100vw;
-      height:100vh;
-      flex-shrink:0;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      padding:4vh 8vw;
-    }
-  }
-
-  /* ========== VERTICAL ON PHONES ========== */
-  @media (max-width: 860px) {
-    .deck{
-      display:flex;
-      flex-direction:column;
-      height:100vh;
-      width:100vw;
-      overflow:hidden;
-    }
-    .slide{
-      min-height:100vh;
-      width:100vw;
-      flex-shrink:0;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      padding:8vh 6vw;
-    }
-  }
-
-  .slide{
-    text-align:center;
-    background:radial-gradient(circle at 40% 30%,#1b3a1e,#081a0d);
-  }
-
-  .big{font-size:11vw;font-weight:900;line-height:1;}
+  @media (min-width:861px){.deck{display:flex;height:100vh;overflow:hidden;}
+    .slide{min-width:100vw;height:100vh;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4vh 10vw;}}
+  @media (max-width:860px){.deck{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+    .slide{min-height:100vh;width:100vw;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8vh 6vw;}}
+  .slide{text-align:center;background:radial-gradient(circle at 40% 30%,#1b3a1e,#081a0d);}
+  .big{font-size:11vw;font-weight:900;line-height:1.1;}
   .huge{font-size:15vw;font-weight:900;line-height:1;}
   .med{font-size:5.5vw;margin:2vh 0;}
   .small{font-size:3.2vw;opacity:0.9;}
@@ -64,19 +22,11 @@
     .med{font-size:9vw;}
     .small{font-size:5.5vw;}
   }
-
-  .red{color:#ff5252;}
-  .green{color:#b2ff59;}
-  .yellow{color:#ffeb3b;}
-
-  canvas{max-width:78vw !important;max-height:52vh !important;margin:4vh auto;}
-
+  .red{color:#ff5252;}.green{color:#b2ff59;}.yellow{color:#ffeb3b;}
+  canvas{max-width:78vw !important;max-height:50vh !important;margin:3vh auto;}
   #counter{position:fixed;top:20px;right:20px;background:rgba(0,0,0,0.7);padding:12px 28px;border-radius:50px;font-size:2rem;z-index:999;}
   @media (max-width:860px){#counter{font-size:5.5vw;padding:10px 20px;}}
-
   #progress{position:fixed;bottom:0;left:0;height:10px;background:#00ff88;width:0%;transition:0.4s;z-index:999;}
-
-  /* Jungle decoration */
   .jungle{position:fixed;inset:0;pointer-events:none;z-index:1;}
   .vine{position:absolute;background:#1b5e20;opacity:0.18;border-radius:100px;}
   .leaf{position:absolute;background:#2e7d32;border-radius:60% 10% 60% 10%;opacity:0.38;}
@@ -95,70 +45,78 @@
   <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
 </div>
 
-<div id="counter">1 / 10</div>
+<div id="counter">1 / 9</div>
 <div id="progress"></div>
 
 <div class="deck" id="deck">
 
+  <!-- 1 -->
   <section class="slide"><div>
     <div class="huge red">210</div>
-    <div class="med">reizes dzīvnieki palika bez ēdiena</div>
-    <div class="small">5.–18.11.2025</div>
+    <div class="med">reizes dzīvnieki palika bez ēdiena/ūdens</div>
+    <div class="small">5.–18.11.2025 (13 dienas)</div>
   </div></section>
 
+  <!-- 2 -->
   <section class="slide"><div>
-    <div class="big red">1</div>
-    <div class="med red">dzīvnieks aizgāja bojā</div>
-    <div class="small">Dievlūdzējs 1.30</div>
+    <div class="big red">1 dzīvnieks</div>
+    <div class="med red">aizgāja bojā</div>
+    <div class="small">Dievlūdzējs 1.30 – nekad nav barots</div>
   </div></section>
 
+  <!-- 3 – 2. stāva čūskas + explanation -->
   <section class="slide"><div>
-    <div class="big">2. stāva čūskas</div>
+    <div class="big red">130 reizes izlaistas</div>
+    <div class="med">Visas čūskas 2. stāvā</div>
     <canvas id="c1"></canvas>
-    <div class="big red">130×</div>
-    <div class="small">13 no 13 dienām</div>
+    <div class="med red">13 no 13 dienām</div>
+    <div class="small">→ katru dienu pilnīgi aizmirstas</div>
   </div></section>
 
+  <!-- 4 – Tūkstoškāji -->
   <section class="slide"><div>
-    <div class="big">Tūkstoškāji</div>
+    <div class="big red">50 reizes izlaisti</div>
+    <div class="med">Tūkstoškāji</div>
     <canvas id="c2"></canvas>
-    <div class="big red">50×</div>
+    <div class="small">10 no 13 dienām</div>
   </div></section>
 
+  <!-- 5 – Lielās čūskas 1.st. -->
   <section class="slide"><div>
-    <div class="big">Lielās čūskas 1.st.</div>
+    <div class="big red">60 reizes izlaistas</div>
+    <div class="med">Lielās čūskas 1. stāvā</div>
     <canvas id="c3"></canvas>
-    <div class="big red">60×</div>
+    <div class="small">9 no 13 dienām</div>
   </div></section>
 
+  <!-- 6 – Darba likums -->
   <section class="slide"><div>
-    <div class="huge yellow">Darba likums</div>
-    <div class="big yellow">145. pants</div>
-    <div class="med red">Pusdienas NEIESKAITĀS darba laikā</div>
-    <div class="med red">Nedrīkst aiziet agrāk, kamēr darbs nav pabeigts</div>
+    <div class="huge yellow">Darba likums 145. pants</div>
+    <div class="big red">Pusdienas NEIESKAITĀS darba laikā</div>
+    <div class="med red">Nedrīkst aiziet agrāk,<br>kamēr darbs nav pabeigts</div>
   </div></section>
 
+  <!-- 7 – Tendence -->
   <section class="slide"><div>
     <canvas id="line"></canvas>
-    <div class="med red">Situācija neuzlabojas</div>
+    <div class="med red">Problēma tikai pasliktinās</div>
   </div></section>
 
+  <!-- 8 – JAUNS: Ko mēs gribam (profesionāli) -->
   <section class="slide"><div>
-    <div class="big green">2</div><div class="med">apgaitas dienā</div>
-    <div class="big green">1</div><div class="med">atbildīgais 2. stāvam</div>
-    <div class="big green">0</div><div class="med">izlaisti voljēri</div>
+    <div class="huge green">MĒS Gribam</div>
+    <div class="big green">2 apgaitas dienā</div>
+    <div class="big green">1 atbildīgo par 2. stāvu</div>
+    <div class="big green">0 izlaistus voljērus</div>
+    <div class="med green">→ visi dzīvnieki paēduši katru dienu</div>
   </div></section>
 
+  <!-- 9 – JAUNS: Paldies + nākamā pārbaude -->
   <section class="slide"><div>
-    <div class="huge green">MĒS TO</div>
-    <div class="huge green">VARAM</div>
-    <div class="huge green">ATRISINĀT</div>
-  </div></section>
-
-  <section class="slide"><div>
-    <div class="huge green">KATRU</div>
-    <div class="huge green">DIENU</div>
-    <div class="big green">katram dzīvniekam</div>
+    <div class="huge green">PALDIES</div>
+    <div class="big green">ka rūpējaties par dzīvniekiem</div>
+    <div class="med green">Nākamā pārbaude: pēc 7 dienām</div>
+    <div class="small">Es atjaunināšu prezentāciju ar jauniem datiem</div>
   </div></section>
 
 </div>
@@ -167,14 +125,14 @@
 <script>
 const deck = document.getElementById('deck');
 let current = 0;
-const total = 10;
+const total = 9;
 
 function go(to){
   current = Math.max(0, Math.min(to, total-1));
-  const isDesktop = window.innerWidth >= 861;
-  const size = isDesktop ? window.innerWidth : window.innerHeight;
-  deck.scrollLeft = isDesktop ? current * size : 0;
-  deck.scrollTop = isDesktop ? 0 : current * size;
+  const wide = window.innerWidth >= 861;
+  const size = wide ? window.innerWidth : window.innerHeight;
+  deck.scrollLeft = wide ? current * size : 0;
+  deck.scrollTop = wide ? 0 : current * size;
   document.getElementById('counter').textContent = (current+1)+' / '+total;
   document.getElementById('progress').style.width = (current+1)/total*100 + '%';
 }
@@ -193,11 +151,11 @@ document.addEventListener('touchend',e=>{
   else if(Math.abs(dy)>50) dy>0?go(current+1):go(current-1);
 });
 
-/* Charts */
-new Chart(document.getElementById('c1'),{type:'doughnut',data:{datasets:[{data:[130,80],backgroundColor:['#ff5252','#1b5e20']}]},options:{cutout:'82%',plugins:{legend:false}}});
-new Chart(document.getElementById('c2'),{type:'doughnut',data:{datasets:[{data:[50,160],backgroundColor:['#ff9800','#1b5e20']}]},options:{cutout:'82%',plugins:{legend:false}}});
-new Chart(document.getElementById('c3'),{type:'doughnut',data:{datasets:[{data:[60,150],backgroundColor:['#ffb74d','#1b5e20']}]},options:{cutout:'82%',plugins:{legend:false}}});
-new Chart(document.getElementById('line'),{type:'line',data:{datasets:[{data:[15,18,12,20,28,25,10,18,35,20,22,24],borderColor:'#ff5252',backgroundColor:'rgba(255,82,82,0.18)',fill:true,tension:0.4,pointRadius:10,pointBackgroundColor:'#ff5252'}]},options:{plugins:{legend:false},scales:{x:{display:false},y:{display:false}}}});
+/* Charts – now with proper colors and size */
+new Chart(document.getElementById('c1'),{type:'doughnut',data:{datasets:[{data:[130,80],backgroundColor:['#ff5252','#2e7d32']}]},options:{cutout:'80%',plugins:{legend:false}}});
+new Chart(document.getElementById('c2'),{type:'doughnut',data:{datasets:[{data:[50,160],backgroundColor:['#ff9800','#2e7d32']}]},options:{cutout:'80%',plugins:{legend:false}}});
+new Chart(document.getElementById('c3'),{type:'doughnut',data:{datasets:[{data:[60,150],backgroundColor:['#ffb74d','#2e7d32']}]},options:{cutout:'80%',plugins:{legend:false}}});
+new Chart(document.getElementById('line'),{type:'line',data:{datasets:[{data:[15,18,12,20,28,25,10,18,35,20,22,24],borderColor:'#ff5252',backgroundColor:'rgba(255,82,82,0.2)',fill:true,tension:0.4,pointRadius:10,pointBackgroundColor:'#ff5252'}]},options:{plugins:{legend:false},scales:{x:{display:false},y:{display:false}}}});
 
 go(0);
 </script>
