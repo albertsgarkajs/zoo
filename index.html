@@ -7,75 +7,38 @@
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
   html,body{height:100%;overflow:hidden;background:#000;font-family:"Segoe UI",Arial,sans-serif;}
-  .frame{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;}
+  .frame{position:fixed;inset:0;display:flex;align-items:flex-start;justify-content:flex-start;background:#000;}
   .presentation{
-    width:1920px;height:1080px;max-width:100vw;max-height:100vh;
+    width:1920px;height:1080px;
     background:radial-gradient(circle at 40% 30%,#1b3a1e,#081a0d);
     position:relative;overflow:hidden;
+    transform-origin:top left;
+    /* MAGIC LINE – fits perfectly on 1080×720 and everything else */
+    transform:scale(calc(100vw / 1920));
   }
-  .slide{
-    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;color:#e8f5e9;opacity:0;transition:opacity 1.4s ease;
+  @media (max-width:640px){
+    .presentation{transform:scale(calc(100vw / 1920 * 1.1));} /* tiny boost on phones */
   }
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;color:#e8f5e9;opacity:0;transition:opacity 1.4s ease;}
   .slide.active{opacity:1;z-index:10;}
-
   h1{font-size:82px;font-weight:900;margin:30px 0;letter-spacing:3px;}
   h2{font-size:66px;font-weight:800;margin:25px 0;}
   p{font-size:44px;line-height:1.5;margin:15px 0;}
   .small{font-size:38px;opacity:0.92;margin-top:40px;}
   .law{font-style:italic;background:rgba(255,255,255,0.06);padding:55px 110px;border-radius:32px;margin:40px 0;max-width:1720px;line-height:1.8;font-size:44px;}
-
   .red{color:#ff1744;text-shadow:0 0 65px #ff1744;}
   .yellow{color:#ffc107;text-shadow:0 0 65px #ffc107;}
-
-  /* Perfect seamless images – no black box, huge and clean */
-  .img-big{
-    position:relative;
-    width:1880px;
-    height:960px;
-    margin:30px auto;
-    border-radius:48px;
-    overflow:hidden;
-    box-shadow:0 50px 140px rgba(0,0,0,0.9);
-  }
-  .img-big img{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:contain;
-  }
-  .img-big .highlight{
-    opacity:0;
-    transition:opacity 2.8s ease-in-out 0.5s;
-  }
-  .slide.active .img-big .highlight{
-    opacity:1;
-  }
-
-  #counter{
-    position:fixed;top:40px;right:60px;
-    background:rgba(0,255,100,0.25);
-    padding:22px 65px;
-    border-radius:90px;
-    font-size:52px;
-    z-index:999;
-    border:6px solid #00ff88;
-  }
-  #progress{
-    position:fixed;bottom:0;left:0;
-    height:10px;
-    background:rgba(0,255,136,0.05);
-    width:0%;
-    transition:width 0.9s ease;
-    z-index:1;
-  }
-
+  .img-big{position:relative;width:1880px;height:960px;margin:30px auto;border-radius:48px;overflow:hidden;box-shadow:0 50px 140px rgba(0,0,0,0.9);}
+  .img-big img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;}
+  .img-big .highlight{opacity:0;transition:opacity 2.8s ease-in-out 0.5s;}
+  .slide.active .img-big .highlight{opacity:1;}
+  #counter{position:fixed;top:40px;right:60px;background:rgba(0,255,100,0.25);padding:22px 65px;border-radius:90px;font-size:52px;z-index:999;border:6px solid #00ff88;}
+  #progress{position:fixed;bottom:0;left:0;height:10px;background:rgba(0,255,136,0.05);width:0%;transition:width 0.9s ease;z-index:1;}
   .vines{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
   .vine{position:absolute;background:linear-gradient(to bottom,transparent,#1b5e20 40%,#2e7d32 80%);border-radius:100px;}
   .grow .vine{animation:grow 4s ease-out forwards;}
   @keyframes grow{0%{transform:scaleY(0);opacity:0;}70%{opacity:0.4;}100%{transform:scaleY(1);opacity:0.35;}}
-
   .chart{width:1780px;display:flex;flex-direction:column;gap:70px;justify-content:center;height:840px;}
   .bar-row{display:flex;align-items:center;gap:90px;height:150px;position:relative;}
   .bar-label{width:860px;text-align:right;font-size:60px;font-weight:900;color:#e8f5e9;text-shadow:0 0 40px #fff;}
@@ -93,7 +56,6 @@
 </style>
 </head>
 <body>
-
 <div class="frame">
   <div class="presentation grow" id="pres">
     <div class="vines">
@@ -102,17 +64,14 @@
       <div class="vine" style="bottom:-10%;left:10%;width:36px;height:76vh;transform:rotate(155deg);"></div>
       <div class="vine" style="top:10%;left:-5%;width:30px;height:64vh;transform:rotate(80deg);"></div>
     </div>
-
     <div id="counter">1 / 8</div>
     <div id="progress"></div>
 
-    <!-- 1 -->
     <section class="slide active">
       <h1 class="red">210 izlaistas barošanas/ūdens maiņas reizes</h1>
       <p>Laika periods 05.11.2025–18.11.2025 · 13 darba dienas</p>
     </section>
 
-    <!-- 2 – Dead animal + voljērs 1.30 -->
     <section class="slide">
       <h1 class="red">1 dzīvnieks</h1>
       <h2 class="red">gāja bojā</h2>
@@ -122,7 +81,6 @@
       <p>Dievlūdzējs (vivārijs 1.30)</p>
     </section>
 
-    <!-- 3 – Dry enclosure -->
     <section class="slide">
       <h2 class="red">Sakaltis ēdiens, pakaiši</h2>
       <div class="img-big">
@@ -132,7 +90,6 @@
       <p>Extatosoma tiaratum</p>
     </section>
 
-    <!-- 4 – Empty water dish -->
     <section class="slide">
       <h2 class="red">Tukšs ūdens trauks/sausi pakaiši</h2>
       <div class="img-big">
@@ -142,7 +99,6 @@
       <p>Blaberus giganteus</p>
     </section>
 
-    <!-- 5 – Bar chart -->
     <section class="slide">
       <h2 class="red" style="margin-bottom:60px;">Kuras grupas cieta visvairāk</h2>
       <div class="chart">
@@ -154,7 +110,6 @@
       <p class="small">Visas šīs ir <strong>izlaistas barošanas un/vai ūdens maiņas</strong></p>
     </section>
 
-    <!-- 6 – Early leaving -->
     <section class="slide">
       <div class="img-big">
         <img src="https://i46.servimg.com/u/f46/14/10/26/20/screen10.jpg">
@@ -164,7 +119,6 @@
       <p style="font-size:76px;">Darba diena līdz 15:30</p>
     </section>
 
-    <!-- 7 – Law 145 -->
     <section class="slide">
       <h1 class="yellow">Darba likums – 145. pants (2)</h1>
       <div class="law">
@@ -174,7 +128,6 @@
       </div>
     </section>
 
-    <!-- 8 – Final law -->
     <section class="slide">
       <h1 class="red">Darba likums – 134. un 97. pants</h1>
       <div class="law">
@@ -182,40 +135,31 @@
         <p>Darba devējs <strong>nedrīkst pieļaut darbinieka priekšlaicīgu aiziešanu</strong>,<br>ja darbs nav pabeigts.</p>
       </div>
     </section>
-
   </div>
 </div>
 
 <script>
-const slides = document.querySelectorAll('.slide');
-const pres = document.getElementById('pres');
-let current = 0;
-const total = slides.length;
-
-function go(n) {
-  current = Math.max(0, Math.min(n, total-1));
-  slides.forEach((s,i) => s.classList.toggle('active', i===current));
-  document.getElementById('counter').textContent = (current+1)+' / '+total;
-  document.getElementById('progress').style.width = (current+1)/total*100+'%';
+const slides=document.querySelectorAll('.slide'),pres=document.getElementById('pres');
+let current=0,total=slides.length;
+function go(n){current=Math.max(0,Math.min(n,total-1));
+  slides.forEach((s,i)=>s.classList.toggle('active',i===current));
+  document.getElementById('counter').textContent=(current+1)+' / '+total;
+  document.getElementById('progress').style.width=(current+1)/total*100+'%';
   pres.classList.remove('grow');void pres.offsetWidth;pres.classList.add('grow');
 }
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === ' ') {e.preventDefault();go(current + 1);}
-  if (e.key === 'ArrowLeft') {e.preventDefault();go(current - 1);}
-  if (e.key.toLowerCase() === 'f') {
-    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-    else document.exitFullscreen();
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(current+1);}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(current-1);}
+  if(e.key.toLowerCase()==='f'){
+    document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
   }
 });
-
-let startX = 0;
-document.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
-document.addEventListener('touchend', e => {
-  const diff = startX - e.changedTouches[0].clientX;
-  if (Math.abs(diff) > 50) go(current + (diff > 0 ? 1 : -1));
+let startX=0;
+document.addEventListener('touchstart',e=>startX=e.touches[0].clientX,{passive:true});
+document.addEventListener('touchend',e=>{
+  const diff=startX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50)go(current+(diff>0?1:-1));
 });
-
 go(0);
 </script>
 </body>
