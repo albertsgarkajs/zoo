@@ -1,1 +1,38 @@
-
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <title>Visitor Counter</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+      .iframe-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 800px;
+      }
+      iframe {
+        width: 100%;
+        height: 700px; /* Increased height to accommodate report button */
+        border: none;
+        border-radius: 10px;
+        background-color: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="iframe-container">
+      <iframe src="http://192.168.1.231:3000/"></iframe>
+    </div>
+  </body>
+</html>
